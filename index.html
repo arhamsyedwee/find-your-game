@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find Your Game</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,500;0,700;0,900;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0c;
+    --bg-alt:#141317;
+    --panel:#1b1a1f;
+    --ink:#f5f3ee;
+    --muted:#9c9aa3;
+    --amber:#ff7a29;
+    --cyan:#35d8c0;
+    --gold:#e8b84b;
+    --line:rgba(245,243,238,0.09);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Archivo',sans-serif;
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:-0.01em;
+    line-height:0.95;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{display:block;max-width:100%;}
+  .wrap{max-width:1280px;margin:0 auto;padding:0 32px;}
+  @media(max-width:640px){.wrap{padding:0 20px;}}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:20px 32px;
+    background:rgba(10,10,12,0.7);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .logo{font-family:'Archivo';font-weight:900;font-size:19px;letter-spacing:-0.02em;text-transform:uppercase;}
+  .logo span{color:var(--amber);}
+  .nav-links{display:flex;gap:36px;font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;}
+  .nav-links a{color:var(--muted);transition:color .25s;}
+  .nav-links a:hover{color:var(--ink);}
+  @media(max-width:640px){.nav-links{gap:20px;font-size:11px;} nav{padding:16px 20px;}}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:100svh;
+    display:flex;flex-direction:column;justify-content:center;
+    position:relative;
+    padding:140px 0 80px;
+    background:
+      radial-gradient(ellipse 80% 60% at 15% 0%, rgba(255,122,41,0.16), transparent 60%),
+      radial-gradient(ellipse 70% 50% at 100% 100%, rgba(53,216,192,0.12), transparent 60%),
+      var(--bg);
+  }
+  .hero-eyebrow{
+    font-size:13px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--cyan);margin-bottom:22px;
+  }
+  .hero h1{
+    font-size:clamp(52px,10vw,128px);
+    max-width:1100px;
+  }
+  .hero h1 em{font-style:normal;color:var(--amber);}
+  .hero p{
+    margin-top:28px;max-width:560px;
+    font-size:18px;line-height:1.6;color:var(--muted);
+  }
+  .hero-scroll{
+    margin-top:64px;display:flex;align-items:center;gap:12px;
+    font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);
+  }
+  .hero-scroll .dash{width:32px;height:1px;background:var(--muted);animation:pulse 1.8s infinite;}
+  @keyframes pulse{0%,100%{opacity:.3;}50%{opacity:1;}}
+
+  /* ---------- SECTION HEADERS ---------- */
+  .section{padding:120px 0;}
+  .section-head{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    margin-bottom:56px;gap:24px;flex-wrap:wrap;
+    border-bottom:1px solid var(--line);padding-bottom:28px;
+  }
+  .section-head .eyebrow{
+    font-size:12px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--amber);
+    margin-bottom:10px;display:block;
+  }
+  .section-head h2{font-size:clamp(32px,4.5vw,56px);}
+  .section-head .count{font-size:14px;color:var(--muted);font-weight:600;}
+
+  /* ---------- GAME GRID ---------- */
+  .grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:20px;
+    perspective:1600px;
+  }
+  @media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:560px){.grid{grid-template-columns:1fr;}}
+
+  .card{
+    position:relative;height:400px;
+    cursor:pointer;
+  }
+  .card-inner{
+    position:relative;width:100%;height:100%;
+    transition:transform .65s cubic-bezier(.2,.9,.25,1);
+    transform-style:preserve-3d;
+    will-change:transform;
+  }
+  .card.flipped .card-inner{transform:rotateY(180deg);}
+  .face{
+    position:absolute;inset:0;
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+    transform:translateZ(0);
+    border-radius:6px;
+    border:1px solid var(--line);
+    overflow:hidden;
+  }
+  .front{
+    display:flex;flex-direction:column;justify-content:flex-end;
+    padding:20px;
+    position:relative;
+    background-color:var(--bg-alt);
+    background-image:
+      linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.95) 100%),
+      var(--art);
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+  }
+  .front::before{
+    content:attr(data-letter);
+    position:absolute;
+    top:-0.28em;right:-0.06em;
+    font-family:'Archivo',sans-serif;
+    font-weight:900;
+    font-size:170px;
+    line-height:1;
+    color:rgba(255,255,255,0.10);
+    z-index:0;
+    pointer-events:none;
+    user-select:none;
+  }
+  .front > *{position:relative;z-index:1;}
+  .goty-tag{
+    position:absolute;top:14px;left:14px;
+    background:var(--gold);color:#161200;
+    font-size:10px;font-weight:800;letter-spacing:0.08em;
+    padding:5px 9px;border-radius:3px;text-transform:uppercase;
+  }
+  .card-genre{
+    font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+    color:rgba(245,243,238,0.75);margin-bottom:8px;
+  }
+  .card-title{font-size:24px;line-height:1;text-shadow:0 2px 12px rgba(0,0,0,0.6);}
+  .card-tap{
+    position:absolute;bottom:16px;right:16px;
+    font-size:10px;color:rgba(245,243,238,0.55);letter-spacing:0.08em;text-transform:uppercase;
+  }
+  .back{
+    transform:rotateY(180deg);
+    background:var(--panel);
+    padding:22px;
+    display:flex;flex-direction:column;
+  }
+  .back .card-genre{color:var(--cyan);}
+  .back h3{font-size:19px;margin-bottom:10px;line-height:1.05;}
+  .back p{font-size:12.5px;line-height:1.55;color:var(--muted);margin-bottom:10px;flex:0 0 auto;}
+  .egg{
+    font-size:11.5px;line-height:1.5;color:var(--ink);
+    background:rgba(255,122,41,0.08);
+    border-left:2px solid var(--amber);
+    padding:9px 10px;margin-bottom:14px;
+  }
+  .egg b{color:var(--amber);font-weight:700;text-transform:uppercase;font-size:9.5px;letter-spacing:0.08em;display:block;margin-bottom:3px;}
+  .back-links{margin-top:auto;display:flex;flex-direction:column;gap:8px;}
+  .btn{
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    padding:10px 14px;border-radius:4px;
+    font-size:12.5px;font-weight:700;letter-spacing:0.03em;text-transform:uppercase;
+    transition:transform .2s, opacity .2s;
+  }
+  .btn:hover{transform:translateY(-1px);opacity:0.92;}
+  .btn-get{background:var(--ink);color:#0a0a0c;}
+  .btn-official{border:1px solid var(--line);color:var(--muted);}
+  .btn svg{width:14px;height:14px;flex:none;}
+
+  /* ---------- ABOUT / CREDITS ---------- */
+  .about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:60px;}
+  @media(max-width:860px){.about-grid{grid-template-columns:1fr;gap:48px;}}
+  .about-copy h2{font-size:clamp(30px,4vw,46px);margin-bottom:22px;}
+  .about-copy p{font-size:16px;line-height:1.7;color:var(--muted);margin-bottom:18px;max-width:520px;}
+  .about-copy p b{color:var(--ink);}
+  .disclaimer{
+    margin-top:28px;padding:18px 20px;
+    border:1px solid var(--line);border-left:3px solid var(--cyan);
+    font-size:13px;line-height:1.6;color:var(--muted);
+    max-width:520px;
+  }
+  .disclaimer b{color:var(--ink);}
+
+  .credits-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:8px;
+    padding:36px;height:fit-content;
+  }
+  .credits-card .eyebrow{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber);margin-bottom:22px;display:block;}
+  .credit-row{
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding:16px 0;border-bottom:1px solid var(--line);
+  }
+  .credit-row:last-child{border-bottom:none;padding-bottom:0;}
+  .credit-row:first-of-type{padding-top:0;}
+  .credit-label{font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);}
+  .credit-value{font-family:'Archivo';font-weight:700;font-size:17px;text-transform:uppercase;}
+  .version-pill{
+    display:inline-block;margin-top:24px;
+    font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+    color:var(--cyan);border:1px solid rgba(53,216,192,0.35);
+    padding:6px 12px;border-radius:20px;
+  }
+
+  /* ---------- VERSIONS HISTORY ---------- */
+  .timeline{
+    display:flex;flex-direction:column;
+    border-top:1px solid var(--line);
+  }
+  .version-entry{
+    display:grid;grid-template-columns:180px 1fr;gap:32px;
+    padding:36px 0;border-bottom:1px solid var(--line);
+  }
+  @media(max-width:700px){.version-entry{grid-template-columns:1fr;gap:12px;}}
+  .version-num{
+    display:flex;flex-direction:column;gap:10px;
+  }
+  .version-num .num{font-family:'Archivo';font-weight:900;font-size:28px;text-transform:uppercase;}
+  .current-tag{
+    display:inline-block;width:fit-content;
+    font-size:10px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;
+    color:#0a0a0c;background:var(--cyan);
+    padding:4px 9px;border-radius:20px;
+  }
+  .version-date{font-size:12px;color:var(--muted);letter-spacing:0.03em;}
+  .version-body h3{
+    font-family:'Inter';font-weight:700;text-transform:none;
+    font-size:17px;margin-bottom:12px;letter-spacing:0;
+  }
+  .version-body ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+  .version-body li{
+    font-size:14px;line-height:1.5;color:var(--muted);
+    padding-left:16px;position:relative;
+  }
+  .version-body li::before{
+    content:'—';position:absolute;left:0;color:var(--amber);
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    border-top:1px solid var(--line);
+    padding:36px 0;
+  }
+  .footer-inner{
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;
+  }
+  .footer-inner .logo{font-size:15px;}
+  .footer-meta{display:flex;gap:22px;font-size:12px;color:var(--muted);flex-wrap:wrap;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Find<span>Your</span>Game</div>
+  <div class="nav-links">
+    <a href="#library">Library</a>
+    <a href="#about">About</a>
+    <a href="#versions">Versions History</a>
+    <a href="#credits">Credits</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="hero-eyebrow">30 titles · curated shelf</span>
+    <h1>Every game<br>has a <em>home.</em></h1>
+    <p>A shelf of titles worth playing — open-world epics, soulslikes, and a couple of Game of the Year winners. Every card links straight to the official Steam page and the studio that made it.</p>
+    <div class="hero-scroll"><div class="dash"></div> Scroll to browse</div>
+  </div>
+</section>
+
+<section class="section" id="library">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">The Library</span>
+        <h2>Pick a case.</h2>
+      </div>
+      <span class="count">30 games · tap a card to flip it</span>
+    </div>
+
+    <div class="grid" id="gameGrid"></div>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="wrap about-grid">
+    <div class="about-copy">
+      <span class="eyebrow" style="color:var(--cyan);display:block;font-size:12px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:10px;">About</span>
+      <h2>A shelf, not a store.</h2>
+      <p><b>Find Your Game</b> is a showcase, not a storefront. It doesn't sell or host anything — every "Get" button leads straight to the game's real Steam page, and every "Official Site" button leads to the studio or publisher that actually made it.</p>
+      <p>The idea is simple: a fast, good-looking place to remember what's worth playing, learn one strange or overlooked fact about each game, and land on the right official page to buy or wishlist it.</p>
+      <div class="disclaimer">
+        <b>Disclaimer.</b> Find Your Game is an independent fan project and is not affiliated with, endorsed by, or sponsored by Valve, Steam, Rockstar Games, or any publisher listed here. All game titles, logos, and trademarks belong to their respective owners. No game files are hosted, sold, or distributed on this site — every download link points to the game's official store page.
+      </div>
+    </div>
+
+    <div class="credits-card" id="credits">
+      <span class="eyebrow">Credits</span>
+      <div class="credit-row">
+        <span class="credit-label">Owner</span>
+        <span class="credit-value">Arham Syed</span>
+      </div>
+      <div class="credit-row">
+        <span class="credit-label">Developer</span>
+        <span class="credit-value">Claude AI</span>
+      </div>
+      <div class="credit-row">
+        <span class="credit-label">Built for</span>
+        <span class="credit-value">Find Your Game</span>
+      </div>
+      <span class="version-pill">Version 26.2</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="versions">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Changelog</span>
+        <h2>Versions History.</h2>
+      </div>
+      <span class="count">3 releases so far</span>
+    </div>
+
+    <div class="timeline">
+
+      <div class="version-entry">
+        <div class="version-num">
+          <span class="num">26.2</span>
+          <span class="current-tag">Current Version</span>
+          <span class="version-date">Latest</span>
+        </div>
+        <div class="version-body">
+          <h3>Changelog central.</h3>
+          <ul>
+            <li>Added the Versions History tab so every release is documented in one place.</li>
+            <li>Version numbering updated from 26.1 to 26.2.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="version-entry">
+        <div class="version-num">
+          <span class="num">26.1</span>
+          <span class="version-date">Previous</span>
+        </div>
+        <div class="version-body">
+          <h3>The shelf got bigger.</h3>
+          <ul>
+            <li>Added 10 more games, bringing the library from 20 to 30 titles.</li>
+            <li>Updated the hero and library counts to reflect 30 games.</li>
+            <li>Version numbering updated from 26 to 26.1.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="version-entry">
+        <div class="version-num">
+          <span class="num">26</span>
+          <span class="version-date">First release</span>
+        </div>
+        <div class="version-body">
+          <h3>Find Your Game launches.</h3>
+          <ul>
+            <li>Initial release with a 20-game library, each linking to its official Steam page and publisher site.</li>
+            <li>Added the About section, disclaimer, and Credits card.</li>
+            <li>Added the site footer with owner, developer, and version details.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-inner">
+    <div class="logo">Find<span>Your</span>Game</div>
+    <div class="footer-meta">
+      <span>Version 26.2</span>
+      <span>Owner: Arham Syed</span>
+      <span>Developer: Claude AI</span>
+      <span>Not affiliated with Valve or Steam</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const games = [
+  {
+    title:"Grand Theft Auto V", genre:"Open World · Action", art:["#2b1a13","#ff7a29"],
+    desc:"Los Santos and Blaine County, three criminals, one sprawling heist story that still holds up.",
+    egg:"There's a working UFO wreck buried under Mount Chiliad, and a cryptic hillside mural that spawned years of fan theories about it.",
+    steam:"https://store.steampowered.com/app/271590/Grand_Theft_Auto_V/",
+    official:"https://www.rockstargames.com/V", officialName:"Rockstar Games"
+  },
+  {
+    title:"Red Dead Redemption 2", genre:"Open World · Western", art:["#1a1712","#c98a3c"],
+    desc:"Arthur Morgan rides through the dying days of the outlaw era. Slow, sad, and gorgeous.",
+    egg:"Legendary animals, a full moonshine side-business, and a Bigfoot-like cryptid rumored to roam the Grizzlies.",
+    steam:"https://store.steampowered.com/app/1174180/Red_Dead_Redemption_2/",
+    official:"https://www.rockstargames.com/reddeadredemption2", officerName:"", officialName:"Rockstar Games"
+  },
+  {
+    title:"Elden Ring", genre:"Action RPG", art:["#151321","#d9a441"], goty:"GOTY 2022",
+    desc:"FromSoftware's open world take on the Souls formula, built with George R. R. Martin's lore.",
+    egg:"There's an entire hidden late-game area, the Consecrated Snowfield, that most players never stumble onto by accident.",
+    steam:"https://store.steampowered.com/app/1245620/ELDEN_RING/",
+    official:"https://en.bandainamcoent.eu/elden-ring/elden-ring", officialName:"FromSoftware / Bandai Namco"
+  },
+  {
+    title:"Baldur's Gate 3", genre:"RPG · Turn-Based", art:["#160f18","#8a4fd6"], goty:"GOTY 2023",
+    desc:"A D&D campaign with real consequences, full voice acting, and a cast people fell in love with.",
+    egg:"You can turn into a bear-druid and romance a companion mid-fight. Larian left it in on purpose.",
+    steam:"https://store.steampowered.com/app/1086940/Baldurs_Gate_3/",
+    official:"https://baldursgate3.game/", officialName:"Larian Studios"
+  },
+  {
+    title:"Resident Evil Village", genre:"Survival Horror", art:["#160c0c","#8a1f1f"],
+    desc:"Ethan Winters wakes up in a snowbound village ruled by four monstrous lords. Tighter and stranger than its predecessor.",
+    egg:"Lady Dimitrescu's exact height was never meant to be a marketing hook — Capcom only confirmed it after fans wouldn't stop asking.",
+    steam:"https://store.steampowered.com/app/1196590/Resident_Evil_Village/",
+    official:"https://www.residentevil.com/village/", officialName:"Capcom"
+  },
+  {
+    title:"The Witcher 3: Wild Hunt", genre:"Open World · RPG", art:["#0f1512","#3fae7a"],
+    desc:"Geralt hunts monsters and his adopted daughter across a war-torn continent. Still one of the best-written RPGs made.",
+    egg:"A fully voiced, unmarked side quest about a broken lute-string bard was almost cut, then became a fan favorite.",
+    steam:"https://store.steampowered.com/app/292030/The_Witcher_3_Wild_Hunt/",
+    official:"https://www.thewitcher.com/", officialName:"CD PROJEKT RED"
+  },
+  {
+    title:"Cyberpunk 2077", genre:"Open World · RPG", art:["#160719","#f2c53d"],
+    desc:"Night City, a merc named V, and a rockerboy ghost living in your head. Rough at launch, remarkable now.",
+    egg:"You can call a bartender NPC for a drink recipe and actually get a real-world cocktail instruction back.",
+    steam:"https://store.steampowered.com/app/1091500/Cyberpunk_2077/",
+    official:"https://www.cyberpunk.net/", officialName:"CD PROJEKT RED"
+  },
+  {
+    title:"DOOM Eternal", genre:"FPS", art:["#1a0d0d","#ff4d2e"],
+    desc:"The Slayer rips through Hell's forces at a sprint. Faster, meaner, and heavier than 2016's reboot.",
+    egg:"There's a fully playable retro-style Doom I level hidden inside the game as a secret arcade cabinet.",
+    steam:"https://store.steampowered.com/app/782330/DOOM_Eternal/",
+    official:"https://bethesda.net/en/game/doometernal", officialName:"id Software / Bethesda"
+  },
+  {
+    title:"Hades", genre:"Roguelike", art:["#180b13","#e0475a"],
+    desc:"Zagreus fights his way out of the Underworld, again and again, meeting family he never knew he had.",
+    egg:"Every one of the thousands of lines of dialogue is context-aware — deaths, gifts, and relationships all change what characters say next.",
+    steam:"https://store.steampowered.com/app/1145360/Hades/",
+    official:"https://www.supergiantgames.com/games/hades/", officialName:"Supergiant Games"
+  },
+  {
+    title:"Portal 2", genre:"Puzzle", art:["#0c1618","#3fd1c9"],
+    desc:"GLaDOS, Wheatley, and a co-op campaign that turned physics puzzles into comedy.",
+    egg:"The credits song was written and recorded by the writers as a joke, then became one of gaming's most requested tracks.",
+    steam:"https://store.steampowered.com/app/620/Portal_2/",
+    official:"https://www.valvesoftware.com/", officialName:"Valve"
+  },
+  {
+    title:"Half-Life: Alyx", genre:"VR · FPS", art:["#0d1414","#e07a2b"],
+    desc:"Valve's return to City 17, built from scratch for VR. Physical, tense, and full of small interactive details.",
+    egg:"Nearly every object in the world can be picked up, stacked, or thrown — including a working vending-machine economy of resin.",
+    steam:"https://store.steampowered.com/app/546560/HalfLife_Alyx/",
+    official:"https://www.valvesoftware.com/", officialName:"Valve"
+  },
+  {
+    title:"Stardew Valley", genre:"Farming · Sim", art:["#101a10","#7fbf4d"],
+    desc:"Inherit a run-down farm, rebuild a town, and quietly lose sixty hours without noticing. Made almost entirely by one person.",
+    egg:"Developer Eric Barone hand-drew and coded nearly the entire game solo over four and a half years.",
+    steam:"https://store.steampowered.com/app/413150/Stardew_Valley/",
+    official:"https://www.stardewvalley.net/", officialName:"ConcernedApe"
+  },
+  {
+    title:"Terraria", genre:"Sandbox · Action", art:["#0f1614","#6bd18a"],
+    desc:"Dig, build, and fight through a 2D world that keeps unfolding new biomes and bosses years after launch.",
+    egg:"The game still receives major free content updates over a decade after release — a running joke among fans is that it will never truly end.",
+    steam:"https://store.steampowered.com/app/105600/Terraria/",
+    official:"https://terraria.org/", officialName:"Re-Logic"
+  },
+  {
+    title:"Dark Souls III", genre:"Action RPG", art:["#0e0d10","#8f8f9c"],
+    desc:"The Souls trilogy's finale — faster combat, a crumbling world, and one of the series' best final bosses.",
+    egg:"Ringing the game's bell in New Londo Ruins references a sound cue hidden all the way back in the original Demon's Souls.",
+    steam:"https://store.steampowered.com/app/374320/DARK_SOULS_III/",
+    official:"https://en.bandainamcoent.eu/dark-souls/dark-souls-iii", officialName:"FromSoftware / Bandai Namco"
+  },
+  {
+    title:"Sekiro: Shadows Die Twice", genre:"Action · Stealth", art:["#120d0d","#b23a3a"],
+    desc:"A one-armed shinobi, a resurrection mechanic, and combat built entirely around deflecting, not dodging.",
+    egg:"The game's true ending requires denying a character's request three separate times across the whole story.",
+    steam:"https://store.steampowered.com/app/814380/Sekiro_Shadows_Die_Twice/",
+    official:"https://en.bandainamcoent.eu/sekiro/sekiro-shadows-die-twice", officialName:"FromSoftware / Activision"
+  },
+  {
+    title:"God of War", genre:"Action Adventure", art:["#0d1213","#5fb0c9"],
+    desc:"Kratos and his son Atreus travel the Norse realms in a single unbroken camera shot. A total reinvention of the series.",
+    egg:"The entire game is presented with no cuts or loading-screen breaks — one continuous take from start to finish.",
+    steam:"https://store.steampowered.com/app/1593500/God_of_War/",
+    official:"https://www.santamonicastudio.com/", officialName:"Santa Monica Studio"
+  },
+  {
+    title:"Hollow Knight", genre:"Metroidvania", art:["#0a0e14","#4d9fd6"],
+    desc:"A silent knight explores a ruined insect kingdom. Hand-drawn, meticulously designed, deceptively hard.",
+    egg:"The map only fills in as you explore, and you have to buy a quill upgrade to draw on it while moving — a deliberate, easy-to-miss design choice.",
+    steam:"https://store.steampowered.com/app/367520/Hollow_Knight/",
+    official:"https://www.teamcherry.com.au/hollow-knight", officialName:"Team Cherry"
+  },
+  {
+    title:"Counter-Strike 2", genre:"FPS · Multiplayer", art:["#111114","#e0a83f"],
+    desc:"The long-running tactical shooter, rebuilt on Valve's Source 2 engine with reworked smoke and lighting.",
+    egg:"Smoke grenades are now fully volumetric and physically react to bullets and explosions passing through them.",
+    steam:"https://store.steampowered.com/app/730/CounterStrike_2/",
+    official:"https://www.valvesoftware.com/", officialName:"Valve"
+  },
+  {
+    title:"Dota 2", genre:"MOBA", art:["#120d16","#c0392b"],
+    desc:"Two teams of five, over a hundred heroes, and one of the deepest strategy metas in gaming.",
+    egg:"Its annual championship, The International, has repeatedly paid out the largest prize pool in esports history, funded mostly by players themselves.",
+    steam:"https://store.steampowered.com/app/570/Dota_2/",
+    official:"https://www.valvesoftware.com/", officialName:"Valve"
+  },
+  {
+    title:"Among Us", genre:"Social Deduction", art:["#0d1416","#c7414a"],
+    desc:"A crewmate ship, a hidden impostor, and one of the biggest breakout hits gaming has seen in years.",
+    egg:"The game launched quietly in 2018 and only exploded two years later, after streamers rediscovered it during 2020.",
+    steam:"https://store.steampowered.com/app/945360/Among_Us/",
+    official:"https://innersloth.com/", officialName:"InnerSloth"
+  },
+  {
+    title:"The Elder Scrolls V: Skyrim", genre:"Open World · RPG", art:["#0e1418","#4f7f9e"],
+    desc:"Dragons return to Tamriel and you're the one prophesied to stop them. A world people are still modding fifteen years later.",
+    egg:"Nearly every NPC has a unique barks line for arrows to the knee — a throwaway joke that became the game's most quoted moment.",
+    steam:"https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition/",
+    official:"https://bethesda.net/en/game/skyrim", officialName:"Bethesda Game Studios"
+  },
+  {
+    title:"Fallout 4", genre:"Open World · RPG", art:["#141210","#8fae4a"],
+    desc:"Wake up two centuries late in a nuked Boston and rebuild whatever's left of civilization, one settlement at a time.",
+    egg:"An entire dead-end vault, Vault 95, was built around a drug-rehab experiment that has nothing to do with the main story.",
+    steam:"https://store.steampowered.com/app/377160/Fallout_4/",
+    official:"https://bethesda.net/en/game/fallout4", officialName:"Bethesda Game Studios"
+  },
+  {
+    title:"Rocket League", genre:"Sports · Multiplayer", art:["#0d1218","#3d7fd6"],
+    desc:"Soccer with rocket-powered cars. Simple to describe, absurdly hard to master, and still one of the best couch-to-esports games ever made.",
+    egg:"It started as a sequel to a little-known 2008 game called Supersonic Acrobatic Rocket-Powered Battle-Cars.",
+    steam:"https://store.steampowered.com/app/252950/Rocket_League/",
+    official:"https://www.rocketleague.com/", officialName:"Psyonix"
+  },
+  {
+    title:"Metal Gear Solid V: The Phantom Pain", genre:"Stealth · Action", art:["#121212","#c98a3c"],
+    desc:"Snake wakes from a nine-year coma into an open-world revenge story built around total stealth freedom.",
+    egg:"Players who neglect Snake's hygiene for too long will notice NPCs start reacting to him with visible disgust.",
+    steam:"https://store.steampowered.com/app/287700/METAL_GEAR_SOLID_V_THE_PHANTOM_PAIN/",
+    official:"https://www.konami.com/mg/", officialName:"Kojima Productions / Konami"
+  },
+  {
+    title:"It Takes Two", genre:"Co-op · Adventure", art:["#150f1a","#d64f8a"],
+    desc:"A couple on the verge of divorce get turned into dolls and forced to work together to turn back. Built entirely around two-player co-op.",
+    egg:"Every single level introduces a completely new gameplay mechanic that's never reused again for the rest of the game.",
+    steam:"https://store.steampowered.com/app/1426210/It_Takes_Two/",
+    official:"https://www.hazelight.se/games/it-takes-two/", officialName:"Hazelight Studios"
+  },
+  {
+    title:"Death Stranding", genre:"Action · Delivery", art:["#0d1416","#e8b84b"],
+    desc:"A courier reconnects a shattered America by carrying packages across a beautiful, hostile landscape. Divisive, unforgettable, and completely its own thing.",
+    egg:"Other players' structures, like bridges and ladders, appear in your own world — you're never told who built them.",
+    steam:"https://store.steampowered.com/app/1190460/DEATH_STRANDING/",
+    official:"https://www.deathstranding.com/", officialName:"Kojima Productions"
+  },
+  {
+    title:"Assassin's Creed Odyssey", genre:"Open World · RPG", art:["#12100d","#3d9ed6"],
+    desc:"Ancient Greece during the Peloponnesian War, a full dialogue-choice RPG system, and a map big enough to sail for hours.",
+    egg:"You can fully recruit and crew a trireme with lieutenants pulled straight out of any enemy you've defeated.",
+    steam:"https://store.steampowered.com/app/812140/Assassins_Creed_Odyssey/",
+    official:"https://www.ubisoft.com/en-us/game/assassins-creed/odyssey", officialName:"Ubisoft"
+  },
+  {
+    title:"Persona 5 Royal", genre:"JRPG", art:["#150c10","#d6273f"],
+    desc:"High schoolers by day, phantom thieves by night, stealing corrupted adults' twisted hearts in a stylish turn-based dungeon crawler.",
+    egg:"The UI itself is treated as a character — its jagged, hand-lettered menus are animated differently for nearly every screen in the game.",
+    steam:"https://store.steampowered.com/app/1687950/Persona_5_Royal/",
+    official:"https://atlus.com/persona5royal/", officialName:"Atlus"
+  },
+  {
+    title:"Celeste", genre:"Platformer", art:["#0d1220","#5f8fe0"],
+    desc:"Madeline climbs a mountain that keeps fighting back, in one of the tightest, hardest, and most emotionally honest platformers ever made.",
+    egg:"A hidden PICO-8 mini-game, the original prototype Celeste was built from, is fully playable inside the finished game.",
+    steam:"https://store.steampowered.com/app/504230/Celeste/",
+    official:"https://www.celestegame.com/", officialName:"Extremely OK Games"
+  },
+  {
+    title:"Grand Theft Auto: San Andreas", genre:"Open World · Action", art:["#100d08","#e8b84b"],
+    desc:"CJ returns to Los Santos to save his family and take back the streets, across the biggest GTA map of its era.",
+    egg:"A cut piece of content nicknamed 'Hot Coffee' was found still on the disc years after release and triggered a national ratings controversy.",
+    steam:"https://store.steampowered.com/app/12120/Grand_Theft_Auto_San_Andreas/",
+    official:"https://www.rockstargames.com/sanandreas", officialName:"Rockstar Games"
+  }
+];
+
+const grid = document.getElementById('gameGrid');
+
+games.forEach((g, i) => {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = `
+    <div class="card-inner">
+      <div class="face front" data-letter="${g.title.charAt(0)}" style="--art:linear-gradient(155deg, ${g.art[0]} 0%, ${g.art[1]} 100%)">
+        ${g.goty ? `<span class="goty-tag">${g.goty}</span>` : ''}
+        <div class="card-genre">${g.genre}</div>
+        <div class="card-title display">${g.title}</div>
+        <div class="card-tap">Tap to open</div>
+      </div>
+      <div class="face back">
+        <div class="card-genre">${g.genre}</div>
+        <h3 class="display">${g.title}</h3>
+        <p>${g.desc}</p>
+        <div class="egg"><b>Easter egg</b>${g.egg}</div>
+        <div class="back-links">
+          <a class="btn btn-get" href="${g.steam}" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.4"/></svg>
+            Get on Steam
+          </a>
+          <a class="btn btn-official" href="${g.official}" target="_blank" rel="noopener">${g.officialName} ↗</a>
+        </div>
+      </div>
+    </div>
+  `;
+  card.addEventListener('click', (e) => {
+    card.classList.toggle('flipped');
+  });
+  grid.appendChild(card);
+});
+</script>
+
+</body>
+</html>
