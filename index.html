@@ -292,7 +292,7 @@
 
 <section class="hero">
   <div class="wrap">
-    <span class="hero-eyebrow">30 titles · curated shelf</span>
+    <span class="hero-eyebrow">50 titles · curated shelf</span>
     <h1>Every game<br>has a <em>home.</em></h1>
     <p>A shelf of titles worth playing — open-world epics, soulslikes, and a couple of Game of the Year winners. Every card links straight to the official Steam page and the studio that made it.</p>
     <div class="hero-scroll"><div class="dash"></div> Scroll to browse</div>
@@ -306,7 +306,7 @@
         <span class="eyebrow">The Library</span>
         <h2>Pick a case.</h2>
       </div>
-      <span class="count">30 games · tap a card to flip it</span>
+      <span class="count">50 games · tap a card to flip it</span>
     </div>
 
     <div class="grid" id="gameGrid"></div>
@@ -339,7 +339,7 @@
         <span class="credit-label">Built for</span>
         <span class="credit-value">Find Your Game</span>
       </div>
-      <span class="version-pill">Version 26.2</span>
+      <span class="version-pill">Version 26.3</span>
     </div>
   </div>
 </section>
@@ -351,16 +351,31 @@
         <span class="eyebrow">Changelog</span>
         <h2>Versions History.</h2>
       </div>
-      <span class="count">3 releases so far</span>
+      <span class="count">4 releases so far</span>
     </div>
 
     <div class="timeline">
 
       <div class="version-entry">
         <div class="version-num">
-          <span class="num">26.2</span>
+          <span class="num">26.3</span>
           <span class="current-tag">Current Version</span>
           <span class="version-date">Latest</span>
+        </div>
+        <div class="version-body">
+          <h3>The shelf doubled.</h3>
+          <ul>
+            <li>Added 20 more games, bringing the library from 30 to 50 titles.</li>
+            <li>Updated the hero and library counts to reflect 50 games.</li>
+            <li>Version numbering updated from 26.2 to 26.3.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="version-entry">
+        <div class="version-num">
+          <span class="num">26.2</span>
+          <span class="version-date">Previous</span>
         </div>
         <div class="version-body">
           <h3>Changelog central.</h3>
@@ -409,7 +424,7 @@
   <div class="wrap footer-inner">
     <div class="logo">Find<span>Your</span>Game</div>
     <div class="footer-meta">
-      <span>Version 26.2</span>
+      <span>Version 26.3</span>
       <span>Owner: Arham Syed</span>
       <span>Developer: Claude AI</span>
       <span>Not affiliated with Valve or Steam</span>
@@ -628,6 +643,146 @@ const games = [
     egg:"A cut piece of content nicknamed 'Hot Coffee' was found still on the disc years after release and triggered a national ratings controversy.",
     steam:"https://store.steampowered.com/app/12120/Grand_Theft_Auto_San_Andreas/",
     official:"https://www.rockstargames.com/sanandreas", officialName:"Rockstar Games"
+  },
+  {
+    title:"Half-Life 2", genre:"FPS", art:["#0d1518","#e8823c"],
+    desc:"Gordon Freeman returns to fight the Combine occupation of Earth. Two decades on, still a masterclass in level design.",
+    egg:"The Gravity Gun was originally a much smaller tool, and only became a full weapon after a QA tester kept using it to fight enemies for fun.",
+    steam:"https://store.steampowered.com/app/220/HalfLife_2/",
+    official:"https://www.valvesoftware.com/", officialName:"Valve"
+  },
+  {
+    title:"Left 4 Dead 2", genre:"Co-op · Horror", art:["#150e0e","#c73a3a"],
+    desc:"Four survivors fight through zombie-infested campaigns built entirely around split-second co-op decisions.",
+    egg:"An AI system called 'The Director' secretly adjusts zombie spawns and item placement in real time based on how well your team is doing.",
+    steam:"https://store.steampowered.com/app/550/Left_4_Dead_2/",
+    official:"https://www.valvesoftware.com/", officialName:"Valve"
+  },
+  {
+    title:"Team Fortress 2", genre:"FPS · Multiplayer", art:["#161008","#e0a83f"],
+    desc:"Nine wildly different classes, cartoonish violence, and one of the most influential class-based shooters ever made.",
+    egg:"It launched completely free years after release, funded almost entirely by a player-driven virtual hat economy.",
+    steam:"https://store.steampowered.com/app/440/Team_Fortress_2/",
+    official:"https://www.teamfortress.com/", officialName:"Valve"
+  },
+  {
+    title:"Grand Theft Auto IV", genre:"Open World · Action", art:["#0e1013","#4a7ab5"],
+    desc:"Niko Bellic chases the American dream through a grim, satirical Liberty City. Rockstar's darkest GTA tone.",
+    egg:"The in-game internet has dozens of fake, fully readable parody websites satirizing real 2008-era internet culture.",
+    steam:"https://store.steampowered.com/app/12210/Grand_Theft_Auto_IV_The_Complete_Edition/",
+    official:"https://www.rockstargames.com/IV", officialName:"Rockstar Games"
+  },
+  {
+    title:"Borderlands 2", genre:"Looter Shooter", art:["#141008","#e0b53f"],
+    desc:"Guns with actual randomized personalities, cel-shaded chaos, and one of gaming's most quotable villains.",
+    egg:"The game generates weapon stats from a system capable of producing hundreds of thousands of unique gun combinations.",
+    steam:"https://store.steampowered.com/app/49520/Borderlands_2/",
+    official:"https://borderlands.2k.com/", officialName:"Gearbox Software"
+  },
+  {
+    title:"Divinity: Original Sin 2", genre:"RPG · Turn-Based", art:["#100f18","#8a5fd6"],
+    desc:"A deep, reactive co-op RPG where nearly everything is destructible, flammable, or an environmental weapon.",
+    egg:"You can talk to almost any animal in the game if you take the right early skill, unlocking entire hidden side conversations.",
+    steam:"https://store.steampowered.com/app/435150/Divinity_Original_Sin_2__Definitive_Edition/",
+    official:"https://larian.com/games/divinity-original-sin-2", officialName:"Larian Studios"
+  },
+  {
+    title:"Monster Hunter: World", genre:"Action RPG", art:["#141310","#d67a3c"],
+    desc:"Hunt enormous, ecosystem-driven monsters across a living world, gear up with their parts, and hunt bigger ones.",
+    egg:"Monsters actually fight each other in the wild — you can lure a bigger predator into a fight to do your work for you.",
+    steam:"https://store.steampowered.com/app/582010/Monster_Hunter_World/",
+    official:"https://www.monsterhunter.com/world/", officialName:"Capcom"
+  },
+  {
+    title:"Middle-earth: Shadow of Mordor", genre:"Action Adventure", art:["#0d1210","#6ba85f"],
+    desc:"An open-world Tolkien revenge story built around the Nemesis System, where enemy orcs remember and evolve from every encounter with you.",
+    egg:"Orc captains who kill you will bring it up mockingly the next time you meet them, complete with their own new scars and promotions.",
+    steam:"https://store.steampowered.com/app/241930/Middleearth_Shadow_of_Mordor/",
+    official:"https://www.wbgames.com/", officialName:"Monolith Productions / WB Games"
+  },
+  {
+    title:"Batman: Arkham Knight", genre:"Action Adventure", art:["#0c0d10","#3a3f4a"],
+    desc:"The finale of the Arkham trilogy, adding a fully drivable Batmobile to Gotham's rain-soaked open world.",
+    egg:"Every one of Batman's rogues gallery has a hidden, fully voiced side-story built entirely around Scarecrow's fear toxin visions.",
+    steam:"https://store.steampowered.com/app/208650/Batman_Arkham_Knight/",
+    official:"https://www.wbgames.com/", officialName:"Rocksteady Studios / WB Games"
+  },
+  {
+    title:"Far Cry 5", genre:"Open World · FPS", art:["#141008","#c9863c"],
+    desc:"Take on a doomsday cult that's taken over a fictional Montana county, in Ubisoft's most grounded Far Cry setting.",
+    egg:"You can recruit an entire roster of animal companions, including a one-eyed attack dog and a cougar, as full combat allies.",
+    steam:"https://store.steampowered.com/app/552520/Far_Cry_5/",
+    official:"https://far-cry.ubisoft.com/", officialName:"Ubisoft"
+  },
+  {
+    title:"Titanfall 2", genre:"FPS", art:["#0d1114","#4f9ed6"],
+    desc:"A single-player campaign built around a bond between pilot and mech that's still held up as one of the best FPS campaigns made.",
+    egg:"The entire time-bending level 'Effect and Cause' was built by a small side team almost in secret before being pitched to leadership.",
+    steam:"https://store.steampowered.com/app/1237970/Titanfall_2/",
+    official:"https://www.ea.com/games/titanfall/titanfall-2", officialName:"Respawn Entertainment"
+  },
+  {
+    title:"Warframe", genre:"Looter Shooter", art:["#0d1416","#4fd6c0"],
+    desc:"Free-to-play space ninjas in bio-mechanical suits, with some of the fastest, most acrobatic movement in any shooter.",
+    egg:"It launched quietly in 2013 and nearly failed, before years of free content updates slowly built it into one of gaming's longest-running live titles.",
+    steam:"https://store.steampowered.com/app/230410/Warframe/",
+    official:"https://www.warframe.com/", officialName:"Digital Extremes"
+  },
+  {
+    title:"Path of Exile", genre:"Action RPG", art:["#100d0d","#8f3a3a"],
+    desc:"A famously deep, dark, free-to-play action RPG with one of the most complex skill and itemization systems in the genre.",
+    egg:"Its passive skill tree contains well over a thousand nodes, and the community has built entire tools just to help plan builds around it.",
+    steam:"https://store.steampowered.com/app/238960/Path_of_Exile/",
+    official:"https://www.pathofexile.com/", officialName:"Grinding Gear Games"
+  },
+  {
+    title:"Slay the Spire", genre:"Deckbuilder · Roguelike", art:["#100d16","#d6273f"],
+    desc:"The game that defined the modern deckbuilding roguelike — climb a spire, build a deck, die, learn, climb again.",
+    egg:"It spent over a year in early access being balanced almost entirely from public player run data, not internal playtesting alone.",
+    steam:"https://store.steampowered.com/app/646570/Slay_the_Spire/",
+    official:"https://www.megacrit.com/", officialName:"MegaCrit"
+  },
+  {
+    title:"Cult of the Lamb", genre:"Action · Sim", art:["#150c18","#d64f8a"],
+    desc:"You're a possessed lamb building a cult of woodland followers by day and hacking through roguelike dungeons by night.",
+    egg:"Followers you neglect for too long will actually start a rebellion and can overthrow you as their leader.",
+    steam:"https://store.steampowered.com/app/1313140/Cult_of_the_Lamb/",
+    official:"https://www.cultofthelamb.com/", officialName:"Massive Monster"
+  },
+  {
+    title:"Vampire Survivors", genre:"Roguelike · Action", art:["#0e0d14","#8a2fd6"],
+    desc:"Move, dodge, and watch the screen fill with hundreds of auto-firing weapons in one of the biggest surprise hits of the decade.",
+    egg:"It was built almost entirely by one developer as a side project, and became a phenomenon within weeks of its early access launch.",
+    steam:"https://store.steampowered.com/app/1794680/Vampire_Survivors/",
+    official:"https://vampiresurvivors.com/", officialName:"poncle"
+  },
+  {
+    title:"Deep Rock Galactic", genre:"Co-op · FPS", art:["#141008","#e0a83f"],
+    desc:"Four dwarven space miners descend into fully destructible procedural caves. Rock and stone.",
+    egg:"Nearly every wall, floor, and ceiling in the game can be dug through or collapsed, generating a new cave layout every single mission.",
+    steam:"https://store.steampowered.com/app/548430/Deep_Rock_Galactic/",
+    official:"https://www.deeprockgalactic.com/", officialName:"Ghost Ship Games"
+  },
+  {
+    title:"Risk of Rain 2", genre:"Roguelike · Action", art:["#0d1418","#4fb0d6"],
+    desc:"A 3D roguelike shooter where items visibly stack onto your character, turning you into a screen-filling chaos engine the longer you survive.",
+    egg:"The longer any run goes, the harder enemies scale forever — there's no actual cap, so late runs can spiral into deliberate, glorious chaos.",
+    steam:"https://store.steampowered.com/app/632360/Risk_of_Rain_2/",
+    official:"https://riskofrain2.com/", officialName:"Hopoo Games"
+  },
+  {
+    title:"Subnautica", genre:"Survival · Exploration", art:["#0a1618","#2fb0c9"],
+    desc:"Crash-land on an ocean planet with no combat weapons — just craft, dive, and survive against whatever's down in the deep.",
+    egg:"The game's most feared creature was deliberately never given a proper introduction cutscene, so players only learn to fear it through sound design.",
+    steam:"https://store.steampowered.com/app/264710/Subnautica/",
+    official:"https://www.subnauticagame.com/", officialName:"Unknown Worlds Entertainment"
+  },
+  {
+    title:"Human: Fall Flat", genre:"Co-op · Puzzle", art:["#100d10","#d6a83f"],
+    desc:"Wobbly, physics-based Steve figures solve puzzles across dreamlike levels. Chaotic, hilarious, and better with friends.",
+    egg:"The main character's floppy, unathletic movement wasn't a bug — it was a deliberate design choice the developer kept after players loved it in early testing.",
+    steam:"https://store.steampowered.com/app/477160/Human_Fall_Flat/",
+    official:"https://humanfallflat.com/", officialName:"No Brakes Games"
   }
 ];
 
