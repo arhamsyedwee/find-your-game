@@ -41,14 +41,41 @@
   @media(max-width:640px){.wrap{padding:0 20px;}}
 
   /* ---------- NAV ---------- */
+  /* ---------- LIQUID GLASS ---------- */
+  .glass{
+    background:rgba(255,255,255,0.055);
+    backdrop-filter:blur(24px) saturate(180%);
+    -webkit-backdrop-filter:blur(24px) saturate(180%);
+    border:1px solid rgba(255,255,255,0.14);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.14),
+      inset 0 0 0 1px rgba(255,255,255,0.02),
+      0 20px 50px rgba(0,0,0,0.35);
+    position:relative;
+  }
+  .glass::before{
+    content:'';
+    position:absolute;inset:0;
+    border-radius:inherit;
+    background:linear-gradient(135deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 40%);
+    pointer-events:none;
+  }
+  .glass-soft{
+    background:rgba(255,255,255,0.045);
+    backdrop-filter:blur(16px) saturate(160%);
+    -webkit-backdrop-filter:blur(16px) saturate(160%);
+    border:1px solid rgba(255,255,255,0.10);
+  }
+
   nav{
     position:fixed;top:0;left:0;right:0;z-index:100;
     display:flex;align-items:center;justify-content:space-between;
     padding:20px 32px;
-    background:rgba(10,10,12,0.7);
-    backdrop-filter:blur(14px);
-    -webkit-backdrop-filter:blur(14px);
-    border-bottom:1px solid var(--line);
+    background:rgba(12,12,14,0.45);
+    backdrop-filter:blur(26px) saturate(180%);
+    -webkit-backdrop-filter:blur(26px) saturate(180%);
+    border-bottom:1px solid rgba(255,255,255,0.10);
+    box-shadow:inset 0 -1px 0 rgba(255,255,255,0.04), 0 8px 32px rgba(0,0,0,0.25);
   }
   .logo{font-family:'Archivo';font-weight:900;font-size:19px;letter-spacing:-0.02em;text-transform:uppercase;}
   .logo span{color:var(--amber);}
@@ -107,6 +134,38 @@
   .section-head h2{font-size:clamp(32px,4.5vw,56px);}
   .section-head .count{font-size:14px;color:var(--muted);font-weight:600;}
 
+  /* ---------- SEARCH BAR ---------- */
+  .search-bar{
+    position:relative;margin-bottom:40px;
+  }
+  .search-bar input{
+    width:100%;
+    background:rgba(255,255,255,0.045);
+    backdrop-filter:blur(18px) saturate(160%);
+    -webkit-backdrop-filter:blur(18px) saturate(160%);
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:6px;
+    padding:14px 16px 14px 44px;
+    font-family:'Inter',sans-serif;
+    font-size:15px;
+    color:var(--ink);
+    outline:none;
+    transition:border-color .2s;
+  }
+  .search-bar input::placeholder{color:var(--muted);}
+  .search-bar input:focus{border-color:var(--cyan);}
+  .search-bar svg{
+    position:absolute;left:14px;top:50%;transform:translateY(-50%);
+    width:18px;height:18px;color:var(--muted);pointer-events:none;
+  }
+  .no-results{
+    display:none;
+    text-align:center;
+    padding:60px 20px;
+    color:var(--muted);
+    font-size:14px;
+  }
+
   /* ---------- GAME GRID ---------- */
   .grid{
     display:grid;grid-template-columns:repeat(4,1fr);gap:20px;
@@ -116,11 +175,11 @@
   @media(max-width:560px){.grid{grid-template-columns:1fr;}}
 
   .card{
-    position:relative;aspect-ratio:2 / 3;
+    position:relative;width:100%;height:0;padding-bottom:150%;
     cursor:pointer;
   }
   .card-inner{
-    position:relative;width:100%;height:100%;
+    position:absolute;inset:0;width:100%;height:100%;
     transition:transform .65s cubic-bezier(.2,.9,.25,1);
     transform-style:preserve-3d;
     will-change:transform;
@@ -162,10 +221,12 @@
   .front > *{position:relative;z-index:1;}
   .price-tag{
     position:absolute;top:14px;right:14px;
-    background:rgba(0,0,0,0.55);color:var(--ink);
+    background:rgba(0,0,0,0.4);color:var(--ink);
+    backdrop-filter:blur(10px) saturate(160%);
+    -webkit-backdrop-filter:blur(10px) saturate(160%);
     font-size:11px;font-weight:800;letter-spacing:0.04em;
     padding:5px 9px;border-radius:3px;
-    border:1px solid rgba(245,243,238,0.18);
+    border:1px solid rgba(245,243,238,0.22);
   }
   .price-tag.price-free{background:var(--cyan);color:#08150c;border-color:transparent;}
   .meta-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;}
@@ -196,7 +257,9 @@
   }
   .back{
     transform:rotateY(180deg);
-    background:var(--panel);
+    background:rgba(27,26,31,0.55);
+    backdrop-filter:blur(22px) saturate(170%);
+    -webkit-backdrop-filter:blur(22px) saturate(170%);
     padding:22px;
     display:flex;flex-direction:column;
   }
@@ -206,6 +269,8 @@
   .egg{
     font-size:11.5px;line-height:1.5;color:var(--ink);
     background:rgba(255,122,41,0.08);
+    backdrop-filter:blur(10px) saturate(150%);
+    -webkit-backdrop-filter:blur(10px) saturate(150%);
     border-left:2px solid var(--amber);
     padding:9px 10px;margin-bottom:14px;
   }
@@ -219,7 +284,13 @@
   }
   .btn:hover{transform:translateY(-1px);opacity:0.92;}
   .btn-get{background:var(--ink);color:#0a0a0c;}
-  .btn-official{border:1px solid var(--line);color:var(--muted);}
+  .btn-official{
+    background:rgba(255,255,255,0.06);
+    backdrop-filter:blur(14px) saturate(160%);
+    -webkit-backdrop-filter:blur(14px) saturate(160%);
+    border:1px solid rgba(255,255,255,0.16);
+    color:var(--muted);
+  }
   .btn svg{width:14px;height:14px;flex:none;}
 
   /* ---------- ABOUT / CREDITS ---------- */
@@ -230,14 +301,21 @@
   .about-copy p b{color:var(--ink);}
   .disclaimer{
     margin-top:28px;padding:18px 20px;
-    border:1px solid var(--line);border-left:3px solid var(--cyan);
+    background:rgba(255,255,255,0.045);
+    backdrop-filter:blur(18px) saturate(160%);
+    -webkit-backdrop-filter:blur(18px) saturate(160%);
+    border:1px solid rgba(255,255,255,0.10);border-left:3px solid var(--cyan);
     font-size:13px;line-height:1.6;color:var(--muted);
     max-width:520px;
   }
   .disclaimer b{color:var(--ink);}
 
   .credits-card{
-    background:var(--panel);border:1px solid var(--line);border-radius:8px;
+    background:rgba(27,26,31,0.5);
+    backdrop-filter:blur(28px) saturate(180%);
+    -webkit-backdrop-filter:blur(28px) saturate(180%);
+    border:1px solid rgba(255,255,255,0.13);border-radius:8px;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.10), 0 24px 60px rgba(0,0,0,0.4);
     padding:36px;height:fit-content;
   }
   .credits-card .eyebrow{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber);margin-bottom:22px;display:block;}
@@ -295,8 +373,11 @@
     display:inline-flex;align-items:center;gap:8px;margin-top:26px;
     font-size:12.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--cyan);
   }
+  .free-card-wrap{
+    position:relative;width:100%;height:0;padding-bottom:150%;
+  }
   .free-card{
-    position:relative;aspect-ratio:2 / 3;border-radius:6px;overflow:hidden;
+    position:absolute;inset:0;border-radius:6px;overflow:hidden;
     border:1px solid var(--line);
     display:flex;flex-direction:column;justify-content:flex-end;padding:18px;
     background-color:var(--bg-alt);
@@ -328,6 +409,48 @@
   .free-btn-get:hover{transform:translateY(-1px);opacity:0.92;}
   .free-btn-get svg{width:13px;height:13px;flex:none;}
 
+  /* ---------- ACCOUNT / AUTH ---------- */
+  .auth-tabs{
+    display:flex;gap:0;margin-bottom:24px;border-radius:6px;overflow:hidden;
+    background:rgba(255,255,255,0.04);
+    backdrop-filter:blur(14px) saturate(150%);
+    -webkit-backdrop-filter:blur(14px) saturate(150%);
+    border:1px solid rgba(255,255,255,0.12);
+  }
+  .auth-tab{
+    flex:1;padding:11px;background:transparent;border:none;
+    font-family:'Inter';font-size:12.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
+    color:var(--muted);cursor:pointer;transition:background .2s,color .2s;
+  }
+  .auth-tab.active{background:var(--cyan);color:#08150c;}
+  .auth-field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+  .auth-field label{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);}
+  .auth-field input{
+    background:rgba(255,255,255,0.04);
+    backdrop-filter:blur(10px) saturate(150%);
+    -webkit-backdrop-filter:blur(10px) saturate(150%);
+    border:1px solid rgba(255,255,255,0.12);border-radius:5px;
+    padding:11px 13px;font-family:'Inter';font-size:14px;color:var(--ink);outline:none;
+    transition:border-color .2s;
+  }
+  .auth-field input:focus{border-color:var(--cyan);}
+  .auth-note{
+    font-size:12px;line-height:1.6;color:var(--muted);
+    background:rgba(53,216,192,0.06);
+    backdrop-filter:blur(12px) saturate(150%);
+    -webkit-backdrop-filter:blur(12px) saturate(150%);
+    border-left:2px solid var(--cyan);
+    padding:10px 12px;margin-bottom:20px;
+  }
+  .auth-error{color:#ff6b6b;font-size:12.5px;margin:-6px 0 14px;min-height:0;}
+  .auth-submit{
+    width:100%;justify-content:center;border:none;cursor:pointer;
+    font-family:'Inter';
+  }
+  .logged-in-name{font-size:24px;margin-bottom:4px;}
+  .logged-in-sub{font-size:13px;color:var(--muted);margin-bottom:22px;}
+  .logout-btn{width:100%;justify-content:center;border:none;cursor:pointer;font-family:'Inter';}
+
   /* ---------- FOOTER ---------- */
   footer{
     border-top:1px solid var(--line);
@@ -350,6 +473,7 @@
     <a href="#versions" onclick="showView('versionsView', event)">Versions History</a>
     <a href="#free-games" onclick="showView('freeGamesView', event)">Free Games</a>
     <a href="#credits" onclick="showView('creditsView', event)">Credits</a>
+    <a href="#account" id="navAccountLink" onclick="showView('accountView', event)">Account</a>
   </div>
 </nav>
 
@@ -373,7 +497,13 @@
       <span class="count">110 games · tap a card to flip it</span>
     </div>
 
+    <div class="search-bar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="librarySearch" placeholder="Search the library — try a title..." autocomplete="off">
+    </div>
+
     <div class="grid" id="gameGrid"></div>
+    <p class="no-results" id="libraryNoResults">No games match that search.</p>
   </div>
 </section>
 </div>
@@ -425,7 +555,7 @@
         <span class="credit-label">Built for</span>
         <span class="credit-value">Find Your Game</span>
       </div>
-      <span class="version-pill">Version 26.7 Beta 1</span>
+      <span class="version-pill">Version 26.7 Beta 3</span>
     </div>
   </div>
 </section>
@@ -447,15 +577,46 @@
         <span class="eyebrow">Changelog</span>
         <h2>Versions History.</h2>
       </div>
-      <span class="count">8 releases so far</span>
+      <span class="count">10 releases so far</span>
     </div>
 
     <div class="timeline">
 
       <div class="version-entry">
         <div class="version-num">
-          <span class="num">26.7 Beta 1</span>
+          <span class="num">26.7 Beta 3</span>
           <span class="current-tag">Current Version</span>
+          <span class="version-date">Released July 12, 2026</span>
+        </div>
+        <div class="version-body">
+          <h3>Liquid Glass, and a login worth logging.</h3>
+          <ul>
+            <li>Added an Apple-style Liquid Glass effect across the site — the nav bar, buttons, search bars, card backs, and panels now use translucent, blurred glass surfaces instead of flat color.</li>
+            <li>Added a new Account tab with cosmetic Sign Up and Log In — stored only in your browser, for fun personalization, not real security.</li>
+            <li>Version numbering updated from 26.7 Beta 2 to 26.7 Beta 3.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="version-entry">
+        <div class="version-num">
+          <span class="num">26.7 Beta 2</span>
+          <span class="version-date">Released July 12, 2026</span>
+        </div>
+        <div class="version-body">
+          <h3>Search added, poster sizing fixed for real this time.</h3>
+          <ul>
+            <li>Added a live search bar to both the main Library and Free Games tabs — type a title and the grid filters instantly.</li>
+            <li>Fixed the poster sizing bug where cards on some devices only showed the first game and left the rest of the grid blank.</li>
+            <li>Rebuilt poster sizing on a more universally-compatible technique instead of the CSS aspect-ratio property that was causing the issue.</li>
+            <li>Version numbering updated from 26.7 Beta 1 to 26.7 Beta 2.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="version-entry">
+        <div class="version-num">
+          <span class="num">26.7 Beta 1</span>
           <span class="version-date">Released July 11, 2026</span>
         </div>
         <div class="version-body">
@@ -598,10 +759,67 @@
       <span class="count">50 games · all officially free</span>
     </div>
 
+    <div class="search-bar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="freeSearch" placeholder="Search free games — try a title..." autocomplete="off">
+    </div>
+
     <div class="grid" id="freeGrid" style="perspective:none;"></div>
+    <p class="no-results" id="freeNoResults">No games match that search.</p>
 
     <div class="disclaimer" style="margin-top:40px;max-width:none;">
       <b>About this tab.</b> Every game listed here is officially free-to-play, distributed directly by its publisher or developer on Steam. Nothing is hosted, modified, or cracked — this tab only links out to each game's real, official Steam store page. Some titles offer optional in-game purchases; that's between you and the publisher, not something this site is involved in.
+    </div>
+  </div>
+</section>
+</div>
+
+<div id="accountView" style="display:none">
+<section class="hero" style="min-height:auto;padding:150px 0 70px;background:radial-gradient(ellipse 80% 60% at 15% 0%, rgba(53,216,192,0.16), transparent 60%),radial-gradient(ellipse 70% 50% at 100% 100%, rgba(255,122,41,0.12), transparent 60%),var(--bg);">
+  <div class="wrap">
+    <span class="hero-eyebrow" style="color:var(--cyan);">Just for fun</span>
+    <h1>Your <em>Account.</em></h1>
+    <p>Pick a username and password to personalize your visit. Heads up: this is purely for fun — it's saved only in this browser, not on a server, so please don't reuse a real password here.</p>
+    <a class="back-home" href="#library" onclick="showHome(event)">← Back to Find Your Game</a>
+  </div>
+</section>
+<section class="section" style="padding-top:0;">
+  <div class="wrap" style="max-width:420px;">
+    <div class="credits-card">
+
+      <div id="authFormWrap">
+        <div class="auth-tabs">
+          <button class="auth-tab active" id="tabSignup" type="button" onclick="setAuthMode('signup')">Sign Up</button>
+          <button class="auth-tab" id="tabLogin" type="button" onclick="setAuthMode('login')">Log In</button>
+        </div>
+
+        <div class="auth-note">This account is cosmetic only — stored in your browser's local storage, not on any server. It won't follow you to another device or browser.</div>
+
+        <div class="auth-field">
+          <label for="authUsername">Username</label>
+          <input type="text" id="authUsername" placeholder="Pick a username" autocomplete="off">
+        </div>
+        <div class="auth-field">
+          <label for="authPassword">Password</label>
+          <input type="password" id="authPassword" placeholder="Pick a password" autocomplete="off">
+        </div>
+        <div class="auth-field" id="authConfirmWrap">
+          <label for="authConfirm">Confirm Password</label>
+          <input type="password" id="authConfirm" placeholder="Confirm password" autocomplete="off">
+        </div>
+
+        <p class="auth-error" id="authError"></p>
+
+        <button class="btn btn-get auth-submit" id="authSubmit" type="button" onclick="submitAuth()">Create Account</button>
+      </div>
+
+      <div id="loggedInPanel" style="display:none">
+        <span class="eyebrow">Signed in as</span>
+        <div class="logged-in-name display" id="loggedInName"></div>
+        <div class="logged-in-sub">Just for fun — this only lives in your browser.</div>
+        <button class="btn btn-official logout-btn" type="button" onclick="logOut()">Log Out</button>
+      </div>
+
     </div>
   </div>
 </section>
@@ -611,7 +829,7 @@
   <div class="wrap footer-inner">
     <div class="logo">Find<span>Your</span>Game</div>
     <div class="footer-meta">
-      <span>Version 26.7 Beta 1</span>
+      <span>Version 26.7 Beta 3</span>
       <span>Owner: Arham Syed</span>
       <span>Developer: Claude AI</span>
       <span>Not affiliated with Valve or Steam</span>
@@ -1398,6 +1616,7 @@ const grid = document.getElementById('gameGrid');
 games.forEach((g, i) => {
   const card = document.createElement('div');
   card.className = 'card';
+  card.setAttribute('data-title', g.title.toLowerCase());
   card.innerHTML = `
     <div class="card-inner">
       <div class="face front" data-letter="${g.title.charAt(0)}" style="--art:linear-gradient(155deg, ${g.art[0]} 0%, ${g.art[1]} 100%)">
@@ -1431,17 +1650,35 @@ games.forEach((g, i) => {
   });
   grid.appendChild(card);
 });
+
+// ---------- Library search ----------
+const librarySearchInput = document.getElementById('librarySearch');
+const libraryNoResults = document.getElementById('libraryNoResults');
+if(librarySearchInput){
+  librarySearchInput.addEventListener('input', () => {
+    const q = librarySearchInput.value.trim().toLowerCase();
+    let visibleCount = 0;
+    document.querySelectorAll('#gameGrid .card').forEach(card => {
+      const match = card.getAttribute('data-title').includes(q);
+      card.style.display = match ? '' : 'none';
+      if(match) visibleCount++;
+    });
+    if(libraryNoResults) libraryNoResults.style.display = visibleCount === 0 ? 'block' : 'none';
+  });
+}
+
 </script>
 
 <script>
 // ---------- View switching (single-file "tabs") ----------
-const allViews = ['mainView', 'aboutView', 'creditsView', 'versionsView', 'freeGamesView'];
+const allViews = ['mainView', 'aboutView', 'creditsView', 'versionsView', 'freeGamesView', 'accountView'];
 const hashForView = {
   mainView: 'library',
   aboutView: 'about',
   creditsView: 'credits',
   versionsView: 'versions',
-  freeGamesView: 'free-games'
+  freeGamesView: 'free-games',
+  accountView: 'account'
 };
 
 function renderView(id){
@@ -1454,13 +1691,13 @@ function renderView(id){
 function showView(id, e){
   if(e) e.preventDefault();
   renderView(id);
-  history.pushState(null, '', '#' + hashForView[id]);
+  try { history.pushState(null, '', '#' + hashForView[id]); } catch(err) {}
 }
 
 function showHome(e){
   if(e) e.preventDefault();
   renderView('mainView');
-  history.pushState(null, '', '#library');
+  try { history.pushState(null, '', '#library'); } catch(err) {}
   setTimeout(() => {
     const el = document.getElementById('library');
     if(el) el.scrollIntoView();
@@ -1473,10 +1710,107 @@ function routeFromHash(){
   else if(h === '#credits') renderView('creditsView');
   else if(h === '#versions') renderView('versionsView');
   else if(h === '#free-games') renderView('freeGamesView');
+  else if(h === '#account') renderView('accountView');
   else renderView('mainView');
 }
 window.addEventListener('popstate', routeFromHash);
 routeFromHash();
+
+// ---------- Account (cosmetic only — localStorage, no server, no real security) ----------
+const ACCOUNTS_KEY = 'fyg_accounts';
+const CURRENT_USER_KEY = 'fyg_current_user';
+let authMode = 'signup';
+
+function getAccounts(){
+  try { return JSON.parse(localStorage.getItem(ACCOUNTS_KEY)) || {}; }
+  catch(err) { return {}; }
+}
+function saveAccounts(accounts){
+  try { localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(accounts)); } catch(err) {}
+}
+function getCurrentUser(){
+  try { return localStorage.getItem(CURRENT_USER_KEY); } catch(err) { return null; }
+}
+function setCurrentUser(username){
+  try {
+    if(username) localStorage.setItem(CURRENT_USER_KEY, username);
+    else localStorage.removeItem(CURRENT_USER_KEY);
+  } catch(err) {}
+}
+
+function setAuthMode(mode){
+  authMode = mode;
+  document.getElementById('tabSignup').classList.toggle('active', mode === 'signup');
+  document.getElementById('tabLogin').classList.toggle('active', mode === 'login');
+  document.getElementById('authConfirmWrap').style.display = mode === 'signup' ? 'flex' : 'none';
+  document.getElementById('authSubmit').textContent = mode === 'signup' ? 'Create Account' : 'Log In';
+  document.getElementById('authError').textContent = '';
+}
+
+function submitAuth(){
+  const username = document.getElementById('authUsername').value.trim();
+  const password = document.getElementById('authPassword').value;
+  const confirm = document.getElementById('authConfirm').value;
+  const errorEl = document.getElementById('authError');
+  const accounts = getAccounts();
+
+  if(!username || !password){
+    errorEl.textContent = 'Enter a username and password.';
+    return;
+  }
+
+  if(authMode === 'signup'){
+    if(password !== confirm){
+      errorEl.textContent = 'Passwords don\u2019t match.';
+      return;
+    }
+    if(accounts[username]){
+      errorEl.textContent = 'That username is already taken — try Log In instead.';
+      return;
+    }
+    accounts[username] = password;
+    saveAccounts(accounts);
+    setCurrentUser(username);
+    errorEl.textContent = '';
+    refreshAuthUI();
+  } else {
+    if(!accounts[username] || accounts[username] !== password){
+      errorEl.textContent = 'Incorrect username or password.';
+      return;
+    }
+    setCurrentUser(username);
+    errorEl.textContent = '';
+    refreshAuthUI();
+  }
+}
+
+function logOut(){
+  setCurrentUser(null);
+  document.getElementById('authUsername').value = '';
+  document.getElementById('authPassword').value = '';
+  document.getElementById('authConfirm').value = '';
+  refreshAuthUI();
+}
+
+function refreshAuthUI(){
+  const user = getCurrentUser();
+  const navLink = document.getElementById('navAccountLink');
+  const formWrap = document.getElementById('authFormWrap');
+  const loggedInPanel = document.getElementById('loggedInPanel');
+  const loggedInName = document.getElementById('loggedInName');
+
+  if(user){
+    if(navLink) navLink.textContent = 'Hi, ' + user;
+    if(formWrap) formWrap.style.display = 'none';
+    if(loggedInPanel) loggedInPanel.style.display = 'block';
+    if(loggedInName) loggedInName.textContent = user;
+  } else {
+    if(navLink) navLink.textContent = 'Account';
+    if(formWrap) formWrap.style.display = 'block';
+    if(loggedInPanel) loggedInPanel.style.display = 'none';
+  }
+}
+refreshAuthUI();
 
 // ---------- Free Games data ----------
 const freeGames = [
@@ -1534,6 +1868,10 @@ const freeGames = [
 
 const freeGrid = document.getElementById('freeGrid');
 freeGames.forEach(game => {
+  const wrap = document.createElement('div');
+  wrap.className = 'free-card-wrap';
+  wrap.setAttribute('data-title', game.t.toLowerCase());
+
   const card = document.createElement('a');
   card.className = 'free-card';
   card.href = `https://store.steampowered.com/app/${game.id}/${game.n}/`;
@@ -1551,8 +1889,25 @@ freeGames.forEach(game => {
       Get Free on Steam
     </span>
   `;
-  freeGrid.appendChild(card);
+  wrap.appendChild(card);
+  freeGrid.appendChild(wrap);
 });
+
+// ---------- Free Games search ----------
+const freeSearchInput = document.getElementById('freeSearch');
+const freeNoResults = document.getElementById('freeNoResults');
+if(freeSearchInput){
+  freeSearchInput.addEventListener('input', () => {
+    const q = freeSearchInput.value.trim().toLowerCase();
+    let visibleCount = 0;
+    document.querySelectorAll('.free-card-wrap').forEach(wrap => {
+      const match = wrap.getAttribute('data-title').includes(q);
+      wrap.style.display = match ? '' : 'none';
+      if(match) visibleCount++;
+    });
+    if(freeNoResults) freeNoResults.style.display = visibleCount === 0 ? 'block' : 'none';
+  });
+}
 </script>
 
 </body>
