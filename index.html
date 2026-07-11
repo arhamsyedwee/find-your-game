@@ -451,6 +451,33 @@
   .logged-in-sub{font-size:13px;color:var(--muted);margin-bottom:22px;}
   .logout-btn{width:100%;justify-content:center;border:none;cursor:pointer;font-family:'Inter';}
 
+  /* ---------- ACCOUNT MODAL ---------- */
+  .modal-overlay{
+    position:fixed;inset:0;z-index:300;
+    background:rgba(5,5,7,0.65);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    display:flex;align-items:center;justify-content:center;
+    padding:24px;
+    animation:fadeIn .2s ease;
+  }
+  @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+  .modal-panel{
+    position:relative;width:100%;max-width:420px;max-height:88vh;overflow-y:auto;
+    border-radius:14px;padding:30px 28px;
+    animation:modalIn .25s cubic-bezier(.2,.9,.25,1);
+  }
+  @keyframes modalIn{from{opacity:0;transform:translateY(12px) scale(.98);}to{opacity:1;transform:translateY(0) scale(1);}}
+  .modal-close{
+    position:absolute;top:16px;right:16px;
+    width:32px;height:32px;border-radius:50%;
+    background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);
+    color:var(--ink);font-size:20px;line-height:1;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:background .2s;
+  }
+  .modal-close:hover{background:rgba(255,255,255,0.16);}
+
   /* ---------- FOOTER ---------- */
   footer{
     border-top:1px solid var(--line);
@@ -473,7 +500,7 @@
     <a href="#versions" onclick="showView('versionsView', event)">Versions History</a>
     <a href="#free-games" onclick="showView('freeGamesView', event)">Free Games</a>
     <a href="#credits" onclick="showView('creditsView', event)">Credits</a>
-    <a href="#account" id="navAccountLink" onclick="showView('accountView', event)">Account</a>
+    <a href="#account" id="navAccountLink" onclick="openAccountModal(event)">Account</a>
   </div>
 </nav>
 
@@ -774,55 +801,48 @@
 </section>
 </div>
 
-<div id="accountView" style="display:none">
-<section class="hero" style="min-height:auto;padding:150px 0 70px;background:radial-gradient(ellipse 80% 60% at 15% 0%, rgba(53,216,192,0.16), transparent 60%),radial-gradient(ellipse 70% 50% at 100% 100%, rgba(255,122,41,0.12), transparent 60%),var(--bg);">
-  <div class="wrap">
-    <span class="hero-eyebrow" style="color:var(--cyan);">Just for fun</span>
-    <h1>Your <em>Account.</em></h1>
-    <p>Pick a username and password to personalize your visit. Heads up: this is purely for fun — it's saved only in this browser, not on a server, so please don't reuse a real password here.</p>
-    <a class="back-home" href="#library" onclick="showHome(event)">← Back to Find Your Game</a>
-  </div>
-</section>
-<section class="section" style="padding-top:0;">
-  <div class="wrap" style="max-width:420px;">
-    <div class="credits-card">
+<div id="accountModalOverlay" class="modal-overlay" style="display:none" onclick="closeAccountModalOnBackdrop(event)">
+  <div class="modal-panel glass" onclick="event.stopPropagation()">
+    <button class="modal-close" type="button" onclick="closeAccountModal()" aria-label="Close">&times;</button>
 
-      <div id="authFormWrap">
-        <div class="auth-tabs">
-          <button class="auth-tab active" id="tabSignup" type="button" onclick="setAuthMode('signup')">Sign Up</button>
-          <button class="auth-tab" id="tabLogin" type="button" onclick="setAuthMode('login')">Log In</button>
-        </div>
+    <span class="eyebrow" style="color:var(--cyan);">Just for fun</span>
+    <h3 class="display" style="font-size:26px;margin-bottom:10px;">Your Account</h3>
+    <p style="font-size:13px;line-height:1.55;color:var(--muted);margin-bottom:20px;">Pick a username and password to personalize your visit — saved only in this browser, not on a server.</p>
 
-        <div class="auth-note">This account is cosmetic only — stored in your browser's local storage, not on any server. It won't follow you to another device or browser.</div>
-
-        <div class="auth-field">
-          <label for="authUsername">Username</label>
-          <input type="text" id="authUsername" placeholder="Pick a username" autocomplete="off">
-        </div>
-        <div class="auth-field">
-          <label for="authPassword">Password</label>
-          <input type="password" id="authPassword" placeholder="Pick a password" autocomplete="off">
-        </div>
-        <div class="auth-field" id="authConfirmWrap">
-          <label for="authConfirm">Confirm Password</label>
-          <input type="password" id="authConfirm" placeholder="Confirm password" autocomplete="off">
-        </div>
-
-        <p class="auth-error" id="authError"></p>
-
-        <button class="btn btn-get auth-submit" id="authSubmit" type="button" onclick="submitAuth()">Create Account</button>
+    <div id="authFormWrap">
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tabSignup" type="button" onclick="setAuthMode('signup')">Sign Up</button>
+        <button class="auth-tab" id="tabLogin" type="button" onclick="setAuthMode('login')">Log In</button>
       </div>
 
-      <div id="loggedInPanel" style="display:none">
-        <span class="eyebrow">Signed in as</span>
-        <div class="logged-in-name display" id="loggedInName"></div>
-        <div class="logged-in-sub">Just for fun — this only lives in your browser.</div>
-        <button class="btn btn-official logout-btn" type="button" onclick="logOut()">Log Out</button>
+      <div class="auth-note">This account is cosmetic only — stored in your browser's local storage, not on any server. It won't follow you to another device or browser.</div>
+
+      <div class="auth-field">
+        <label for="authUsername">Username</label>
+        <input type="text" id="authUsername" placeholder="Pick a username" autocomplete="off">
+      </div>
+      <div class="auth-field">
+        <label for="authPassword">Password</label>
+        <input type="password" id="authPassword" placeholder="Pick a password" autocomplete="off">
+      </div>
+      <div class="auth-field" id="authConfirmWrap">
+        <label for="authConfirm">Confirm Password</label>
+        <input type="password" id="authConfirm" placeholder="Confirm password" autocomplete="off">
       </div>
 
+      <p class="auth-error" id="authError"></p>
+
+      <button class="btn btn-get auth-submit" id="authSubmit" type="button" onclick="submitAuth()">Create Account</button>
     </div>
+
+    <div id="loggedInPanel" style="display:none">
+      <span class="eyebrow">Signed in as</span>
+      <div class="logged-in-name display" id="loggedInName"></div>
+      <div class="logged-in-sub">Just for fun — this only lives in your browser.</div>
+      <button class="btn btn-official logout-btn" type="button" onclick="logOut()">Log Out</button>
+    </div>
+
   </div>
-</section>
 </div>
 
 <footer>
@@ -1671,14 +1691,13 @@ if(librarySearchInput){
 
 <script>
 // ---------- View switching (single-file "tabs") ----------
-const allViews = ['mainView', 'aboutView', 'creditsView', 'versionsView', 'freeGamesView', 'accountView'];
+const allViews = ['mainView', 'aboutView', 'creditsView', 'versionsView', 'freeGamesView'];
 const hashForView = {
   mainView: 'library',
   aboutView: 'about',
   creditsView: 'credits',
   versionsView: 'versions',
-  freeGamesView: 'free-games',
-  accountView: 'account'
+  freeGamesView: 'free-games'
 };
 
 function renderView(id){
@@ -1710,11 +1729,34 @@ function routeFromHash(){
   else if(h === '#credits') renderView('creditsView');
   else if(h === '#versions') renderView('versionsView');
   else if(h === '#free-games') renderView('freeGamesView');
-  else if(h === '#account') renderView('accountView');
   else renderView('mainView');
+  if(h === '#account') openAccountModal();
 }
 window.addEventListener('popstate', routeFromHash);
 routeFromHash();
+
+// ---------- Account modal open/close ----------
+function openAccountModal(e){
+  if(e) e.preventDefault();
+  const overlay = document.getElementById('accountModalOverlay');
+  if(overlay) overlay.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  try { history.pushState(null, '', '#account'); } catch(err) {}
+}
+function closeAccountModal(){
+  const overlay = document.getElementById('accountModalOverlay');
+  if(overlay) overlay.style.display = 'none';
+  document.body.style.overflow = '';
+  if(location.hash === '#account'){
+    try { history.pushState(null, '', '#library'); } catch(err) {}
+  }
+}
+function closeAccountModalOnBackdrop(e){
+  if(e.target === document.getElementById('accountModalOverlay')) closeAccountModal();
+}
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape') closeAccountModal();
+});
 
 // ---------- Account (cosmetic only — localStorage, no server, no real security) ----------
 const ACCOUNTS_KEY = 'fyg_accounts';
