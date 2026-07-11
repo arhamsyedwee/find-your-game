@@ -52,10 +52,15 @@
   }
   .logo{font-family:'Archivo';font-weight:900;font-size:19px;letter-spacing:-0.02em;text-transform:uppercase;}
   .logo span{color:var(--amber);}
-  .nav-links{display:flex;gap:36px;font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;}
-  .nav-links a{color:var(--muted);transition:color .25s;}
+  .nav-links{
+    display:flex;gap:36px;font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
+    overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .nav-links::-webkit-scrollbar{display:none;}
+  .nav-links a{color:var(--muted);transition:color .25s;flex:none;}
   .nav-links a:hover{color:var(--ink);}
-  @media(max-width:640px){.nav-links{gap:20px;font-size:11px;} nav{padding:16px 20px;}}
+  @media(max-width:640px){.nav-links{gap:18px;font-size:10.5px;} nav{padding:16px 20px;}}
 
   /* ---------- HERO ---------- */
   .hero{
@@ -266,6 +271,44 @@
     content:'—';position:absolute;left:0;color:var(--amber);
   }
 
+  /* ---------- FREE GAMES VIEW ---------- */
+  .back-home{
+    display:inline-flex;align-items:center;gap:8px;margin-top:26px;
+    font-size:12.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--cyan);
+  }
+  .free-card{
+    position:relative;height:260px;border-radius:6px;overflow:hidden;
+    border:1px solid var(--line);
+    display:flex;flex-direction:column;justify-content:flex-end;padding:18px;
+    background-color:var(--bg-alt);
+    background-image:linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.95) 100%), var(--art);
+    background-repeat:no-repeat;background-size:100% 100%;
+  }
+  .free-card::before{
+    content:attr(data-letter);
+    position:absolute;top:-0.24em;right:-0.05em;
+    font-family:'Archivo';font-weight:900;font-size:120px;line-height:1;
+    color:rgba(255,255,255,0.09);z-index:0;pointer-events:none;
+  }
+  .free-card > *{position:relative;z-index:1;}
+  .free-tag{
+    position:absolute;top:12px;left:12px;z-index:2;
+    background:var(--cyan);color:#08150c;
+    font-size:9.5px;font-weight:800;letter-spacing:0.07em;text-transform:uppercase;
+    padding:4px 8px;border-radius:3px;
+  }
+  .free-card .card-genre{font-size:10.5px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:rgba(245,243,238,0.7);margin-bottom:6px;}
+  .free-card .card-title{font-size:19px;line-height:1.05;text-shadow:0 2px 10px rgba(0,0,0,0.6);margin-bottom:12px;}
+  .free-btn-get{
+    display:flex;align-items:center;justify-content:center;gap:7px;
+    padding:9px 12px;border-radius:4px;
+    font-size:11.5px;font-weight:700;letter-spacing:0.03em;text-transform:uppercase;
+    background:var(--ink);color:#0a0a0c;
+    transition:transform .2s, opacity .2s;
+  }
+  .free-btn-get:hover{transform:translateY(-1px);opacity:0.92;}
+  .free-btn-get svg{width:13px;height:13px;flex:none;}
+
   /* ---------- FOOTER ---------- */
   footer{
     border-top:1px solid var(--line);
@@ -283,13 +326,15 @@
 <nav>
   <div class="logo">Find<span>Your</span>Game</div>
   <div class="nav-links">
-    <a href="#library">Library</a>
-    <a href="#about">About</a>
-    <a href="#versions">Versions History</a>
-    <a href="#credits">Credits</a>
+    <a href="#library" onclick="showMain(event)">Library</a>
+    <a href="#about" onclick="showMain(event)">About</a>
+    <a href="#versions" onclick="showMain(event)">Versions History</a>
+    <a href="#free-games" onclick="showFreeGames(event)">Free Games</a>
+    <a href="#credits" onclick="showMain(event)">Credits</a>
   </div>
 </nav>
 
+<div id="mainView">
 <section class="hero">
   <div class="wrap">
     <span class="hero-eyebrow">100 titles · curated shelf</span>
@@ -339,7 +384,7 @@
         <span class="credit-label">Built for</span>
         <span class="credit-value">Find Your Game</span>
       </div>
-      <span class="version-pill">Version 26.5</span>
+      <span class="version-pill">Version 26.6</span>
     </div>
   </div>
 </section>
@@ -351,15 +396,30 @@
         <span class="eyebrow">Changelog</span>
         <h2>Versions History.</h2>
       </div>
-      <span class="count">6 releases so far</span>
+      <span class="count">7 releases so far</span>
     </div>
 
     <div class="timeline">
 
       <div class="version-entry">
         <div class="version-num">
-          <span class="num">26.5</span>
+          <span class="num">26.6</span>
           <span class="current-tag">Current Version</span>
+          <span class="version-date">Released July 11, 2026</span>
+        </div>
+        <div class="version-body">
+          <h3>A whole new tab.</h3>
+          <ul>
+            <li>Added a brand new, separate Free Games page — opens in its own tab, not tucked into the footer.</li>
+            <li>Free Games page launches with 50 official, genuinely free-to-play titles, each linking straight to Steam.</li>
+            <li>Version numbering updated from 26.5 to 26.6.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="version-entry">
+        <div class="version-num">
+          <span class="num">26.5</span>
           <span class="version-date">Released July 11, 2026</span>
         </div>
         <div class="version-body">
@@ -448,12 +508,42 @@
     </div>
   </div>
 </section>
+</div>
+
+<div id="freeGamesView" style="display:none">
+<section class="hero" style="min-height:auto;padding:150px 0 70px;background:radial-gradient(ellipse 80% 60% at 15% 0%, rgba(79,214,122,0.16), transparent 60%),radial-gradient(ellipse 70% 50% at 100% 100%, rgba(53,216,192,0.12), transparent 60%),var(--bg);">
+  <div class="wrap">
+    <span class="hero-eyebrow" style="color:var(--green);">50 titles · genuinely free</span>
+    <h1>Free to <em style="color:var(--amber);">play.</em></h1>
+    <p>No trials, no crippled demos — these 50 games are officially, permanently free on Steam. Every button opens the real store page, straight from the publisher.</p>
+    <a class="back-home" href="#library" onclick="showMain(event)">← Back to Find Your Game</a>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Free Games</span>
+        <h2>Play tonight, pay nothing.</h2>
+      </div>
+      <span class="count">50 games · all officially free</span>
+    </div>
+
+    <div class="grid" id="freeGrid" style="perspective:none;"></div>
+
+    <div class="disclaimer" style="margin-top:40px;max-width:none;">
+      <b>About this tab.</b> Every game listed here is officially free-to-play, distributed directly by its publisher or developer on Steam. Nothing is hosted, modified, or cracked — this tab only links out to each game's real, official Steam store page. Some titles offer optional in-game purchases; that's between you and the publisher, not something this site is involved in.
+    </div>
+  </div>
+</section>
+</div>
 
 <footer>
   <div class="wrap footer-inner">
     <div class="logo">Find<span>Your</span>Game</div>
     <div class="footer-meta">
-      <span>Version 26.5</span>
+      <span>Version 26.6</span>
       <span>Owner: Arham Syed</span>
       <span>Developer: Claude AI</span>
       <span>Not affiliated with Valve or Steam</span>
@@ -1197,6 +1287,112 @@ games.forEach((g, i) => {
     card.classList.toggle('flipped');
   });
   grid.appendChild(card);
+});
+</script>
+
+<script>
+// ---------- View switching (single-file "tabs") ----------
+function showFreeGames(e){
+  if(e) e.preventDefault();
+  document.getElementById('mainView').style.display = 'none';
+  document.getElementById('freeGamesView').style.display = 'block';
+  window.scrollTo(0,0);
+  history.pushState(null, '', '#free-games');
+}
+function showMain(e){
+  if(e) e.preventDefault();
+  document.getElementById('freeGamesView').style.display = 'none';
+  document.getElementById('mainView').style.display = 'block';
+  if(e && e.target && e.target.getAttribute('href') && e.target.getAttribute('href').startsWith('#')){
+    const id = e.target.getAttribute('href').slice(1);
+    history.pushState(null, '', '#' + id);
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if(el) el.scrollIntoView();
+    }, 0);
+  } else {
+    window.scrollTo(0,0);
+  }
+}
+window.addEventListener('popstate', () => {
+  if(location.hash === '#free-games') showFreeGames();
+  else showMain();
+});
+if(location.hash === '#free-games') showFreeGames();
+
+// ---------- Free Games data ----------
+const freeGames = [
+  {t:"Dota 2", g:"MOBA", a:["#120d16","#c0392b"], id:"570", n:"Dota_2"},
+  {t:"Counter-Strike 2", g:"FPS · Multiplayer", a:["#111114","#e0a83f"], id:"730", n:"CounterStrike_2"},
+  {t:"Team Fortress 2", g:"FPS · Multiplayer", a:["#161008","#e0a83f"], id:"440", n:"Team_Fortress_2"},
+  {t:"Warframe", g:"Looter Shooter", a:["#0d1416","#4fd6c0"], id:"230410", n:"Warframe"},
+  {t:"Path of Exile", g:"Action RPG", a:["#100d0d","#8f3a3a"], id:"238960", n:"Path_of_Exile"},
+  {t:"Destiny 2", g:"Looter Shooter", a:["#0d1218","#4f9ed6"], id:"1085660", n:"Destiny_2"},
+  {t:"Apex Legends", g:"Battle Royale", a:["#0d1418","#d6273f"], id:"1172470", n:"Apex_Legends"},
+  {t:"Rocket League", g:"Sports · Multiplayer", a:["#0d1218","#3d7fd6"], id:"252950", n:"Rocket_League"},
+  {t:"Fall Guys", g:"Party · Battle Royale", a:["#160f18","#f2a83f"], id:"1097150", n:"Fall_Guys"},
+  {t:"War Thunder", g:"Vehicle Combat", a:["#100d08","#8f8f5f"], id:"236390", n:"War_Thunder"},
+  {t:"Brawlhalla", g:"Platform Fighter", a:["#160d1a","#e0a83f"], id:"291550", n:"Brawlhalla"},
+  {t:"Smite", g:"MOBA", a:["#100d16","#c9273f"], id:"386360", n:"SMITE"},
+  {t:"Paladins", g:"Hero Shooter", a:["#0d1614","#4fae6f"], id:"444090", n:"Paladins"},
+  {t:"Warface", g:"FPS · Multiplayer", a:["#100d0d","#8f8f8f"], id:"291480", n:"Warface"},
+  {t:"Trove", g:"Sandbox · Adventure", a:["#100d16","#c93a9f"], id:"304050", n:"Trove"},
+  {t:"Crossout", g:"Vehicle Combat", a:["#100d08","#c9863c"], id:"592540", n:"Crossout"},
+  {t:"Realm Royale Reforged", g:"Battle Royale", a:["#0d1616","#4fd6a0"], id:"813820", n:"Realm_Royale_Reforged"},
+  {t:"Enlisted", g:"WWII · FPS", a:["#100d08","#8f8f5f"], id:"1418160", n:"Enlisted"},
+  {t:"Dauntless", g:"Action RPG", a:["#0d1420","#4f9ed6"], id:"1030300", n:"Dauntless"},
+  {t:"Albion Online", g:"MMORPG", a:["#100d08","#d6a83f"], id:"761890", n:"Albion_Online"},
+  {t:"Old School RuneScape", g:"MMORPG", a:["#100d08","#e0a83f"], id:"1343370", n:"Old_School_RuneScape"},
+  {t:"RuneScape", g:"MMORPG", a:["#0d1214","#3f7ac9"], id:"1343400", n:"RuneScape"},
+  {t:"Naraka: Bladepoint", g:"Battle Royale", a:["#100d0d","#c9273f"], id:"1203220", n:"NARAKA_BLADEPOINT"},
+  {t:"VRChat", g:"Social · Sandbox", a:["#0d1420","#4fd6c0"], id:"438100", n:"VRChat"},
+  {t:"Unturned", g:"Survival", a:["#0d140d","#4f8f5f"], id:"304930", n:"Unturned"},
+  {t:"Fistful of Frags", g:"FPS · Western", a:["#100d08","#c9863c"], id:"265630", n:"Fistful_of_Frags"},
+  {t:"Deceit", g:"Social Deduction", a:["#100d16","#8a2fd6"], id:"466240", n:"Deceit"},
+  {t:"Marvel Rivals", g:"Hero Shooter", a:["#100d0d","#c9273f"], id:"2767030", n:"Marvel_Rivals"},
+  {t:"Halo Infinite", g:"FPS · Multiplayer", a:["#0d1420","#4f9ed6"], id:"1240440", n:"Halo_Infinite"},
+  {t:"PlanetSide 2", g:"MMO FPS", a:["#0d1214","#3f7ac9"], id:"218230", n:"PlanetSide_2"},
+  {t:"Heroes & Generals", g:"WWII · FPS", a:["#100d08","#8f8f5f"], id:"227940", n:"Heroes__Generals"},
+  {t:"Quake Champions", g:"Arena FPS", a:["#100d0d","#c9273f"], id:"611500", n:"Quake_Champions"},
+  {t:"Star Trek Online", g:"MMORPG", a:["#0d1420","#4f9ed6"], id:"9900", n:"Star_Trek_Online"},
+  {t:"Neverwinter", g:"MMORPG", a:["#100d16","#8a5fd6"], id:"109600", n:"Neverwinter"},
+  {t:"DC Universe Online", g:"MMORPG", a:["#0d1214","#3f7ac9"], id:"24200", n:"DC_Universe_Online"},
+  {t:"World of Tanks Blitz", g:"Vehicle Combat", a:["#100d08","#8f8f5f"], id:"843980", n:"World_of_Tanks_Blitz"},
+  {t:"Eternal Return", g:"Battle Royale", a:["#100d16","#c93a9f"], id:"1049590", n:"Eternal_Return"},
+  {t:"Idle Champions of the Forgotten Realms", g:"Idle RPG", a:["#100d08","#d6a83f"], id:"818530", n:"Idle_Champions_of_the_Forgotten_Realms"},
+  {t:"Lost Ark", g:"Action MMORPG", a:["#100d0d","#c9863c"], id:"1599340", n:"Lost_Ark"},
+  {t:"Genshin Impact", g:"Open World · RPG", a:["#0d1420","#4fd6c0"], id:"2270000", n:"Genshin_Impact"},
+  {t:"Honkai: Star Rail", g:"RPG", a:["#100d16","#8a5fd6"], id:"2181170", n:"Honkai_Star_Rail"},
+  {t:"Zenless Zone Zero", g:"Action RPG", a:["#100d0d","#c9273f"], id:"3167550", n:"Zenless_Zone_Zero"},
+  {t:"MultiVersus", g:"Platform Fighter", a:["#0d1420","#4f9ed6"], id:"1818750", n:"MultiVersus"},
+  {t:"The First Descendant", g:"Looter Shooter", a:["#100d0d","#c9863c"], id:"2074920", n:"The_First_Descendant"},
+  {t:"Cuisine Royale", g:"Battle Royale", a:["#100d08","#8f8f5f"], id:"1017180", n:"Cuisine_Royale"},
+  {t:"Creativerse", g:"Sandbox · Building", a:["#0d140d","#4f8f5f"], id:"280790", n:"Creativerse"},
+  {t:"Sky: Children of the Light", g:"Social · Adventure", a:["#0d1420","#4fd6e0"], id:"1622650", n:"Sky_Children_of_the_Light"},
+  {t:"Marvel Snap", g:"Card Battler", a:["#100d0d","#c9273f"], id:"1997040", n:"MARVEL_SNAP"},
+  {t:"Legends of Runeterra", g:"Card Battler", a:["#100d16","#8a5fd6"], id:"1128810", n:"Legends_of_Runeterra"},
+  {t:"Splitgate", g:"Arena FPS", a:["#0d1420","#4f9ed6"], id:"677620", n:"Splitgate"}
+];
+
+const freeGrid = document.getElementById('freeGrid');
+freeGames.forEach(game => {
+  const card = document.createElement('a');
+  card.className = 'free-card';
+  card.href = `https://store.steampowered.com/app/${game.id}/${game.n}/`;
+  card.target = '_blank';
+  card.rel = 'noopener';
+  card.setAttribute('data-letter', game.t.charAt(0));
+  card.style.setProperty('--art', `linear-gradient(155deg, ${game.a[0]} 0%, ${game.a[1]} 100%)`);
+  card.innerHTML = `
+    <span class="free-tag">Free to Play</span>
+    <div class="card-genre">${game.g}</div>
+    <div class="card-title display">${game.t}</div>
+    <span class="free-btn-get">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.4"/></svg>
+      Get Free on Steam
+    </span>
+  `;
+  freeGrid.appendChild(card);
 });
 </script>
 
