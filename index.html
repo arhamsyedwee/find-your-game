@@ -116,7 +116,7 @@
   @media(max-width:560px){.grid{grid-template-columns:1fr;}}
 
   .card{
-    position:relative;height:400px;
+    position:relative;aspect-ratio:2 / 3;
     cursor:pointer;
   }
   .card-inner{
@@ -160,6 +160,25 @@
     user-select:none;
   }
   .front > *{position:relative;z-index:1;}
+  .price-tag{
+    position:absolute;top:14px;right:14px;
+    background:rgba(0,0,0,0.55);color:var(--ink);
+    font-size:11px;font-weight:800;letter-spacing:0.04em;
+    padding:5px 9px;border-radius:3px;
+    border:1px solid rgba(245,243,238,0.18);
+  }
+  .price-tag.price-free{background:var(--cyan);color:#08150c;border-color:transparent;}
+  .meta-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;}
+  .meta-price{
+    font-size:11px;font-weight:800;letter-spacing:0.03em;
+    background:rgba(255,255,255,0.08);color:var(--ink);
+    padding:3px 8px;border-radius:3px;
+  }
+  .meta-price.price-free{background:var(--cyan);color:#08150c;}
+  .meta-date{font-size:11px;color:var(--muted);letter-spacing:0.02em;}
+  .free-release{
+    display:block;font-size:10.5px;color:var(--muted);letter-spacing:0.02em;margin-bottom:10px;
+  }
   .goty-tag{
     position:absolute;top:14px;left:14px;
     background:var(--gold);color:#161200;
@@ -277,7 +296,7 @@
     font-size:12.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--cyan);
   }
   .free-card{
-    position:relative;height:260px;border-radius:6px;overflow:hidden;
+    position:relative;aspect-ratio:2 / 3;border-radius:6px;overflow:hidden;
     border:1px solid var(--line);
     display:flex;flex-direction:column;justify-content:flex-end;padding:18px;
     background-color:var(--bg-alt);
@@ -326,18 +345,18 @@
 <nav>
   <div class="logo">Find<span>Your</span>Game</div>
   <div class="nav-links">
-    <a href="#library" onclick="showMain(event)">Library</a>
-    <a href="#about" onclick="showMain(event)">About</a>
-    <a href="#versions" onclick="showMain(event)">Versions History</a>
-    <a href="#free-games" onclick="showFreeGames(event)">Free Games</a>
-    <a href="#credits" onclick="showMain(event)">Credits</a>
+    <a href="#library" onclick="showHome(event)">Library</a>
+    <a href="#about" onclick="showView('aboutView', event)">About</a>
+    <a href="#versions" onclick="showView('versionsView', event)">Versions History</a>
+    <a href="#free-games" onclick="showView('freeGamesView', event)">Free Games</a>
+    <a href="#credits" onclick="showView('creditsView', event)">Credits</a>
   </div>
 </nav>
 
 <div id="mainView">
 <section class="hero">
   <div class="wrap">
-    <span class="hero-eyebrow">100 titles · curated shelf</span>
+    <span class="hero-eyebrow">110 titles · curated shelf</span>
     <h1>Every game<br>has a <em>home.</em></h1>
     <p>A shelf of titles worth playing — open-world epics, soulslikes, and a couple of Game of the Year winners. Every card links straight to the official Steam page and the studio that made it.</p>
     <div class="hero-scroll"><div class="dash"></div> Scroll to browse</div>
@@ -351,26 +370,48 @@
         <span class="eyebrow">The Library</span>
         <h2>Pick a case.</h2>
       </div>
-      <span class="count">100 games · tap a card to flip it</span>
+      <span class="count">110 games · tap a card to flip it</span>
     </div>
 
     <div class="grid" id="gameGrid"></div>
   </div>
 </section>
+</div>
 
-<section class="section" id="about">
-  <div class="wrap about-grid">
+<div id="aboutView" style="display:none">
+<section class="hero" style="min-height:auto;padding:150px 0 70px;background:radial-gradient(ellipse 80% 60% at 15% 0%, rgba(53,216,192,0.16), transparent 60%),radial-gradient(ellipse 70% 50% at 100% 100%, rgba(255,122,41,0.12), transparent 60%),var(--bg);">
+  <div class="wrap">
+    <span class="hero-eyebrow" style="color:var(--cyan);">The idea behind it</span>
+    <h1>A shelf, <em>not a store.</em></h1>
+    <p>A fast, good-looking place to remember what's worth playing — not a place that sells or hosts anything.</p>
+    <a class="back-home" href="#library" onclick="showHome(event)">← Back to Find Your Game</a>
+  </div>
+</section>
+<section class="section" style="padding-top:0;">
+  <div class="wrap" style="max-width:720px;">
     <div class="about-copy">
-      <span class="eyebrow" style="color:var(--cyan);display:block;font-size:12px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:10px;">About</span>
-      <h2>A shelf, not a store.</h2>
       <p><b>Find Your Game</b> is a showcase, not a storefront. It doesn't sell or host anything — every "Get" button leads straight to the game's real Steam page, and every "Official Site" button leads to the studio or publisher that actually made it.</p>
       <p>The idea is simple: a fast, good-looking place to remember what's worth playing, learn one strange or overlooked fact about each game, and land on the right official page to buy or wishlist it.</p>
       <div class="disclaimer">
         <b>Disclaimer.</b> Find Your Game is an independent fan project and is not affiliated with, endorsed by, or sponsored by Valve, Steam, Rockstar Games, or any publisher listed here. All game titles, logos, and trademarks belong to their respective owners. No game files are hosted, sold, or distributed on this site — every download link points to the game's official store page.
       </div>
     </div>
+  </div>
+</section>
+</div>
 
-    <div class="credits-card" id="credits">
+<div id="creditsView" style="display:none">
+<section class="hero" style="min-height:auto;padding:150px 0 70px;background:radial-gradient(ellipse 80% 60% at 15% 0%, rgba(255,122,41,0.16), transparent 60%),radial-gradient(ellipse 70% 50% at 100% 100%, rgba(53,216,192,0.12), transparent 60%),var(--bg);">
+  <div class="wrap">
+    <span class="hero-eyebrow" style="color:var(--amber);">Who made this</span>
+    <h1>Credits.</h1>
+    <p>Owner, developer, and version — all in one place.</p>
+    <a class="back-home" href="#library" onclick="showHome(event)">← Back to Find Your Game</a>
+  </div>
+</section>
+<section class="section" style="padding-top:0;">
+  <div class="wrap" style="max-width:480px;">
+    <div class="credits-card">
       <span class="eyebrow">Credits</span>
       <div class="credit-row">
         <span class="credit-label">Owner</span>
@@ -384,27 +425,54 @@
         <span class="credit-label">Built for</span>
         <span class="credit-value">Find Your Game</span>
       </div>
-      <span class="version-pill">Version 26.6</span>
+      <span class="version-pill">Version 26.7 Beta 1</span>
     </div>
   </div>
 </section>
+</div>
 
-<section class="section" id="versions">
+<div id="versionsView" style="display:none">
+<section class="hero" style="min-height:auto;padding:150px 0 70px;background:radial-gradient(ellipse 80% 60% at 15% 0%, rgba(232,184,75,0.16), transparent 60%),radial-gradient(ellipse 70% 50% at 100% 100%, rgba(53,216,192,0.12), transparent 60%),var(--bg);">
+  <div class="wrap">
+    <span class="hero-eyebrow" style="color:var(--gold);">Changelog</span>
+    <h1>Versions <em style="color:var(--gold);">History.</em></h1>
+    <p>Every release, what changed, and when it shipped.</p>
+    <a class="back-home" href="#library" onclick="showHome(event)">← Back to Find Your Game</a>
+  </div>
+</section>
+<section class="section" style="padding-top:0;">
   <div class="wrap">
     <div class="section-head">
       <div>
         <span class="eyebrow">Changelog</span>
         <h2>Versions History.</h2>
       </div>
-      <span class="count">7 releases so far</span>
+      <span class="count">8 releases so far</span>
     </div>
 
     <div class="timeline">
 
       <div class="version-entry">
         <div class="version-num">
-          <span class="num">26.6</span>
+          <span class="num">26.7 Beta 1</span>
           <span class="current-tag">Current Version</span>
+          <span class="version-date">Released July 11, 2026</span>
+        </div>
+        <div class="version-body">
+          <h3>About, Credits, and Versions History all became real tabs.</h3>
+          <ul>
+            <li>About, Credits, and Versions History are now each their own separate view — just like Free Games — instead of anchor-scrolling sections.</li>
+            <li>Added a price in USD to every paid game in the main library, and marked genuinely free titles as "Free."</li>
+            <li>Added a release date to every game across both the main library and the Free Games tab.</li>
+            <li>Added 10 more games to the main library.</li>
+            <li>Version numbering updated from 26.6 to 26.7 Beta 1.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="version-entry">
+        <div class="version-num">
+          <span class="num">26.6</span>
           <span class="version-date">Released July 11, 2026</span>
         </div>
         <div class="version-body">
@@ -516,7 +584,7 @@
     <span class="hero-eyebrow" style="color:var(--green);">50 titles · genuinely free</span>
     <h1>Free to <em style="color:var(--amber);">play.</em></h1>
     <p>No trials, no crippled demos — these 50 games are officially, permanently free on Steam. Every button opens the real store page, straight from the publisher.</p>
-    <a class="back-home" href="#library" onclick="showMain(event)">← Back to Find Your Game</a>
+    <a class="back-home" href="#library" onclick="showHome(event)">← Back to Find Your Game</a>
   </div>
 </section>
 
@@ -543,7 +611,7 @@
   <div class="wrap footer-inner">
     <div class="logo">Find<span>Your</span>Game</div>
     <div class="footer-meta">
-      <span>Version 26.6</span>
+      <span>Version 26.7 Beta 1</span>
       <span>Owner: Arham Syed</span>
       <span>Developer: Claude AI</span>
       <span>Not affiliated with Valve or Steam</span>
@@ -554,704 +622,774 @@
 <script>
 const games = [
   {
-    title:"Grand Theft Auto V", genre:"Open World · Action", art:["#2b1a13","#ff7a29"],
+    title:"Grand Theft Auto V", genre:"Open World · Action", art:["#2b1a13","#ff7a29"], price:"$29.99", releaseDate:"Apr 2015",
     desc:"Los Santos and Blaine County, three criminals, one sprawling heist story that still holds up.",
     egg:"There's a working UFO wreck buried under Mount Chiliad, and a cryptic hillside mural that spawned years of fan theories about it.",
     steam:"https://store.steampowered.com/app/271590/Grand_Theft_Auto_V/",
     official:"https://www.rockstargames.com/V", officialName:"Rockstar Games"
   },
   {
-    title:"Red Dead Redemption 2", genre:"Open World · Western", art:["#1a1712","#c98a3c"],
+    title:"Red Dead Redemption 2", genre:"Open World · Western", art:["#1a1712","#c98a3c"], price:"$59.99", releaseDate:"Nov 2019",
     desc:"Arthur Morgan rides through the dying days of the outlaw era. Slow, sad, and gorgeous.",
     egg:"Legendary animals, a full moonshine side-business, and a Bigfoot-like cryptid rumored to roam the Grizzlies.",
     steam:"https://store.steampowered.com/app/1174180/Red_Dead_Redemption_2/",
     official:"https://www.rockstargames.com/reddeadredemption2", officerName:"", officialName:"Rockstar Games"
   },
   {
-    title:"Elden Ring", genre:"Action RPG", art:["#151321","#d9a441"], goty:"GOTY 2022",
+    title:"Elden Ring", genre:"Action RPG", art:["#151321","#d9a441"], price:"$59.99", releaseDate:"Feb 2022", goty:"GOTY 2022",
     desc:"FromSoftware's open world take on the Souls formula, built with George R. R. Martin's lore.",
     egg:"There's an entire hidden late-game area, the Consecrated Snowfield, that most players never stumble onto by accident.",
     steam:"https://store.steampowered.com/app/1245620/ELDEN_RING/",
     official:"https://en.bandainamcoent.eu/elden-ring/elden-ring", officialName:"FromSoftware / Bandai Namco"
   },
   {
-    title:"Baldur's Gate 3", genre:"RPG · Turn-Based", art:["#160f18","#8a4fd6"], goty:"GOTY 2023",
+    title:"Baldur's Gate 3", genre:"RPG · Turn-Based", art:["#160f18","#8a4fd6"], price:"$59.99", releaseDate:"Aug 2023", goty:"GOTY 2023",
     desc:"A D&D campaign with real consequences, full voice acting, and a cast people fell in love with.",
     egg:"You can turn into a bear-druid and romance a companion mid-fight. Larian left it in on purpose.",
     steam:"https://store.steampowered.com/app/1086940/Baldurs_Gate_3/",
     official:"https://baldursgate3.game/", officialName:"Larian Studios"
   },
   {
-    title:"Resident Evil Village", genre:"Survival Horror", art:["#160c0c","#8a1f1f"],
+    title:"Resident Evil Village", genre:"Survival Horror", art:["#160c0c","#8a1f1f"], price:"$39.99", releaseDate:"May 2021",
     desc:"Ethan Winters wakes up in a snowbound village ruled by four monstrous lords. Tighter and stranger than its predecessor.",
     egg:"Lady Dimitrescu's exact height was never meant to be a marketing hook — Capcom only confirmed it after fans wouldn't stop asking.",
     steam:"https://store.steampowered.com/app/1196590/Resident_Evil_Village/",
     official:"https://www.residentevil.com/village/", officialName:"Capcom"
   },
   {
-    title:"The Witcher 3: Wild Hunt", genre:"Open World · RPG", art:["#0f1512","#3fae7a"],
+    title:"The Witcher 3: Wild Hunt", genre:"Open World · RPG", art:["#0f1512","#3fae7a"], price:"$39.99", releaseDate:"May 2015",
     desc:"Geralt hunts monsters and his adopted daughter across a war-torn continent. Still one of the best-written RPGs made.",
     egg:"A fully voiced, unmarked side quest about a broken lute-string bard was almost cut, then became a fan favorite.",
     steam:"https://store.steampowered.com/app/292030/The_Witcher_3_Wild_Hunt/",
     official:"https://www.thewitcher.com/", officialName:"CD PROJEKT RED"
   },
   {
-    title:"Cyberpunk 2077", genre:"Open World · RPG", art:["#160719","#f2c53d"],
+    title:"Cyberpunk 2077", genre:"Open World · RPG", art:["#160719","#f2c53d"], price:"$59.99", releaseDate:"Dec 2020",
     desc:"Night City, a merc named V, and a rockerboy ghost living in your head. Rough at launch, remarkable now.",
     egg:"You can call a bartender NPC for a drink recipe and actually get a real-world cocktail instruction back.",
     steam:"https://store.steampowered.com/app/1091500/Cyberpunk_2077/",
     official:"https://www.cyberpunk.net/", officialName:"CD PROJEKT RED"
   },
   {
-    title:"DOOM Eternal", genre:"FPS", art:["#1a0d0d","#ff4d2e"],
+    title:"DOOM Eternal", genre:"FPS", art:["#1a0d0d","#ff4d2e"], price:"$39.99", releaseDate:"Mar 2020",
     desc:"The Slayer rips through Hell's forces at a sprint. Faster, meaner, and heavier than 2016's reboot.",
     egg:"There's a fully playable retro-style Doom I level hidden inside the game as a secret arcade cabinet.",
     steam:"https://store.steampowered.com/app/782330/DOOM_Eternal/",
     official:"https://bethesda.net/en/game/doometernal", officialName:"id Software / Bethesda"
   },
   {
-    title:"Hades", genre:"Roguelike", art:["#180b13","#e0475a"],
+    title:"Hades", genre:"Roguelike", art:["#180b13","#e0475a"], price:"$24.99", releaseDate:"Sep 2020",
     desc:"Zagreus fights his way out of the Underworld, again and again, meeting family he never knew he had.",
     egg:"Every one of the thousands of lines of dialogue is context-aware — deaths, gifts, and relationships all change what characters say next.",
     steam:"https://store.steampowered.com/app/1145360/Hades/",
     official:"https://www.supergiantgames.com/games/hades/", officialName:"Supergiant Games"
   },
   {
-    title:"Portal 2", genre:"Puzzle", art:["#0c1618","#3fd1c9"],
+    title:"Portal 2", genre:"Puzzle", art:["#0c1618","#3fd1c9"], price:"$9.99", releaseDate:"Apr 2011",
     desc:"GLaDOS, Wheatley, and a co-op campaign that turned physics puzzles into comedy.",
     egg:"The credits song was written and recorded by the writers as a joke, then became one of gaming's most requested tracks.",
     steam:"https://store.steampowered.com/app/620/Portal_2/",
     official:"https://www.valvesoftware.com/", officialName:"Valve"
   },
   {
-    title:"Half-Life: Alyx", genre:"VR · FPS", art:["#0d1414","#e07a2b"],
+    title:"Half-Life: Alyx", genre:"VR · FPS", art:["#0d1414","#e07a2b"], price:"$59.99", releaseDate:"Mar 2020",
     desc:"Valve's return to City 17, built from scratch for VR. Physical, tense, and full of small interactive details.",
     egg:"Nearly every object in the world can be picked up, stacked, or thrown — including a working vending-machine economy of resin.",
     steam:"https://store.steampowered.com/app/546560/HalfLife_Alyx/",
     official:"https://www.valvesoftware.com/", officialName:"Valve"
   },
   {
-    title:"Stardew Valley", genre:"Farming · Sim", art:["#101a10","#7fbf4d"],
+    title:"Stardew Valley", genre:"Farming · Sim", art:["#101a10","#7fbf4d"], price:"$14.99", releaseDate:"Feb 2016",
     desc:"Inherit a run-down farm, rebuild a town, and quietly lose sixty hours without noticing. Made almost entirely by one person.",
     egg:"Developer Eric Barone hand-drew and coded nearly the entire game solo over four and a half years.",
     steam:"https://store.steampowered.com/app/413150/Stardew_Valley/",
     official:"https://www.stardewvalley.net/", officialName:"ConcernedApe"
   },
   {
-    title:"Terraria", genre:"Sandbox · Action", art:["#0f1614","#6bd18a"],
+    title:"Terraria", genre:"Sandbox · Action", art:["#0f1614","#6bd18a"], price:"$9.99", releaseDate:"May 2011",
     desc:"Dig, build, and fight through a 2D world that keeps unfolding new biomes and bosses years after launch.",
     egg:"The game still receives major free content updates over a decade after release — a running joke among fans is that it will never truly end.",
     steam:"https://store.steampowered.com/app/105600/Terraria/",
     official:"https://terraria.org/", officialName:"Re-Logic"
   },
   {
-    title:"Dark Souls III", genre:"Action RPG", art:["#0e0d10","#8f8f9c"],
+    title:"Dark Souls III", genre:"Action RPG", art:["#0e0d10","#8f8f9c"], price:"$59.99", releaseDate:"Apr 2016",
     desc:"The Souls trilogy's finale — faster combat, a crumbling world, and one of the series' best final bosses.",
     egg:"Ringing the game's bell in New Londo Ruins references a sound cue hidden all the way back in the original Demon's Souls.",
     steam:"https://store.steampowered.com/app/374320/DARK_SOULS_III/",
     official:"https://en.bandainamcoent.eu/dark-souls/dark-souls-iii", officialName:"FromSoftware / Bandai Namco"
   },
   {
-    title:"Sekiro: Shadows Die Twice", genre:"Action · Stealth", art:["#120d0d","#b23a3a"],
+    title:"Sekiro: Shadows Die Twice", genre:"Action · Stealth", art:["#120d0d","#b23a3a"], price:"$59.99", releaseDate:"Mar 2019",
     desc:"A one-armed shinobi, a resurrection mechanic, and combat built entirely around deflecting, not dodging.",
     egg:"The game's true ending requires denying a character's request three separate times across the whole story.",
     steam:"https://store.steampowered.com/app/814380/Sekiro_Shadows_Die_Twice/",
     official:"https://en.bandainamcoent.eu/sekiro/sekiro-shadows-die-twice", officialName:"FromSoftware / Activision"
   },
   {
-    title:"God of War", genre:"Action Adventure", art:["#0d1213","#5fb0c9"],
+    title:"God of War", genre:"Action Adventure", art:["#0d1213","#5fb0c9"], price:"$49.99", releaseDate:"Jan 2022",
     desc:"Kratos and his son Atreus travel the Norse realms in a single unbroken camera shot. A total reinvention of the series.",
     egg:"The entire game is presented with no cuts or loading-screen breaks — one continuous take from start to finish.",
     steam:"https://store.steampowered.com/app/1593500/God_of_War/",
     official:"https://www.santamonicastudio.com/", officialName:"Santa Monica Studio"
   },
   {
-    title:"Hollow Knight", genre:"Metroidvania", art:["#0a0e14","#4d9fd6"],
+    title:"Hollow Knight", genre:"Metroidvania", art:["#0a0e14","#4d9fd6"], price:"$14.99", releaseDate:"Feb 2017",
     desc:"A silent knight explores a ruined insect kingdom. Hand-drawn, meticulously designed, deceptively hard.",
     egg:"The map only fills in as you explore, and you have to buy a quill upgrade to draw on it while moving — a deliberate, easy-to-miss design choice.",
     steam:"https://store.steampowered.com/app/367520/Hollow_Knight/",
     official:"https://www.teamcherry.com.au/hollow-knight", officialName:"Team Cherry"
   },
   {
-    title:"Counter-Strike 2", genre:"FPS · Multiplayer", art:["#111114","#e0a83f"],
+    title:"Counter-Strike 2", genre:"FPS · Multiplayer", art:["#111114","#e0a83f"], price:"Free", releaseDate:"Sep 2023",
     desc:"The long-running tactical shooter, rebuilt on Valve's Source 2 engine with reworked smoke and lighting.",
     egg:"Smoke grenades are now fully volumetric and physically react to bullets and explosions passing through them.",
     steam:"https://store.steampowered.com/app/730/CounterStrike_2/",
     official:"https://www.valvesoftware.com/", officialName:"Valve"
   },
   {
-    title:"Dota 2", genre:"MOBA", art:["#120d16","#c0392b"],
+    title:"Dota 2", genre:"MOBA", art:["#120d16","#c0392b"], price:"Free", releaseDate:"Jul 2013",
     desc:"Two teams of five, over a hundred heroes, and one of the deepest strategy metas in gaming.",
     egg:"Its annual championship, The International, has repeatedly paid out the largest prize pool in esports history, funded mostly by players themselves.",
     steam:"https://store.steampowered.com/app/570/Dota_2/",
     official:"https://www.valvesoftware.com/", officialName:"Valve"
   },
   {
-    title:"Among Us", genre:"Social Deduction", art:["#0d1416","#c7414a"],
+    title:"Among Us", genre:"Social Deduction", art:["#0d1416","#c7414a"], price:"$4.99", releaseDate:"Jun 2018",
     desc:"A crewmate ship, a hidden impostor, and one of the biggest breakout hits gaming has seen in years.",
     egg:"The game launched quietly in 2018 and only exploded two years later, after streamers rediscovered it during 2020.",
     steam:"https://store.steampowered.com/app/945360/Among_Us/",
     official:"https://innersloth.com/", officialName:"InnerSloth"
   },
   {
-    title:"The Elder Scrolls V: Skyrim", genre:"Open World · RPG", art:["#0e1418","#4f7f9e"],
+    title:"The Elder Scrolls V: Skyrim", genre:"Open World · RPG", art:["#0e1418","#4f7f9e"], price:"$39.99", releaseDate:"Oct 2016",
     desc:"Dragons return to Tamriel and you're the one prophesied to stop them. A world people are still modding fifteen years later.",
     egg:"Nearly every NPC has a unique barks line for arrows to the knee — a throwaway joke that became the game's most quoted moment.",
     steam:"https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition/",
     official:"https://bethesda.net/en/game/skyrim", officialName:"Bethesda Game Studios"
   },
   {
-    title:"Fallout 4", genre:"Open World · RPG", art:["#141210","#8fae4a"],
+    title:"Fallout 4", genre:"Open World · RPG", art:["#141210","#8fae4a"], price:"$19.99", releaseDate:"Nov 2015",
     desc:"Wake up two centuries late in a nuked Boston and rebuild whatever's left of civilization, one settlement at a time.",
     egg:"An entire dead-end vault, Vault 95, was built around a drug-rehab experiment that has nothing to do with the main story.",
     steam:"https://store.steampowered.com/app/377160/Fallout_4/",
     official:"https://bethesda.net/en/game/fallout4", officialName:"Bethesda Game Studios"
   },
   {
-    title:"Rocket League", genre:"Sports · Multiplayer", art:["#0d1218","#3d7fd6"],
+    title:"Rocket League", genre:"Sports · Multiplayer", art:["#0d1218","#3d7fd6"], price:"Free", releaseDate:"Jul 2015",
     desc:"Soccer with rocket-powered cars. Simple to describe, absurdly hard to master, and still one of the best couch-to-esports games ever made.",
     egg:"It started as a sequel to a little-known 2008 game called Supersonic Acrobatic Rocket-Powered Battle-Cars.",
     steam:"https://store.steampowered.com/app/252950/Rocket_League/",
     official:"https://www.rocketleague.com/", officialName:"Psyonix"
   },
   {
-    title:"Metal Gear Solid V: The Phantom Pain", genre:"Stealth · Action", art:["#121212","#c98a3c"],
+    title:"Metal Gear Solid V: The Phantom Pain", genre:"Stealth · Action", art:["#121212","#c98a3c"], price:"$19.99", releaseDate:"Sep 2015",
     desc:"Snake wakes from a nine-year coma into an open-world revenge story built around total stealth freedom.",
     egg:"Players who neglect Snake's hygiene for too long will notice NPCs start reacting to him with visible disgust.",
     steam:"https://store.steampowered.com/app/287700/METAL_GEAR_SOLID_V_THE_PHANTOM_PAIN/",
     official:"https://www.konami.com/mg/", officialName:"Kojima Productions / Konami"
   },
   {
-    title:"It Takes Two", genre:"Co-op · Adventure", art:["#150f1a","#d64f8a"],
+    title:"It Takes Two", genre:"Co-op · Adventure", art:["#150f1a","#d64f8a"], price:"$39.99", releaseDate:"Mar 2021",
     desc:"A couple on the verge of divorce get turned into dolls and forced to work together to turn back. Built entirely around two-player co-op.",
     egg:"Every single level introduces a completely new gameplay mechanic that's never reused again for the rest of the game.",
     steam:"https://store.steampowered.com/app/1426210/It_Takes_Two/",
     official:"https://www.hazelight.se/games/it-takes-two/", officialName:"Hazelight Studios"
   },
   {
-    title:"Death Stranding", genre:"Action · Delivery", art:["#0d1416","#e8b84b"],
+    title:"Death Stranding", genre:"Action · Delivery", art:["#0d1416","#e8b84b"], price:"$39.99", releaseDate:"Jul 2020",
     desc:"A courier reconnects a shattered America by carrying packages across a beautiful, hostile landscape. Divisive, unforgettable, and completely its own thing.",
     egg:"Other players' structures, like bridges and ladders, appear in your own world — you're never told who built them.",
     steam:"https://store.steampowered.com/app/1190460/DEATH_STRANDING/",
     official:"https://www.deathstranding.com/", officialName:"Kojima Productions"
   },
   {
-    title:"Assassin's Creed Odyssey", genre:"Open World · RPG", art:["#12100d","#3d9ed6"],
+    title:"Assassin's Creed Odyssey", genre:"Open World · RPG", art:["#12100d","#3d9ed6"], price:"$59.99", releaseDate:"Oct 2018",
     desc:"Ancient Greece during the Peloponnesian War, a full dialogue-choice RPG system, and a map big enough to sail for hours.",
     egg:"You can fully recruit and crew a trireme with lieutenants pulled straight out of any enemy you've defeated.",
     steam:"https://store.steampowered.com/app/812140/Assassins_Creed_Odyssey/",
     official:"https://www.ubisoft.com/en-us/game/assassins-creed/odyssey", officialName:"Ubisoft"
   },
   {
-    title:"Persona 5 Royal", genre:"JRPG", art:["#150c10","#d6273f"],
+    title:"Persona 5 Royal", genre:"JRPG", art:["#150c10","#d6273f"], price:"$59.99", releaseDate:"Oct 2022",
     desc:"High schoolers by day, phantom thieves by night, stealing corrupted adults' twisted hearts in a stylish turn-based dungeon crawler.",
     egg:"The UI itself is treated as a character — its jagged, hand-lettered menus are animated differently for nearly every screen in the game.",
     steam:"https://store.steampowered.com/app/1687950/Persona_5_Royal/",
     official:"https://atlus.com/persona5royal/", officialName:"Atlus"
   },
   {
-    title:"Celeste", genre:"Platformer", art:["#0d1220","#5f8fe0"],
+    title:"Celeste", genre:"Platformer", art:["#0d1220","#5f8fe0"], price:"$19.99", releaseDate:"Jan 2018",
     desc:"Madeline climbs a mountain that keeps fighting back, in one of the tightest, hardest, and most emotionally honest platformers ever made.",
     egg:"A hidden PICO-8 mini-game, the original prototype Celeste was built from, is fully playable inside the finished game.",
     steam:"https://store.steampowered.com/app/504230/Celeste/",
     official:"https://www.celestegame.com/", officialName:"Extremely OK Games"
   },
   {
-    title:"Grand Theft Auto: San Andreas", genre:"Open World · Action", art:["#100d08","#e8b84b"],
+    title:"Grand Theft Auto: San Andreas", genre:"Open World · Action", art:["#100d08","#e8b84b"], price:"$14.99", releaseDate:"Jun 2015",
     desc:"CJ returns to Los Santos to save his family and take back the streets, across the biggest GTA map of its era.",
     egg:"A cut piece of content nicknamed 'Hot Coffee' was found still on the disc years after release and triggered a national ratings controversy.",
     steam:"https://store.steampowered.com/app/12120/Grand_Theft_Auto_San_Andreas/",
     official:"https://www.rockstargames.com/sanandreas", officialName:"Rockstar Games"
   },
   {
-    title:"Half-Life 2", genre:"FPS", art:["#0d1518","#e8823c"],
+    title:"Half-Life 2", genre:"FPS", art:["#0d1518","#e8823c"], price:"$9.99", releaseDate:"Nov 2004",
     desc:"Gordon Freeman returns to fight the Combine occupation of Earth. Two decades on, still a masterclass in level design.",
     egg:"The Gravity Gun was originally a much smaller tool, and only became a full weapon after a QA tester kept using it to fight enemies for fun.",
     steam:"https://store.steampowered.com/app/220/HalfLife_2/",
     official:"https://www.valvesoftware.com/", officialName:"Valve"
   },
   {
-    title:"Left 4 Dead 2", genre:"Co-op · Horror", art:["#150e0e","#c73a3a"],
+    title:"Left 4 Dead 2", genre:"Co-op · Horror", art:["#150e0e","#c73a3a"], price:"$9.99", releaseDate:"Nov 2009",
     desc:"Four survivors fight through zombie-infested campaigns built entirely around split-second co-op decisions.",
     egg:"An AI system called 'The Director' secretly adjusts zombie spawns and item placement in real time based on how well your team is doing.",
     steam:"https://store.steampowered.com/app/550/Left_4_Dead_2/",
     official:"https://www.valvesoftware.com/", officialName:"Valve"
   },
   {
-    title:"Team Fortress 2", genre:"FPS · Multiplayer", art:["#161008","#e0a83f"],
+    title:"Team Fortress 2", genre:"FPS · Multiplayer", art:["#161008","#e0a83f"], price:"Free", releaseDate:"Oct 2007",
     desc:"Nine wildly different classes, cartoonish violence, and one of the most influential class-based shooters ever made.",
     egg:"It launched completely free years after release, funded almost entirely by a player-driven virtual hat economy.",
     steam:"https://store.steampowered.com/app/440/Team_Fortress_2/",
     official:"https://www.teamfortress.com/", officialName:"Valve"
   },
   {
-    title:"Grand Theft Auto IV", genre:"Open World · Action", art:["#0e1013","#4a7ab5"],
+    title:"Grand Theft Auto IV", genre:"Open World · Action", art:["#0e1013","#4a7ab5"], price:"$19.99", releaseDate:"Dec 2008",
     desc:"Niko Bellic chases the American dream through a grim, satirical Liberty City. Rockstar's darkest GTA tone.",
     egg:"The in-game internet has dozens of fake, fully readable parody websites satirizing real 2008-era internet culture.",
     steam:"https://store.steampowered.com/app/12210/Grand_Theft_Auto_IV_The_Complete_Edition/",
     official:"https://www.rockstargames.com/IV", officialName:"Rockstar Games"
   },
   {
-    title:"Borderlands 2", genre:"Looter Shooter", art:["#141008","#e0b53f"],
+    title:"Borderlands 2", genre:"Looter Shooter", art:["#141008","#e0b53f"], price:"$19.99", releaseDate:"Sep 2012",
     desc:"Guns with actual randomized personalities, cel-shaded chaos, and one of gaming's most quotable villains.",
     egg:"The game generates weapon stats from a system capable of producing hundreds of thousands of unique gun combinations.",
     steam:"https://store.steampowered.com/app/49520/Borderlands_2/",
     official:"https://borderlands.2k.com/", officialName:"Gearbox Software"
   },
   {
-    title:"Divinity: Original Sin 2", genre:"RPG · Turn-Based", art:["#100f18","#8a5fd6"],
+    title:"Divinity: Original Sin 2", genre:"RPG · Turn-Based", art:["#100f18","#8a5fd6"], price:"$44.99", releaseDate:"Sep 2017",
     desc:"A deep, reactive co-op RPG where nearly everything is destructible, flammable, or an environmental weapon.",
     egg:"You can talk to almost any animal in the game if you take the right early skill, unlocking entire hidden side conversations.",
     steam:"https://store.steampowered.com/app/435150/Divinity_Original_Sin_2__Definitive_Edition/",
     official:"https://larian.com/games/divinity-original-sin-2", officialName:"Larian Studios"
   },
   {
-    title:"Monster Hunter: World", genre:"Action RPG", art:["#141310","#d67a3c"],
+    title:"Monster Hunter: World", genre:"Action RPG", art:["#141310","#d67a3c"], price:"$29.99", releaseDate:"Aug 2018",
     desc:"Hunt enormous, ecosystem-driven monsters across a living world, gear up with their parts, and hunt bigger ones.",
     egg:"Monsters actually fight each other in the wild — you can lure a bigger predator into a fight to do your work for you.",
     steam:"https://store.steampowered.com/app/582010/Monster_Hunter_World/",
     official:"https://www.monsterhunter.com/world/", officialName:"Capcom"
   },
   {
-    title:"Middle-earth: Shadow of Mordor", genre:"Action Adventure", art:["#0d1210","#6ba85f"],
+    title:"Middle-earth: Shadow of Mordor", genre:"Action Adventure", art:["#0d1210","#6ba85f"], price:"$19.99", releaseDate:"Sep 2014",
     desc:"An open-world Tolkien revenge story built around the Nemesis System, where enemy orcs remember and evolve from every encounter with you.",
     egg:"Orc captains who kill you will bring it up mockingly the next time you meet them, complete with their own new scars and promotions.",
     steam:"https://store.steampowered.com/app/241930/Middleearth_Shadow_of_Mordor/",
     official:"https://www.wbgames.com/", officialName:"Monolith Productions / WB Games"
   },
   {
-    title:"Batman: Arkham Knight", genre:"Action Adventure", art:["#0c0d10","#3a3f4a"],
+    title:"Batman: Arkham Knight", genre:"Action Adventure", art:["#0c0d10","#3a3f4a"], price:"$19.99", releaseDate:"Jun 2015",
     desc:"The finale of the Arkham trilogy, adding a fully drivable Batmobile to Gotham's rain-soaked open world.",
     egg:"Every one of Batman's rogues gallery has a hidden, fully voiced side-story built entirely around Scarecrow's fear toxin visions.",
     steam:"https://store.steampowered.com/app/208650/Batman_Arkham_Knight/",
     official:"https://www.wbgames.com/", officialName:"Rocksteady Studios / WB Games"
   },
   {
-    title:"Far Cry 5", genre:"Open World · FPS", art:["#141008","#c9863c"],
+    title:"Far Cry 5", genre:"Open World · FPS", art:["#141008","#c9863c"], price:"$29.99", releaseDate:"Mar 2018",
     desc:"Take on a doomsday cult that's taken over a fictional Montana county, in Ubisoft's most grounded Far Cry setting.",
     egg:"You can recruit an entire roster of animal companions, including a one-eyed attack dog and a cougar, as full combat allies.",
     steam:"https://store.steampowered.com/app/552520/Far_Cry_5/",
     official:"https://far-cry.ubisoft.com/", officialName:"Ubisoft"
   },
   {
-    title:"Titanfall 2", genre:"FPS", art:["#0d1114","#4f9ed6"],
+    title:"Titanfall 2", genre:"FPS", art:["#0d1114","#4f9ed6"], price:"$19.99", releaseDate:"Oct 2016",
     desc:"A single-player campaign built around a bond between pilot and mech that's still held up as one of the best FPS campaigns made.",
     egg:"The entire time-bending level 'Effect and Cause' was built by a small side team almost in secret before being pitched to leadership.",
     steam:"https://store.steampowered.com/app/1237970/Titanfall_2/",
     official:"https://www.ea.com/games/titanfall/titanfall-2", officialName:"Respawn Entertainment"
   },
   {
-    title:"Warframe", genre:"Looter Shooter", art:["#0d1416","#4fd6c0"],
+    title:"Warframe", genre:"Looter Shooter", art:["#0d1416","#4fd6c0"], price:"Free", releaseDate:"Mar 2013",
     desc:"Free-to-play space ninjas in bio-mechanical suits, with some of the fastest, most acrobatic movement in any shooter.",
     egg:"It launched quietly in 2013 and nearly failed, before years of free content updates slowly built it into one of gaming's longest-running live titles.",
     steam:"https://store.steampowered.com/app/230410/Warframe/",
     official:"https://www.warframe.com/", officialName:"Digital Extremes"
   },
   {
-    title:"Path of Exile", genre:"Action RPG", art:["#100d0d","#8f3a3a"],
+    title:"Path of Exile", genre:"Action RPG", art:["#100d0d","#8f3a3a"], price:"Free", releaseDate:"Oct 2013",
     desc:"A famously deep, dark, free-to-play action RPG with one of the most complex skill and itemization systems in the genre.",
     egg:"Its passive skill tree contains well over a thousand nodes, and the community has built entire tools just to help plan builds around it.",
     steam:"https://store.steampowered.com/app/238960/Path_of_Exile/",
     official:"https://www.pathofexile.com/", officialName:"Grinding Gear Games"
   },
   {
-    title:"Slay the Spire", genre:"Deckbuilder · Roguelike", art:["#100d16","#d6273f"],
+    title:"Slay the Spire", genre:"Deckbuilder · Roguelike", art:["#100d16","#d6273f"], price:"$24.99", releaseDate:"Jan 2019",
     desc:"The game that defined the modern deckbuilding roguelike — climb a spire, build a deck, die, learn, climb again.",
     egg:"It spent over a year in early access being balanced almost entirely from public player run data, not internal playtesting alone.",
     steam:"https://store.steampowered.com/app/646570/Slay_the_Spire/",
     official:"https://www.megacrit.com/", officialName:"MegaCrit"
   },
   {
-    title:"Cult of the Lamb", genre:"Action · Sim", art:["#150c18","#d64f8a"],
+    title:"Cult of the Lamb", genre:"Action · Sim", art:["#150c18","#d64f8a"], price:"$24.99", releaseDate:"Aug 2022",
     desc:"You're a possessed lamb building a cult of woodland followers by day and hacking through roguelike dungeons by night.",
     egg:"Followers you neglect for too long will actually start a rebellion and can overthrow you as their leader.",
     steam:"https://store.steampowered.com/app/1313140/Cult_of_the_Lamb/",
     official:"https://www.cultofthelamb.com/", officialName:"Massive Monster"
   },
   {
-    title:"Vampire Survivors", genre:"Roguelike · Action", art:["#0e0d14","#8a2fd6"],
+    title:"Vampire Survivors", genre:"Roguelike · Action", art:["#0e0d14","#8a2fd6"], price:"$4.99", releaseDate:"Oct 2022",
     desc:"Move, dodge, and watch the screen fill with hundreds of auto-firing weapons in one of the biggest surprise hits of the decade.",
     egg:"It was built almost entirely by one developer as a side project, and became a phenomenon within weeks of its early access launch.",
     steam:"https://store.steampowered.com/app/1794680/Vampire_Survivors/",
     official:"https://vampiresurvivors.com/", officialName:"poncle"
   },
   {
-    title:"Deep Rock Galactic", genre:"Co-op · FPS", art:["#141008","#e0a83f"],
+    title:"Deep Rock Galactic", genre:"Co-op · FPS", art:["#141008","#e0a83f"], price:"$29.99", releaseDate:"May 2020",
     desc:"Four dwarven space miners descend into fully destructible procedural caves. Rock and stone.",
     egg:"Nearly every wall, floor, and ceiling in the game can be dug through or collapsed, generating a new cave layout every single mission.",
     steam:"https://store.steampowered.com/app/548430/Deep_Rock_Galactic/",
     official:"https://www.deeprockgalactic.com/", officialName:"Ghost Ship Games"
   },
   {
-    title:"Risk of Rain 2", genre:"Roguelike · Action", art:["#0d1418","#4fb0d6"],
+    title:"Risk of Rain 2", genre:"Roguelike · Action", art:["#0d1418","#4fb0d6"], price:"$24.99", releaseDate:"Aug 2020",
     desc:"A 3D roguelike shooter where items visibly stack onto your character, turning you into a screen-filling chaos engine the longer you survive.",
     egg:"The longer any run goes, the harder enemies scale forever — there's no actual cap, so late runs can spiral into deliberate, glorious chaos.",
     steam:"https://store.steampowered.com/app/632360/Risk_of_Rain_2/",
     official:"https://riskofrain2.com/", officialName:"Hopoo Games"
   },
   {
-    title:"Subnautica", genre:"Survival · Exploration", art:["#0a1618","#2fb0c9"],
+    title:"Subnautica", genre:"Survival · Exploration", art:["#0a1618","#2fb0c9"], price:"$29.99", releaseDate:"Jan 2018",
     desc:"Crash-land on an ocean planet with no combat weapons — just craft, dive, and survive against whatever's down in the deep.",
     egg:"The game's most feared creature was deliberately never given a proper introduction cutscene, so players only learn to fear it through sound design.",
     steam:"https://store.steampowered.com/app/264710/Subnautica/",
     official:"https://www.subnauticagame.com/", officialName:"Unknown Worlds Entertainment"
   },
   {
-    title:"Human: Fall Flat", genre:"Co-op · Puzzle", art:["#100d10","#d6a83f"],
+    title:"Human: Fall Flat", genre:"Co-op · Puzzle", art:["#100d10","#d6a83f"], price:"$19.99", releaseDate:"Jul 2016",
     desc:"Wobbly, physics-based Steve figures solve puzzles across dreamlike levels. Chaotic, hilarious, and better with friends.",
     egg:"The main character's floppy, unathletic movement wasn't a bug — it was a deliberate design choice the developer kept after players loved it in early testing.",
     steam:"https://store.steampowered.com/app/477160/Human_Fall_Flat/",
     official:"https://humanfallflat.com/", officialName:"No Brakes Games"
   },
   {
-    title:"Grand Theft Auto: Vice City", genre:"Open World · Action", art:["#14082f","#ff3fa0"],
+    title:"Grand Theft Auto: Vice City", genre:"Open World · Action", art:["#14082f","#ff3fa0"], price:"$14.99", releaseDate:"Jun 2015",
     desc:"An '80s-soaked crime saga starring Tommy Vercetti, set in a neon Miami stand-in that basically defined the series' identity.",
     egg:"The entire radio station lineup was recorded with real licensed '80s tracks and original in-character DJ banter written just for the game.",
     steam:"https://store.steampowered.com/app/12110/Grand_Theft_Auto_Vice_City/",
     official:"https://www.rockstargames.com/vicecity", officialName:"Rockstar Games"
   },
   {
-    title:"Portal", genre:"Puzzle", art:["#0d1618","#e8823c"],
+    title:"Portal", genre:"Puzzle", art:["#0d1618","#e8823c"], price:"$9.99", releaseDate:"Oct 2007",
     desc:"A silent test subject, a sarcastic AI, and a portal gun that turned a short experimental game into a genre-defining classic.",
     egg:"The game began life as a student project called Narbacular Drop before Valve hired the whole team to rebuild it as Portal.",
     steam:"https://store.steampowered.com/app/400/Portal/",
     official:"https://www.valvesoftware.com/", officialName:"Valve"
   },
   {
-    title:"Half-Life", genre:"FPS", art:["#0f1214","#c9c9d6"],
+    title:"Half-Life", genre:"FPS", art:["#0f1214","#c9c9d6"], price:"$9.99", releaseDate:"Nov 1998",
     desc:"A resonance cascade turns a research facility into an alien warzone. The game that reshaped what FPS storytelling could be.",
     egg:"The entire game plays out in one continuous, uninterrupted first-person view — there are no cutscenes that take control away from you.",
     steam:"https://store.steampowered.com/app/70/HalfLife/",
     official:"https://www.valvesoftware.com/", officialName:"Valve"
   },
   {
-    title:"Counter-Strike: Source", genre:"FPS · Multiplayer", art:["#100d0d","#d69a3f"],
+    title:"Counter-Strike: Source", genre:"FPS · Multiplayer", art:["#100d0d","#d69a3f"], price:"$9.99", releaseDate:"Nov 2004",
     desc:"The Source-engine rebuild of the original Counter-Strike, and the long-running bridge between the classic and modern eras of the series.",
     egg:"Its early build was so close to the original that competitive players spent months arguing over whether it even played the same.",
     steam:"https://store.steampowered.com/app/240/CounterStrike_Source/",
     official:"https://www.valvesoftware.com/", officialName:"Valve"
   },
   {
-    title:"Garry's Mod", genre:"Sandbox", art:["#101014","#f2a83f"],
+    title:"Garry's Mod", genre:"Sandbox", art:["#101014","#f2a83f"], price:"$9.99", releaseDate:"Nov 2006",
     desc:"A physics sandbox with basically no rules — spawn anything, build anything, and let the community's game modes do the rest.",
     egg:"It started as a free Half-Life 2 mod built by one person messing with the physics engine, before becoming a full commercial release.",
     steam:"https://store.steampowered.com/app/4000/Garrys_Mod/",
     official:"https://garrysmod.com/", officialName:"Facepunch Studios"
   },
   {
-    title:"PUBG: Battlegrounds", genre:"Battle Royale", art:["#12140d","#d6c23f"],
+    title:"PUBG: Battlegrounds", genre:"Battle Royale", art:["#12140d","#d6c23f"], price:"Free", releaseDate:"Dec 2017",
     desc:"The game that turned the battle royale genre into a mainstream phenomenon — 100 players, one shrinking circle, one winner.",
     egg:"It was built by a mod-maker who'd already made battle royale mods for two earlier games before finally shipping his own standalone version.",
     steam:"https://store.steampowered.com/app/578080/PUBG_BATTLEGROUNDS/",
     official:"https://pubg.com/", officialName:"KRAFTON"
   },
   {
-    title:"Apex Legends", genre:"Battle Royale · FPS", art:["#0d1418","#d6273f"],
+    title:"Apex Legends", genre:"Battle Royale · FPS", art:["#0d1418","#d6273f"], price:"Free", releaseDate:"Feb 2019",
     desc:"Titanfall's universe reborn as a fast, slide-and-grapple battle royale with distinct hero abilities layered on top.",
     egg:"It was developed almost entirely in secret under a different working title, then released as a surprise with zero pre-launch marketing.",
     steam:"https://store.steampowered.com/app/1172470/Apex_Legends/",
     official:"https://www.ea.com/games/apex-legends", officialName:"Respawn Entertainment"
   },
   {
-    title:"Destiny 2", genre:"Looter Shooter", art:["#0d1218","#4f9ed6"],
+    title:"Destiny 2", genre:"Looter Shooter", art:["#0d1218","#4f9ed6"], price:"Free", releaseDate:"Oct 2017",
     desc:"A sci-fi shared-world shooter built around raids, seasons, and gunplay that's widely considered some of the best in the genre.",
     egg:"Its biggest raids are deliberately designed with puzzle mechanics that can only be solved by six players coordinating in real time.",
     steam:"https://store.steampowered.com/app/1085660/Destiny_2/",
     official:"https://www.bungie.net/", officialName:"Bungie"
   },
   {
-    title:"Valheim", genre:"Survival · Open World", art:["#0e1210","#5f9e5f"],
+    title:"Valheim", genre:"Survival · Open World", art:["#0e1210","#5f9e5f"], price:"$19.99", releaseDate:"Feb 2021",
     desc:"A cooperative Viking-mythology survival game where you sail, build, and fight your way across a procedurally generated afterlife.",
     egg:"It was built by a five-person team and became one of the fastest-selling early access games in Steam history within weeks of launch.",
     steam:"https://store.steampowered.com/app/892970/Valheim/",
     official:"https://www.valheimgame.com/", officialName:"Iron Gate Studio"
   },
   {
-    title:"Rust", genre:"Survival · Multiplayer", art:["#161008","#c96a2f"],
+    title:"Rust", genre:"Survival · Multiplayer", art:["#161008","#c96a2f"], price:"$39.99", releaseDate:"Feb 2018",
     desc:"A brutal, unforgiving multiplayer survival game where trust is a resource and everyone else is a threat.",
     egg:"The game world resets on regular official wipes, meaning entire bases and economies are periodically erased and rebuilt from scratch.",
     steam:"https://store.steampowered.com/app/252490/Rust/",
     official:"https://rust.facepunch.com/", officialName:"Facepunch Studios"
   },
   {
-    title:"ARK: Survival Evolved", genre:"Survival · Open World", art:["#0f1410","#5f8f5f"],
+    title:"ARK: Survival Evolved", genre:"Survival · Open World", art:["#0f1410","#5f8f5f"], price:"$29.99", releaseDate:"Aug 2017",
     desc:"Wake up stranded on a dinosaur-infested island, tame the wildlife, and build your way up the food chain.",
     egg:"Almost every dinosaur in the game can be tamed and ridden, including ones large enough to carry an entire base on their back.",
     steam:"https://store.steampowered.com/app/346110/ARK_Survival_Evolved/",
     official:"https://playark.com/", officialName:"Studio Wildcard"
   },
   {
-    title:"No Man's Sky", genre:"Exploration · Survival", art:["#0d1420","#4fd6e0"],
+    title:"No Man's Sky", genre:"Exploration · Survival", art:["#0d1420","#4fd6e0"], price:"$59.99", releaseDate:"Aug 2016",
     desc:"Fly seamlessly from planet surface to deep space in a procedurally generated universe that grew from a rocky launch into one of gaming's biggest comeback stories.",
     egg:"The universe contains over eighteen quintillion planets, each generated by an algorithm rather than hand-built by a designer.",
     steam:"https://store.steampowered.com/app/275850/No_Mans_Sky/",
     official:"https://www.nomanssky.com/", officialName:"Hello Games"
   },
   {
-    title:"Sea of Thieves", genre:"Open World · Adventure", art:["#0d1618","#3fb0c9"],
+    title:"Sea of Thieves", genre:"Open World · Adventure", art:["#0d1618","#3fb0c9"], price:"$39.99", releaseDate:"Jun 2020",
     desc:"A shared-world pirate sandbox built entirely around crewed ships, treasure hunting, and player-driven chaos on the high seas.",
     egg:"Ships leave a visible trail of shared world events behind them, so other crews can literally sail toward smoke or gunfire to find you.",
     steam:"https://store.steampowered.com/app/1172620/Sea_of_Thieves/",
     official:"https://www.seaofthieves.com/", officialName:"Rare"
   },
   {
-    title:"Rainbow Six Siege", genre:"Tactical FPS", art:["#100d0d","#c93a3a"],
+    title:"Rainbow Six Siege", genre:"Tactical FPS", art:["#100d0d","#c93a3a"], price:"$19.99", releaseDate:"Dec 2015",
     desc:"A slow, destructible-environment tactical shooter where nearly every wall and floor can be breached to create a new angle.",
     egg:"Its roster of operators has grown from twenty at launch to well over eighty, each with a completely unique gadget.",
     steam:"https://store.steampowered.com/app/359550/Tom_Clancys_Rainbow_Six_Siege/",
     official:"https://www.ubisoft.com/en-us/game/rainbow-six/siege", officialName:"Ubisoft"
   },
   {
-    title:"For Honor", genre:"Melee Combat", art:["#100d0d","#c9863c"],
+    title:"For Honor", genre:"Melee Combat", art:["#100d0d","#c9863c"], price:"$29.99", releaseDate:"Feb 2017",
     desc:"Knights, Vikings, and samurai fight in a deliberate, stance-based melee combat system unlike almost any other multiplayer game.",
     egg:"Its combat system was built around a mechanic the studio calls 'The Art of Battle,' directing attacks with a four-way directional stance.",
     steam:"https://store.steampowered.com/app/304390/For_Honor/",
     official:"https://www.ubisoft.com/en-us/game/for-honor", officialName:"Ubisoft"
   },
   {
-    title:"Payday 2", genre:"Co-op · Heist", art:["#100d0d","#e0b53f"],
+    title:"Payday 2", genre:"Co-op · Heist", art:["#100d0d","#e0b53f"], price:"$9.99", releaseDate:"Aug 2013",
     desc:"Four masked robbers pull off increasingly elaborate heists together, from bank jobs to full-blown armored convoy raids.",
     egg:"Years after launch it still receives community-made heists, some built by modders who were later hired by the studio itself.",
     steam:"https://store.steampowered.com/app/218620/PAYDAY_2/",
     official:"https://www.payday2.com/", officialName:"Starbreeze Studios"
   },
   {
-    title:"Dying Light 2", genre:"Open World · Survival", art:["#100d0d","#d64f3f"],
+    title:"Dying Light 2", genre:"Open World · Survival", art:["#100d0d","#d64f3f"], price:"$59.99", releaseDate:"Feb 2022",
     desc:"Parkour across a zombie-infested city where every choice you make visibly reshapes the world's factions and layout.",
     egg:"Your traversal skills directly affect the story — certain late-game areas are only reachable through advanced parkour techniques.",
     steam:"https://store.steampowered.com/app/534380/Dying_Light_2_Stay_Human/",
     official:"https://dyinglightgame.com/", officialName:"Techland"
   },
   {
-    title:"Dead by Daylight", genre:"Horror · Multiplayer", art:["#0d0d10","#8f3a4a"],
+    title:"Dead by Daylight", genre:"Horror · Multiplayer", art:["#0d0d10","#8f3a4a"], price:"$19.99", releaseDate:"Jun 2016",
     desc:"Four survivors versus one killer in an asymmetric horror match that's brought in crossover killers from nearly every major horror franchise.",
     egg:"It popularized the entire asymmetric 4v1 horror genre, inspiring a wave of similar games that followed years later.",
     steam:"https://store.steampowered.com/app/381210/Dead_by_Daylight/",
     official:"https://deadbydaylight.com/", officialName:"Behaviour Interactive"
   },
   {
-    title:"Phasmophobia", genre:"Co-op · Horror", art:["#0a0a0d","#8fb0c9"],
+    title:"Phasmophobia", genre:"Co-op · Horror", art:["#0a0a0d","#8fb0c9"], price:"$13.99", releaseDate:"Sep 2020",
     desc:"A four-player ghost-hunting sim where you gather evidence with real tools, using voice chat the ghost itself can actually hear.",
     egg:"It was built almost entirely by a solo developer and became a massive streaming hit within weeks of its early access launch.",
     steam:"https://store.steampowered.com/app/739630/Phasmophobia/",
     official:"https://kineticgames.co.uk/", officialName:"Kinetic Games"
   },
   {
-    title:"Lethal Company", genre:"Co-op · Horror", art:["#0d0f0d","#8fd66f"],
+    title:"Lethal Company", genre:"Co-op · Horror", art:["#0d0f0d","#8fd66f"], price:"$9.99", releaseDate:"Oct 2023",
     desc:"A crew of underpaid space scavengers loot abandoned, monster-filled facilities to hit a quota. Cheap, terrifying, and endlessly memeable.",
     egg:"It was made almost entirely solo, and its low-poly horror monsters were deliberately designed to look uncanny rather than photorealistic.",
     steam:"https://store.steampowered.com/app/1966720/Lethal_Company/",
     official:"https://zeekerss.itch.io/lethal-company", officialName:"Zeekerss"
   },
   {
-    title:"Outer Wilds", genre:"Exploration · Mystery", art:["#0d1220","#e8b84b"],
+    title:"Outer Wilds", genre:"Exploration · Mystery", art:["#0d1220","#e8b84b"], price:"$24.99", releaseDate:"May 2019",
     desc:"A tiny solar system stuck in a 22-minute time loop, and a knowledge-based mystery with no combat, no upgrades — just curiosity.",
     egg:"There's no traditional progression system at all; everything you 'unlock' is knowledge stored entirely in your own head as the player.",
     steam:"https://store.steampowered.com/app/753640/Outer_Wilds/",
     official:"https://www.mobiusdigitalgames.com/outer-wilds.html", officialName:"Mobius Digital"
   },
   {
-    title:"Inside", genre:"Puzzle Platformer", art:["#0d0d0d","#8a8a8a"],
+    title:"Inside", genre:"Puzzle Platformer", art:["#0d0d0d","#8a8a8a"], price:"$19.99", releaseDate:"Jun 2016",
     desc:"A wordless, unsettling puzzle-platformer from the makers of Limbo, following a boy through a dystopia that's never explained.",
     egg:"The game's true ending is a secret alternate finale, hidden behind a puzzle most players never discover on their first playthrough.",
     steam:"https://store.steampowered.com/app/304430/INSIDE/",
     official:"https://playdead.com/games/inside/", officialName:"Playdead"
   },
   {
-    title:"Limbo", genre:"Puzzle Platformer", art:["#0a0a0a","#c9c9c9"],
+    title:"Limbo", genre:"Puzzle Platformer", art:["#0a0a0a","#c9c9c9"], price:"$9.99", releaseDate:"Jul 2011",
     desc:"A boy searches a monochrome, monstrous forest for his sister in one of indie gaming's most influential atmospheric puzzlers.",
     egg:"The entire game uses only black, white, and gray — color was avoided completely to keep every scene feeling like a silhouette.",
     steam:"https://store.steampowered.com/app/48000/LIMBO/",
     official:"https://playdead.com/games/limbo/", officialName:"Playdead"
   },
   {
-    title:"Ori and the Blind Forest", genre:"Metroidvania", art:["#0d1420","#4fd6c0"],
+    title:"Ori and the Blind Forest", genre:"Metroidvania", art:["#0d1420","#4fd6c0"], price:"$19.99", releaseDate:"Mar 2015",
     desc:"A hand-painted, heartbreaking metroidvania about a guardian spirit restoring a dying forest, built around some of the genre's tightest platforming.",
     egg:"Its now-famous 'Escape' sequences were originally so difficult in testing that the team had to rebuild them multiple times to feel fair.",
     steam:"https://store.steampowered.com/app/261570/Ori_and_the_Blind_Forest/",
     official:"https://www.orithegame.com/", officialName:"Moon Studios"
   },
   {
-    title:"Ori and the Will of the Wisps", genre:"Metroidvania", art:["#0d1420","#e0a83f"],
+    title:"Ori and the Will of the Wisps", genre:"Metroidvania", art:["#0d1420","#e0a83f"], price:"$29.99", releaseDate:"Mar 2020",
     desc:"The sequel expands Ori's world with combat, new companions, and even more ambitious platforming set-pieces.",
     egg:"Its late-game escape sequence is widely considered one of the most technically demanding platforming segments ever shipped in the genre.",
     steam:"https://store.steampowered.com/app/1057090/Ori_and_the_Will_of_the_Wisps/",
     official:"https://www.orithegame.com/", officialName:"Moon Studios"
   },
   {
-    title:"Cuphead", genre:"Run and Gun", art:["#100d0d","#d6273f"],
+    title:"Cuphead", genre:"Run and Gun", art:["#100d0d","#d6273f"], price:"$19.99", releaseDate:"Sep 2017",
     desc:"A brutally hard run-and-gun boss rush, hand-drawn and hand-inked to look exactly like a 1930s rubber-hose cartoon.",
     egg:"Every frame of animation was actually drawn by hand and filmed on paper, the same way cartoons were made nearly a century ago.",
     steam:"https://store.steampowered.com/app/268910/Cuphead/",
     official:"https://cupheadgame.com/", officialName:"StudioMDHR"
   },
   {
-    title:"Undertale", genre:"RPG", art:["#100d16","#d6a83f"],
+    title:"Undertale", genre:"RPG", art:["#100d16","#d6a83f"], price:"$9.99", releaseDate:"Sep 2015",
     desc:"A tiny, subversive RPG where you can beat every single enemy without killing anyone — and the game genuinely remembers if you did.",
     egg:"The game permanently remembers your choices in its save files even after you delete them, referencing a prior playthrough if you start over.",
     steam:"https://store.steampowered.com/app/391540/Undertale/",
     official:"https://undertale.com/", officialName:"Toby Fox"
   },
   {
-    title:"Disco Elysium", genre:"RPG", art:["#100d16","#8a5fd6"],
+    title:"Disco Elysium", genre:"RPG", art:["#100d16","#8a5fd6"], price:"$39.99", releaseDate:"Oct 2019",
     desc:"A detective with amnesia and two dozen warring voices in his head investigates a murder in one of the best-written RPGs ever made.",
     egg:"There's no combat at all — every conflict in the game is resolved entirely through dialogue and skill checks.",
     steam:"https://store.steampowered.com/app/632470/Disco_Elysium__The_Final_Cut/",
     official:"https://discoelysium.com/", officialName:"ZA/UM"
   },
   {
-    title:"Kingdom Come: Deliverance", genre:"Open World · RPG", art:["#100d08","#c98a3c"],
+    title:"Kingdom Come: Deliverance", genre:"Open World · RPG", art:["#100d08","#c98a3c"], price:"$29.99", releaseDate:"Feb 2018",
     desc:"A grounded, historically accurate medieval RPG with no magic, no dragons — just a blacksmith's son surviving a brutal 15th-century war.",
     egg:"Combat requires actually learning sword direction and timing mechanics, closer to real historical fencing than typical RPG button-mashing.",
     steam:"https://store.steampowered.com/app/379430/Kingdom_Come_Deliverance/",
     official:"https://www.kingdomcomerpg.com/", officialName:"Warhorse Studios"
   },
   {
-    title:"Kingdom Come: Deliverance II", genre:"Open World · RPG", art:["#100d08","#e0a83f"],
+    title:"Kingdom Come: Deliverance II", genre:"Open World · RPG", art:["#100d08","#e0a83f"], price:"$59.99", releaseDate:"Feb 2025",
     desc:"Henry's story continues in a bigger, more polished sequel that keeps the series' obsession with grounded medieval realism.",
     egg:"The game's alchemy system requires actually following in-game recipe books step-by-step, with no simplified shortcut menu.",
     steam:"https://store.steampowered.com/app/1771300/Kingdom_Come_Deliverance_II/",
     official:"https://www.kingdomcomerpg.com/", officialName:"Warhorse Studios"
   },
   {
-    title:"Total War: Warhammer III", genre:"Strategy", art:["#100d0d","#c9273f"],
+    title:"Total War: Warhammer III", genre:"Strategy", art:["#100d0d","#c9273f"], price:"$59.99", releaseDate:"Feb 2022",
     desc:"Massive real-time battles meet turn-based empire management, set across the Warhammer Fantasy world's most chaotic realms.",
     egg:"Individual battles can involve tens of thousands of simulated units on screen at once, each following its own unit-level AI.",
     steam:"https://store.steampowered.com/app/1142710/Total_War_WARHAMMER_III/",
     official:"https://www.totalwar.com/", officialName:"Creative Assembly"
   },
   {
-    title:"Sid Meier's Civilization VI", genre:"Strategy", art:["#0d1420","#4f9ed6"],
+    title:"Sid Meier's Civilization VI", genre:"Strategy", art:["#0d1420","#4f9ed6"], price:"$59.99", releaseDate:"Oct 2016",
     desc:"Build an empire from a single settler to a spacefaring civilization, one turn — or one 'just one more turn' — at a time.",
     egg:"Its 'One More Turn' addictiveness is such a well-known phenomenon that the series jokingly references it in its own marketing.",
     steam:"https://store.steampowered.com/app/289070/Sid_Meiers_Civilization_VI/",
     official:"https://civilization.com/", officialName:"Firaxis Games"
   },
   {
-    title:"Age of Empires II: Definitive Edition", genre:"Strategy", art:["#100d08","#d6a83f"],
+    title:"Age of Empires II: Definitive Edition", genre:"Strategy", art:["#100d08","#d6a83f"], price:"$19.99", releaseDate:"Nov 2019",
     desc:"The classic real-time strategy game, remastered — still one of the most beloved and competitively played RTS games ever made.",
     egg:"Villager unit lines like 'Wololo' from the Monk have become some of the most recognizable sound bites in strategy game history.",
     steam:"https://store.steampowered.com/app/813780/Age_of_Empires_II_Definitive_Edition/",
     official:"https://www.ageofempires.com/", officialName:"Forgotten Empires / Xbox Game Studios"
   },
   {
-    title:"Company of Heroes 2", genre:"Strategy", art:["#0d0d10","#8f8f9c"],
+    title:"Company of Heroes 2", genre:"Strategy", art:["#0d0d10","#8f8f9c"], price:"$19.99", releaseDate:"Jun 2013",
     desc:"A tactical WWII real-time strategy game built around cover, terrain, and destructible environments on the Eastern Front.",
     egg:"A dynamic weather system can actually freeze units to death or slow tanks if you leave them out in a blizzard too long.",
     steam:"https://store.steampowered.com/app/231430/Company_of_Heroes_2/",
     official:"https://www.companyofheroes.com/", officialName:"Relic Entertainment"
   },
   {
-    title:"Football Manager 2024", genre:"Sports · Sim", art:["#0d1610","#4fd66f"],
+    title:"Football Manager 2024", genre:"Sports · Sim", art:["#0d1610","#4fd66f"], price:"$54.99", releaseDate:"Nov 2023",
     desc:"Take charge of a football club's every decision — tactics, transfers, training — in the deepest management sim in sports gaming.",
     egg:"Its scouting database contains real, detailed attribute profiles for hundreds of thousands of actual professional and youth players worldwide.",
     steam:"https://store.steampowered.com/app/2252570/Football_Manager_2024/",
     official:"https://www.footballmanager.com/", officialName:"Sports Interactive"
   },
   {
-    title:"Forza Horizon 5", genre:"Racing · Open World", art:["#100d08","#e8823c"],
+    title:"Forza Horizon 5", genre:"Racing · Open World", art:["#100d08","#e8823c"], price:"$59.99", releaseDate:"Nov 2021",
     desc:"An open-world racing festival across a vibrant, varied recreation of Mexico, built to be as much a scenery tour as a racing game.",
     egg:"The map includes a fully drivable, active volcano you can race straight into and out of, complete with its own weather system.",
     steam:"https://store.steampowered.com/app/1551360/Forza_Horizon_5/",
     official:"https://forza.net/", officialName:"Playground Games"
   },
   {
-    title:"Euro Truck Simulator 2", genre:"Simulation", art:["#0d1214","#3f7ac9"],
+    title:"Euro Truck Simulator 2", genre:"Simulation", art:["#0d1214","#3f7ac9"], price:"$19.99", releaseDate:"Oct 2012",
     desc:"Haul freight across a meticulously recreated Europe. Slow, relaxing, and somehow one of the most beloved sims ever made.",
     egg:"It's still receiving new country map expansions well over a decade after its original release, with fans mapping real highways from memory.",
     steam:"https://store.steampowered.com/app/227300/Euro_Truck_Simulator_2/",
     official:"https://eurotrucksimulator2.com/", officialName:"SCS Software"
   },
   {
-    title:"Cities: Skylines", genre:"City Builder", art:["#0d1614","#4fae6f"],
+    title:"Cities: Skylines", genre:"City Builder", art:["#0d1614","#4fae6f"], price:"$29.99", releaseDate:"Mar 2015",
     desc:"Zone, build, and manage a living city, complete with traffic simulation detailed enough to become a genuine problem to solve.",
     egg:"Its traffic simulation is detailed enough that entire YouTube channels exist purely around solving imaginary gridlock problems.",
     steam:"https://store.steampowered.com/app/255710/Cities_Skylines/",
     official:"https://www.paradoxinteractive.com/games/cities-skylines", officialName:"Colossal Order"
   },
   {
-    title:"Cities: Skylines II", genre:"City Builder", art:["#0d1418","#4f9ed6"],
+    title:"Cities: Skylines II", genre:"City Builder", art:["#0d1418","#4f9ed6"], price:"$49.99", releaseDate:"Oct 2023",
     desc:"A ground-up sequel with deeper simulation for economy, services, and citizen behavior across an even bigger buildable map.",
     egg:"Individual citizens are simulated with their own jobs, routines, and needs, rather than being simple background traffic.",
     steam:"https://store.steampowered.com/app/949230/Cities_Skylines_II/",
     official:"https://www.paradoxinteractive.com/games/cities-skylines-ii", officialName:"Colossal Order"
   },
   {
-    title:"Planet Coaster", genre:"Sim · Management", art:["#100d08","#e0a83f"],
+    title:"Planet Coaster", genre:"Sim · Management", art:["#100d08","#e0a83f"], price:"$44.99", releaseDate:"Nov 2016",
     desc:"Design and run a theme park down to the individual coaster track piece, with a scenery-building toolset beloved by hobbyists.",
     egg:"Its piece-by-piece building tools are flexible enough that players have recreated entire real-world theme parks track for track.",
     steam:"https://store.steampowered.com/app/493340/Planet_Coaster/",
     official:"https://www.planetcoaster.com/", officialName:"Frontier Developments"
   },
   {
-    title:"Two Point Hospital", genre:"Sim · Management", art:["#0d1618","#3fc9c0"],
+    title:"Two Point Hospital", genre:"Sim · Management", art:["#0d1618","#3fc9c0"], price:"$34.99", releaseDate:"Aug 2018",
     desc:"Build and run a comedy hospital treating deliberately ridiculous diagnoses, from a spin-off spiritual successor to Theme Hospital.",
     egg:"Made-up diagnoses like 'Lightheadedness,' where patients' heads literally turn into glowing lightbulbs, are treated with equally absurd cures.",
     steam:"https://store.steampowered.com/app/535930/Two_Point_Hospital/",
     official:"https://www.twopointhospital.com/", officialName:"Two Point Studios"
   },
   {
-    title:"Factorio", genre:"Simulation · Strategy", art:["#100d08","#d6a83f"],
+    title:"Factorio", genre:"Simulation · Strategy", art:["#100d08","#d6a83f"], price:"$35.00", releaseDate:"Aug 2020",
     desc:"Crash-land on an alien planet and slowly automate everything — mining, smelting, crafting — into a sprawling factory megastructure.",
     egg:"The developers famously spend years polishing tiny quality-of-life details, publishing legendary weekly 'Friday Facts' devlogs the whole way.",
     steam:"https://store.steampowered.com/app/427520/Factorio/",
     official:"https://factorio.com/", officialName:"Wube Software"
   },
   {
-    title:"Satisfactory", genre:"Simulation · Survival", art:["#0d1614","#e8823c"],
+    title:"Satisfactory", genre:"Simulation · Survival", art:["#0d1614","#e8823c"], price:"$29.99", releaseDate:"Sep 2024",
     desc:"A first-person factory-building game where you engineer sprawling automated production lines across an alien planet, in glorious first person.",
     egg:"Players have built factories so enormous and complex that some have crashed their own game just by rendering them.",
     steam:"https://store.steampowered.com/app/526870/Satisfactory/",
     official:"https://www.satisfactorygame.com/", officialName:"Coffee Stain Studios"
   },
   {
-    title:"The Forest", genre:"Survival · Horror", art:["#0d140d","#4f8f5f"],
+    title:"The Forest", genre:"Survival · Horror", art:["#0d140d","#4f8f5f"], price:"$19.99", releaseDate:"Apr 2018",
     desc:"Survive a plane crash on a cannibal-infested island, building shelter by day and defending it from something far worse by night.",
     egg:"The cannibal enemies actually react to how you treat their dead, becoming more hostile if you desecrate or leave bodies in view.",
     steam:"https://store.steampowered.com/app/242760/The_Forest/",
     official:"https://www.theforestgame.com/", officialName:"Endnight Games"
   },
   {
-    title:"Sons of the Forest", genre:"Survival · Horror", art:["#0d140d","#8fae4a"],
+    title:"Sons of the Forest", genre:"Survival · Horror", art:["#0d140d","#8fae4a"], price:"$29.99", releaseDate:"Feb 2024",
     desc:"The sequel raises the stakes with a smarter, more responsive enemy AI and a much deeper base-building and crafting system.",
     egg:"Enemies can remember and adapt to your build layout over time, sometimes finding new ways to break into a base you thought was secure.",
     steam:"https://store.steampowered.com/app/1326470/Sons_Of_The_Forest/",
     official:"https://www.sonsoftheforestgame.com/", officialName:"Endnight Games"
   },
   {
-    title:"Green Hell", genre:"Survival", art:["#0d140d","#4f8f5f"],
+    title:"Green Hell", genre:"Survival", art:["#0d140d","#4f8f5f"], price:"$24.99", releaseDate:"Aug 2019",
     desc:"A punishing, realistic Amazon rainforest survival game where you have to actually treat wounds, parasites, and mental health, not just hunger.",
     egg:"It includes a genuinely accurate first-aid system — you have to correctly identify and treat specific injuries, not just click a heal button.",
     steam:"https://store.steampowered.com/app/815370/Green_Hell/",
     official:"https://greenhellgame.com/", officialName:"Creepy Jar"
   },
   {
-    title:"Raft", genre:"Survival · Co-op", art:["#0a1618","#3fb0d6"],
+    title:"Raft", genre:"Survival · Co-op", art:["#0a1618","#3fb0d6"], price:"$19.99", releaseDate:"Jun 2022",
     desc:"Stranded on a tiny raft in the middle of the ocean, you hook floating debris and slowly build an entire seafaring base from scratch.",
     egg:"The game started as a small student project prototype before its developers turned it into a full commercial release years later.",
     steam:"https://store.steampowered.com/app/648800/Raft/",
     official:"https://raft-game.com/", officialName:"Redbeet Interactive"
   },
   {
-    title:"Grounded", genre:"Survival · Co-op", art:["#0d140d","#8fd64f"],
+    title:"Grounded", genre:"Survival · Co-op", art:["#0d140d","#8fd64f"], price:"$29.99", releaseDate:"Sep 2022",
     desc:"Shrunk down to the size of an ant, you survive a suburban backyard that's suddenly an enormous, insect-filled wilderness.",
     egg:"Every blade of grass and drop of dew was rebuilt at a scale meant to feel genuinely towering when you're the size of a bug.",
     steam:"https://store.steampowered.com/app/962130/Grounded/",
     official:"https://groundedgame.com/", officialName:"Obsidian Entertainment"
   },
   {
-    title:"A Way Out", genre:"Co-op · Action", art:["#100d0d","#8f8f9c"],
+    title:"A Way Out", genre:"Co-op · Action", art:["#100d0d","#8f8f9c"], price:"$29.99", releaseDate:"Mar 2018",
     desc:"Two escaped prisoners must work together on the run, in a split-screen story that only exists in co-op — there's no single-player mode at all.",
     egg:"The game can only be played in co-op, split-screen locally or online, and was designed from day one with zero single-player option.",
     steam:"https://store.steampowered.com/app/1222700/A_Way_Out/",
     official:"https://www.ea.com/games/a-way-out", officialName:"Hazelight Studios"
   },
   {
-    title:"Mount & Blade II: Bannerlord", genre:"Action RPG · Strategy", art:["#100d08","#c9863c"],
+    title:"Mount & Blade II: Bannerlord", genre:"Action RPG · Strategy", art:["#100d08","#c9863c"], price:"$49.99", releaseDate:"Oct 2022",
     desc:"Build a kingdom from nothing through medieval warfare, trade, and diplomacy, commanding massive battles you can personally fight in.",
     egg:"Battles can scale to include hundreds of individually simulated soldiers, each following their own AI rather than scripted animations.",
     steam:"https://store.steampowered.com/app/261550/Mount__Blade_II_Bannerlord/",
     official:"https://www.mountandblade.com/", officialName:"TaleWorlds Entertainment"
+  },
+  {
+    title:"Marvel's Spider-Man Remastered", genre:"Action Adventure", art:["#12100d","#c9273f"], price:"$59.99", releaseDate:"Aug 2022",
+    desc:"Swing across a fully realized New York as Peter Parker, in one of the best superhero games ever made.",
+    egg:"There are dozens of fully hand-placed backpack collectibles hidden across the city, each unlocking a real piece of Spider-Man comic or film history.",
+    steam:"https://store.steampowered.com/app/1817070/Marvels_SpiderMan_Remastered/",
+    official:"https://insomniac.games/games/marvels-spider-man-remastered/", officialName:"Insomniac Games"
+  },
+  {
+    title:"Horizon Zero Dawn Complete Edition", genre:"Open World · Action RPG", art:["#0d140d","#4fae6f"], price:"$49.99", releaseDate:"Aug 2020",
+    desc:"Aloy hunts robotic dinosaurs across a beautiful, mysterious post-apocalyptic Earth, uncovering exactly how the world ended.",
+    egg:"Every single machine has weak points and behaviors modeled after real animals, right down to how a Watcher actually watches.",
+    steam:"https://store.steampowered.com/app/1151640/Horizon_Zero_Dawn_Complete_Edition/",
+    official:"https://www.guerrilla-games.com/play/horizon", officialName:"Guerrilla Games"
+  },
+  {
+    title:"Days Gone", genre:"Open World · Survival", art:["#100d0d","#8f8f5f"], price:"$39.99", releaseDate:"May 2021",
+    desc:"A drifter and his motorcycle survive a zombie-infested Pacific Northwest, hunted by hordes that actually move and think as a swarm.",
+    egg:"The game's massive zombie 'Hordes' can number in the hundreds, all individually simulated and reacting to fire, noise, and terrain at once.",
+    steam:"https://store.steampowered.com/app/1258080/Days_Gone/",
+    official:"https://www.daysgone.com/", officialName:"Bend Studio"
+  },
+  {
+    title:"Resident Evil 4", genre:"Survival Horror", art:["#160c0c","#8a1f1f"], price:"$59.99", releaseDate:"Mar 2023",
+    desc:"A ground-up remake of the genre-defining classic, sending Leon Kennedy into a village of infected Spaniards to rescue the president's daughter.",
+    egg:"The famous 'Merchant' character was rebuilt with an entirely new, stranger design after the original actor's voice lines were re-recorded specifically for the remake.",
+    steam:"https://store.steampowered.com/app/2050650/Resident_Evil_4/",
+    official:"https://www.residentevil.com/re4/", officialName:"Capcom"
+  },
+  {
+    title:"Hogwarts Legacy", genre:"Open World · RPG", art:["#12100d","#8a5fd6"], price:"$59.99", releaseDate:"Feb 2023",
+    desc:"Attend Hogwarts as a fifth-year student in the 1800s, learning spells and uncovering a hidden goblin rebellion threatening the wizarding world.",
+    egg:"Nearly every room in the castle was hand-built to match the geography of the films, including staircases that genuinely move on a schedule.",
+    steam:"https://store.steampowered.com/app/990080/Hogwarts_Legacy/",
+    official:"https://www.hogwartslegacy.com/", officialName:"Avalanche Software"
+  },
+  {
+    title:"Starfield", genre:"Open World · RPG", art:["#0d1420","#4f9ed6"], price:"$69.99", releaseDate:"Sep 2023",
+    desc:"Explore a thousand handcrafted and procedural planets as a member of Constellation, the last group of space explorers in Bethesda's first new universe in decades.",
+    egg:"Ship design is fully modular — players have built everything from tiny one-seat shuttles to enormous, function-first flying cities.",
+    steam:"https://store.steampowered.com/app/1716740/Starfield/",
+    official:"https://bethesda.net/en/game/starfield", officialName:"Bethesda Game Studios"
+  },
+  {
+    title:"Diablo IV", genre:"Action RPG", art:["#100d0d","#c9273f"], price:"$69.99", releaseDate:"Jun 2023",
+    desc:"Return to Sanctuary in the series' darkest entry yet, hunting Lilith across a shared open world dense with dungeons and world bosses.",
+    egg:"The entire game world is seamlessly open with no loading screens between zones, a first for the mainline Diablo series.",
+    steam:"https://store.steampowered.com/app/2344520/Diablo_IV/",
+    official:"https://diablo4.blizzard.com/", officialName:"Blizzard Entertainment"
+  },
+  {
+    title:"Hitman World of Assassination", genre:"Stealth · Action", art:["#0c0d10","#c9863c"], price:"$19.99", releaseDate:"Jan 2023",
+    desc:"Agent 47 travels the globe eliminating targets in enormous, systemic sandbox levels where nearly anything can become a weapon or a disguise.",
+    egg:"Every level supports dozens of unique 'Mission Story' assassination methods, each fully scripted with its own setup and outcome.",
+    steam:"https://store.steampowered.com/app/1659040/HITMAN_World_of_Assassination/",
+    official:"https://hitman.com/", officialName:"IO Interactive"
+  },
+  {
+    title:"Resident Evil 2", genre:"Survival Horror", art:["#160c0c","#8a1f1f"], price:"$29.99", releaseDate:"Jan 2019",
+    desc:"A total remake of the 1998 classic, trapping Leon and Claire in a zombie-infested Raccoon City police station stalked by an unkillable pursuer.",
+    egg:"The relentless Mr. X enemy uses dynamic AI pathfinding to actually hunt the player through the station in real time, rather than following scripted routes.",
+    steam:"https://store.steampowered.com/app/883710/Resident_Evil_2/",
+    official:"https://www.residentevil.com/re2/", officialName:"Capcom"
+  },
+  {
+    title:"The Last of Us Part I", genre:"Action Adventure", art:["#0d140d","#4f8f5f"], price:"$59.99", releaseDate:"Mar 2023",
+    desc:"A rebuilt-from-the-ground-up version of the story that redefined narrative game design, following Joel and Ellie across a ruined, infected America.",
+    egg:"Facial performance capture was completely redone for this version, syncing far more precisely with the original actors' full-body motion data.",
+    steam:"https://store.steampowered.com/app/1888930/The_Last_of_Us_Part_I/",
+    official:"https://www.naughtydog.com/games/the-last-of-us-part-i-pc", officialName:"Naughty Dog"
   }
 ];
 
@@ -1264,6 +1402,7 @@ games.forEach((g, i) => {
     <div class="card-inner">
       <div class="face front" data-letter="${g.title.charAt(0)}" style="--art:linear-gradient(155deg, ${g.art[0]} 0%, ${g.art[1]} 100%)">
         ${g.goty ? `<span class="goty-tag">${g.goty}</span>` : ''}
+        <span class="price-tag ${g.price === 'Free' ? 'price-free' : ''}">${g.price}</span>
         <div class="card-genre">${g.genre}</div>
         <div class="card-title display">${g.title}</div>
         <div class="card-tap">Tap to open</div>
@@ -1271,6 +1410,10 @@ games.forEach((g, i) => {
       <div class="face back">
         <div class="card-genre">${g.genre}</div>
         <h3 class="display">${g.title}</h3>
+        <div class="meta-row">
+          <span class="meta-price ${g.price === 'Free' ? 'price-free' : ''}">${g.price}</span>
+          <span class="meta-date">Released ${g.releaseDate}</span>
+        </div>
         <p>${g.desc}</p>
         <div class="egg"><b>Easter egg</b>${g.egg}</div>
         <div class="back-links">
@@ -1292,86 +1435,101 @@ games.forEach((g, i) => {
 
 <script>
 // ---------- View switching (single-file "tabs") ----------
-function showFreeGames(e){
-  if(e) e.preventDefault();
-  document.getElementById('mainView').style.display = 'none';
-  document.getElementById('freeGamesView').style.display = 'block';
+const allViews = ['mainView', 'aboutView', 'creditsView', 'versionsView', 'freeGamesView'];
+const hashForView = {
+  mainView: 'library',
+  aboutView: 'about',
+  creditsView: 'credits',
+  versionsView: 'versions',
+  freeGamesView: 'free-games'
+};
+
+function renderView(id){
+  allViews.forEach(v => {
+    document.getElementById(v).style.display = (v === id) ? 'block' : 'none';
+  });
   window.scrollTo(0,0);
-  history.pushState(null, '', '#free-games');
 }
-function showMain(e){
+
+function showView(id, e){
   if(e) e.preventDefault();
-  document.getElementById('freeGamesView').style.display = 'none';
-  document.getElementById('mainView').style.display = 'block';
-  if(e && e.target && e.target.getAttribute('href') && e.target.getAttribute('href').startsWith('#')){
-    const id = e.target.getAttribute('href').slice(1);
-    history.pushState(null, '', '#' + id);
-    setTimeout(() => {
-      const el = document.getElementById(id);
-      if(el) el.scrollIntoView();
-    }, 0);
-  } else {
-    window.scrollTo(0,0);
-  }
+  renderView(id);
+  history.pushState(null, '', '#' + hashForView[id]);
 }
-window.addEventListener('popstate', () => {
-  if(location.hash === '#free-games') showFreeGames();
-  else showMain();
-});
-if(location.hash === '#free-games') showFreeGames();
+
+function showHome(e){
+  if(e) e.preventDefault();
+  renderView('mainView');
+  history.pushState(null, '', '#library');
+  setTimeout(() => {
+    const el = document.getElementById('library');
+    if(el) el.scrollIntoView();
+  }, 0);
+}
+
+function routeFromHash(){
+  const h = location.hash;
+  if(h === '#about') renderView('aboutView');
+  else if(h === '#credits') renderView('creditsView');
+  else if(h === '#versions') renderView('versionsView');
+  else if(h === '#free-games') renderView('freeGamesView');
+  else renderView('mainView');
+}
+window.addEventListener('popstate', routeFromHash);
+routeFromHash();
 
 // ---------- Free Games data ----------
 const freeGames = [
-  {t:"Dota 2", g:"MOBA", a:["#120d16","#c0392b"], id:"570", n:"Dota_2"},
-  {t:"Counter-Strike 2", g:"FPS · Multiplayer", a:["#111114","#e0a83f"], id:"730", n:"CounterStrike_2"},
-  {t:"Team Fortress 2", g:"FPS · Multiplayer", a:["#161008","#e0a83f"], id:"440", n:"Team_Fortress_2"},
-  {t:"Warframe", g:"Looter Shooter", a:["#0d1416","#4fd6c0"], id:"230410", n:"Warframe"},
-  {t:"Path of Exile", g:"Action RPG", a:["#100d0d","#8f3a3a"], id:"238960", n:"Path_of_Exile"},
-  {t:"Destiny 2", g:"Looter Shooter", a:["#0d1218","#4f9ed6"], id:"1085660", n:"Destiny_2"},
-  {t:"Apex Legends", g:"Battle Royale", a:["#0d1418","#d6273f"], id:"1172470", n:"Apex_Legends"},
-  {t:"Rocket League", g:"Sports · Multiplayer", a:["#0d1218","#3d7fd6"], id:"252950", n:"Rocket_League"},
-  {t:"Fall Guys", g:"Party · Battle Royale", a:["#160f18","#f2a83f"], id:"1097150", n:"Fall_Guys"},
-  {t:"War Thunder", g:"Vehicle Combat", a:["#100d08","#8f8f5f"], id:"236390", n:"War_Thunder"},
-  {t:"Brawlhalla", g:"Platform Fighter", a:["#160d1a","#e0a83f"], id:"291550", n:"Brawlhalla"},
-  {t:"Smite", g:"MOBA", a:["#100d16","#c9273f"], id:"386360", n:"SMITE"},
-  {t:"Paladins", g:"Hero Shooter", a:["#0d1614","#4fae6f"], id:"444090", n:"Paladins"},
-  {t:"Warface", g:"FPS · Multiplayer", a:["#100d0d","#8f8f8f"], id:"291480", n:"Warface"},
-  {t:"Trove", g:"Sandbox · Adventure", a:["#100d16","#c93a9f"], id:"304050", n:"Trove"},
-  {t:"Crossout", g:"Vehicle Combat", a:["#100d08","#c9863c"], id:"592540", n:"Crossout"},
-  {t:"Realm Royale Reforged", g:"Battle Royale", a:["#0d1616","#4fd6a0"], id:"813820", n:"Realm_Royale_Reforged"},
-  {t:"Enlisted", g:"WWII · FPS", a:["#100d08","#8f8f5f"], id:"1418160", n:"Enlisted"},
-  {t:"Dauntless", g:"Action RPG", a:["#0d1420","#4f9ed6"], id:"1030300", n:"Dauntless"},
-  {t:"Albion Online", g:"MMORPG", a:["#100d08","#d6a83f"], id:"761890", n:"Albion_Online"},
-  {t:"Old School RuneScape", g:"MMORPG", a:["#100d08","#e0a83f"], id:"1343370", n:"Old_School_RuneScape"},
-  {t:"RuneScape", g:"MMORPG", a:["#0d1214","#3f7ac9"], id:"1343400", n:"RuneScape"},
-  {t:"Naraka: Bladepoint", g:"Battle Royale", a:["#100d0d","#c9273f"], id:"1203220", n:"NARAKA_BLADEPOINT"},
-  {t:"VRChat", g:"Social · Sandbox", a:["#0d1420","#4fd6c0"], id:"438100", n:"VRChat"},
-  {t:"Unturned", g:"Survival", a:["#0d140d","#4f8f5f"], id:"304930", n:"Unturned"},
-  {t:"Fistful of Frags", g:"FPS · Western", a:["#100d08","#c9863c"], id:"265630", n:"Fistful_of_Frags"},
-  {t:"Deceit", g:"Social Deduction", a:["#100d16","#8a2fd6"], id:"466240", n:"Deceit"},
-  {t:"Marvel Rivals", g:"Hero Shooter", a:["#100d0d","#c9273f"], id:"2767030", n:"Marvel_Rivals"},
-  {t:"Halo Infinite", g:"FPS · Multiplayer", a:["#0d1420","#4f9ed6"], id:"1240440", n:"Halo_Infinite"},
-  {t:"PlanetSide 2", g:"MMO FPS", a:["#0d1214","#3f7ac9"], id:"218230", n:"PlanetSide_2"},
-  {t:"Heroes & Generals", g:"WWII · FPS", a:["#100d08","#8f8f5f"], id:"227940", n:"Heroes__Generals"},
-  {t:"Quake Champions", g:"Arena FPS", a:["#100d0d","#c9273f"], id:"611500", n:"Quake_Champions"},
-  {t:"Star Trek Online", g:"MMORPG", a:["#0d1420","#4f9ed6"], id:"9900", n:"Star_Trek_Online"},
-  {t:"Neverwinter", g:"MMORPG", a:["#100d16","#8a5fd6"], id:"109600", n:"Neverwinter"},
-  {t:"DC Universe Online", g:"MMORPG", a:["#0d1214","#3f7ac9"], id:"24200", n:"DC_Universe_Online"},
-  {t:"World of Tanks Blitz", g:"Vehicle Combat", a:["#100d08","#8f8f5f"], id:"843980", n:"World_of_Tanks_Blitz"},
-  {t:"Eternal Return", g:"Battle Royale", a:["#100d16","#c93a9f"], id:"1049590", n:"Eternal_Return"},
-  {t:"Idle Champions of the Forgotten Realms", g:"Idle RPG", a:["#100d08","#d6a83f"], id:"818530", n:"Idle_Champions_of_the_Forgotten_Realms"},
-  {t:"Lost Ark", g:"Action MMORPG", a:["#100d0d","#c9863c"], id:"1599340", n:"Lost_Ark"},
-  {t:"Genshin Impact", g:"Open World · RPG", a:["#0d1420","#4fd6c0"], id:"2270000", n:"Genshin_Impact"},
-  {t:"Honkai: Star Rail", g:"RPG", a:["#100d16","#8a5fd6"], id:"2181170", n:"Honkai_Star_Rail"},
-  {t:"Zenless Zone Zero", g:"Action RPG", a:["#100d0d","#c9273f"], id:"3167550", n:"Zenless_Zone_Zero"},
-  {t:"MultiVersus", g:"Platform Fighter", a:["#0d1420","#4f9ed6"], id:"1818750", n:"MultiVersus"},
-  {t:"The First Descendant", g:"Looter Shooter", a:["#100d0d","#c9863c"], id:"2074920", n:"The_First_Descendant"},
-  {t:"Cuisine Royale", g:"Battle Royale", a:["#100d08","#8f8f5f"], id:"1017180", n:"Cuisine_Royale"},
-  {t:"Creativerse", g:"Sandbox · Building", a:["#0d140d","#4f8f5f"], id:"280790", n:"Creativerse"},
-  {t:"Sky: Children of the Light", g:"Social · Adventure", a:["#0d1420","#4fd6e0"], id:"1622650", n:"Sky_Children_of_the_Light"},
-  {t:"Marvel Snap", g:"Card Battler", a:["#100d0d","#c9273f"], id:"1997040", n:"MARVEL_SNAP"},
-  {t:"Legends of Runeterra", g:"Card Battler", a:["#100d16","#8a5fd6"], id:"1128810", n:"Legends_of_Runeterra"},
-  {t:"Splitgate", g:"Arena FPS", a:["#0d1420","#4f9ed6"], id:"677620", n:"Splitgate"}
+  {t:"Dota 2", g:"MOBA", a:["#120d16","#c0392b"], release:"Jul 2013", id:"570", n:"Dota_2"},
+  {t:"Counter-Strike 2", g:"FPS · Multiplayer", a:["#111114","#e0a83f"], release:"Sep 2023", id:"730", n:"CounterStrike_2"},
+  {t:"Team Fortress 2", g:"FPS · Multiplayer", a:["#161008","#e0a83f"], release:"Oct 2007", id:"440", n:"Team_Fortress_2"},
+  {t:"Warframe", g:"Looter Shooter", a:["#0d1416","#4fd6c0"], release:"Mar 2013", id:"230410", n:"Warframe"},
+  {t:"Path of Exile", g:"Action RPG", a:["#100d0d","#8f3a3a"], release:"Oct 2013", id:"238960", n:"Path_of_Exile"},
+  {t:"Destiny 2", g:"Looter Shooter", a:["#0d1218","#4f9ed6"], release:"Oct 2017", id:"1085660", n:"Destiny_2"},
+  {t:"Apex Legends", g:"Battle Royale", a:["#0d1418","#d6273f"], release:"Feb 2019", id:"1172470", n:"Apex_Legends"},
+  {t:"Rocket League", g:"Sports · Multiplayer", a:["#0d1218","#3d7fd6"], release:"Jul 2015", id:"252950", n:"Rocket_League"},
+  {t:"Fall Guys", g:"Party · Battle Royale", a:["#160f18","#f2a83f"], release:"Aug 2020", id:"1097150", n:"Fall_Guys"},
+  {t:"War Thunder", g:"Vehicle Combat", a:["#100d08","#8f8f5f"], release:"Nov 2012", id:"236390", n:"War_Thunder"},
+  {t:"Brawlhalla", g:"Platform Fighter", a:["#160d1a","#e0a83f"], release:"Oct 2014", id:"291550", n:"Brawlhalla"},
+  {t:"Smite", g:"MOBA", a:["#100d16","#c9273f"], release:"Mar 2014", id:"386360", n:"SMITE"},
+  {t:"Paladins", g:"Hero Shooter", a:["#0d1614","#4fae6f"], release:"Sep 2018", id:"444090", n:"Paladins"},
+  {t:"Warface", g:"FPS · Multiplayer", a:["#100d0d","#8f8f8f"], release:"Jul 2014", id:"291480", n:"Warface"},
+  {t:"Trove", g:"Sandbox · Adventure", a:["#100d16","#c93a9f"], release:"Jul 2015", id:"304050", n:"Trove"},
+  {t:"Crossout", g:"Vehicle Combat", a:["#100d08","#c9863c"], release:"May 2017", id:"592540", n:"Crossout"},
+  {t:"Realm Royale Reforged", g:"Battle Royale", a:["#0d1616","#4fd6a0"], release:"Jun 2018", id:"813820", n:"Realm_Royale_Reforged"},
+  {t:"Enlisted", g:"WWII · FPS", a:["#100d08","#8f8f5f"], release:"Apr 2021", id:"1418160", n:"Enlisted"},
+  {t:"Dauntless", g:"Action RPG", a:["#0d1420","#4f9ed6"], release:"May 2019", id:"1030300", n:"Dauntless"},
+  {t:"Albion Online", g:"MMORPG", a:["#100d08","#d6a83f"], release:"Jul 2017", id:"761890", n:"Albion_Online"},
+  {t:"Old School RuneScape", g:"MMORPG", a:["#100d08","#e0a83f"], release:"Feb 2013", id:"1343370", n:"Old_School_RuneScape"},
+  {t:"RuneScape", g:"MMORPG", a:["#0d1214","#3f7ac9"], release:"Jan 2001", id:"1343400", n:"RuneScape"},
+  {t:"Naraka: Bladepoint", g:"Battle Royale", a:["#100d0d","#c9273f"], release:"Aug 2021", id:"1203220", n:"NARAKA_BLADEPOINT"},
+  {t:"VRChat", g:"Social · Sandbox", a:["#0d1420","#4fd6c0"], release:"Feb 2017", id:"438100", n:"VRChat"},
+  {t:"Unturned", g:"Survival", a:["#0d140d","#4f8f5f"], release:"Jul 2017", id:"304930", n:"Unturned"},
+  {t:"Fistful of Frags", g:"FPS · Western", a:["#100d08","#c9863c"], release:"Oct 2014", id:"265630", n:"Fistful_of_Frags"},
+  {t:"Deceit", g:"Social Deduction", a:["#100d16","#8a2fd6"], release:"Jun 2017", id:"466240", n:"Deceit"},
+  {t:"Marvel Rivals", g:"Hero Shooter", a:["#100d0d","#c9273f"], release:"Dec 2024", id:"2767030", n:"Marvel_Rivals"},
+  {t:"Halo Infinite", g:"FPS · Multiplayer", a:["#0d1420","#4f9ed6"], release:"Nov 2021", id:"1240440", n:"Halo_Infinite"},
+  {t:"PlanetSide 2", g:"MMO FPS", a:["#0d1214","#3f7ac9"], release:"Nov 2012", id:"218230", n:"PlanetSide_2"},
+  {t:"Heroes & Generals", g:"WWII · FPS", a:["#100d08","#8f8f5f"], release:"Jan 2016", id:"227940", n:"Heroes__Generals"},
+  {t:"Quake Champions", g:"Arena FPS", a:["#100d0d","#c9273f"], release:"Aug 2018", id:"611500", n:"Quake_Champions"},
+  {t:"Star Trek Online", g:"MMORPG", a:["#0d1420","#4f9ed6"], release:"Feb 2010", id:"9900", n:"Star_Trek_Online"},
+  {t:"Neverwinter", g:"MMORPG", a:["#100d16","#8a5fd6"], release:"Jun 2013", id:"109600", n:"Neverwinter"},
+  {t:"DC Universe Online", g:"MMORPG", a:["#0d1214","#3f7ac9"], release:"Jan 2011", id:"24200", n:"DC_Universe_Online"},
+  {t:"World of Tanks Blitz", g:"Vehicle Combat", a:["#100d08","#8f8f5f"], release:"Jun 2014", id:"843980", n:"World_of_Tanks_Blitz"},
+  {t:"Eternal Return", g:"Battle Royale", a:["#100d16","#c93a9f"], release:"Nov 2021", id:"1049590", n:"Eternal_Return"},
+  {t:"Idle Champions of the Forgotten Realms", g:"Idle RPG", a:["#100d08","#d6a83f"], release:"Oct 2015", id:"818530", n:"Idle_Champions_of_the_Forgotten_Realms"},
+  {t:"Lost Ark", g:"Action MMORPG", a:["#100d0d","#c9863c"], release:"Feb 2022", id:"1599340", n:"Lost_Ark"},
+  {t:"Genshin Impact", g:"Open World · RPG", a:["#0d1420","#4fd6c0"], release:"Sep 2020", id:"2270000", n:"Genshin_Impact"},
+  {t:"Honkai: Star Rail", g:"RPG", a:["#100d16","#8a5fd6"], release:"Apr 2023", id:"2181170", n:"Honkai_Star_Rail"},
+  {t:"Zenless Zone Zero", g:"Action RPG", a:["#100d0d","#c9273f"], release:"Jul 2024", id:"3167550", n:"Zenless_Zone_Zero"},
+  {t:"MultiVersus", g:"Platform Fighter", a:["#0d1420","#4f9ed6"], release:"May 2024", id:"1818750", n:"MultiVersus"},
+  {t:"The First Descendant", g:"Looter Shooter", a:["#100d0d","#c9863c"], release:"Jul 2024", id:"2074920", n:"The_First_Descendant"},
+  {t:"Cuisine Royale", g:"Battle Royale", a:["#100d08","#8f8f5f"], release:"Aug 2018", id:"1017180", n:"Cuisine_Royale"},
+  {t:"Creativerse", g:"Sandbox · Building", a:["#0d140d","#4f8f5f"], release:"Jul 2017", id:"280790", n:"Creativerse"},
+  {t:"Sky: Children of the Light", g:"Social · Adventure", a:["#0d1420","#4fd6e0"], release:"Jul 2019", id:"1622650", n:"Sky_Children_of_the_Light"},
+  {t:"Marvel Snap", g:"Card Battler", a:["#100d0d","#c9273f"], release:"Oct 2022", id:"1997040", n:"MARVEL_SNAP"},
+  {t:"Legends of Runeterra", g:"Card Battler", a:["#100d16","#8a5fd6"], release:"Apr 2020", id:"1128810", n:"Legends_of_Runeterra"},
+  {t:"Splitgate", g:"Arena FPS", a:["#0d1420","#4f9ed6"], release:"Aug 2021", id:"677620", n:"Splitgate"}
 ];
 
 const freeGrid = document.getElementById('freeGrid');
@@ -1387,6 +1545,7 @@ freeGames.forEach(game => {
     <span class="free-tag">Free to Play</span>
     <div class="card-genre">${game.g}</div>
     <div class="card-title display">${game.t}</div>
+    <span class="free-release">Released ${game.release}</span>
     <span class="free-btn-get">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.4"/></svg>
       Get Free on Steam
