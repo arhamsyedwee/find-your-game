@@ -292,7 +292,7 @@
 
 <section class="hero">
   <div class="wrap">
-    <span class="hero-eyebrow">50 titles · curated shelf</span>
+    <span class="hero-eyebrow">100 titles · curated shelf</span>
     <h1>Every game<br>has a <em>home.</em></h1>
     <p>A shelf of titles worth playing — open-world epics, soulslikes, and a couple of Game of the Year winners. Every card links straight to the official Steam page and the studio that made it.</p>
     <div class="hero-scroll"><div class="dash"></div> Scroll to browse</div>
@@ -306,7 +306,7 @@
         <span class="eyebrow">The Library</span>
         <h2>Pick a case.</h2>
       </div>
-      <span class="count">50 games · tap a card to flip it</span>
+      <span class="count">100 games · tap a card to flip it</span>
     </div>
 
     <div class="grid" id="gameGrid"></div>
@@ -339,7 +339,7 @@
         <span class="credit-label">Built for</span>
         <span class="credit-value">Find Your Game</span>
       </div>
-      <span class="version-pill">Version 26.3</span>
+      <span class="version-pill">Version 26.4</span>
     </div>
   </div>
 </section>
@@ -351,21 +351,36 @@
         <span class="eyebrow">Changelog</span>
         <h2>Versions History.</h2>
       </div>
-      <span class="count">4 releases so far</span>
+      <span class="count">5 releases so far</span>
     </div>
 
     <div class="timeline">
 
       <div class="version-entry">
         <div class="version-num">
-          <span class="num">26.3</span>
+          <span class="num">26.4</span>
           <span class="current-tag">Current Version</span>
           <span class="version-date">Latest</span>
         </div>
         <div class="version-body">
+          <h3>The shelf doubled again.</h3>
+          <ul>
+            <li>Added 50 more games, bringing the library from 50 up to 100 titles.</li>
+            <li>Updated the hero and library counts to reflect 100 games.</li>
+            <li>Version numbering updated from 26.3 to 26.4.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="version-entry">
+        <div class="version-num">
+          <span class="num">26.3</span>
+          <span class="version-date">Previous</span>
+        </div>
+        <div class="version-body">
           <h3>The shelf doubled.</h3>
           <ul>
-            <li>Added 20 more games, bringing the library from 30 to 50 titles.</li>
+            <li>Added 20 more games, bringing the library from 30 up to 50 titles.</li>
             <li>Updated the hero and library counts to reflect 50 games.</li>
             <li>Version numbering updated from 26.2 to 26.3.</li>
           </ul>
@@ -424,7 +439,7 @@
   <div class="wrap footer-inner">
     <div class="logo">Find<span>Your</span>Game</div>
     <div class="footer-meta">
-      <span>Version 26.3</span>
+      <span>Version 26.4</span>
       <span>Owner: Arham Syed</span>
       <span>Developer: Claude AI</span>
       <span>Not affiliated with Valve or Steam</span>
@@ -783,6 +798,356 @@ const games = [
     egg:"The main character's floppy, unathletic movement wasn't a bug — it was a deliberate design choice the developer kept after players loved it in early testing.",
     steam:"https://store.steampowered.com/app/477160/Human_Fall_Flat/",
     official:"https://humanfallflat.com/", officialName:"No Brakes Games"
+  },
+  {
+    title:"Grand Theft Auto: Vice City", genre:"Open World · Action", art:["#14082f","#ff3fa0"],
+    desc:"An '80s-soaked crime saga starring Tommy Vercetti, set in a neon Miami stand-in that basically defined the series' identity.",
+    egg:"The entire radio station lineup was recorded with real licensed '80s tracks and original in-character DJ banter written just for the game.",
+    steam:"https://store.steampowered.com/app/12110/Grand_Theft_Auto_Vice_City/",
+    official:"https://www.rockstargames.com/vicecity", officialName:"Rockstar Games"
+  },
+  {
+    title:"Portal", genre:"Puzzle", art:["#0d1618","#e8823c"],
+    desc:"A silent test subject, a sarcastic AI, and a portal gun that turned a short experimental game into a genre-defining classic.",
+    egg:"The game began life as a student project called Narbacular Drop before Valve hired the whole team to rebuild it as Portal.",
+    steam:"https://store.steampowered.com/app/400/Portal/",
+    official:"https://www.valvesoftware.com/", officialName:"Valve"
+  },
+  {
+    title:"Half-Life", genre:"FPS", art:["#0f1214","#c9c9d6"],
+    desc:"A resonance cascade turns a research facility into an alien warzone. The game that reshaped what FPS storytelling could be.",
+    egg:"The entire game plays out in one continuous, uninterrupted first-person view — there are no cutscenes that take control away from you.",
+    steam:"https://store.steampowered.com/app/70/HalfLife/",
+    official:"https://www.valvesoftware.com/", officialName:"Valve"
+  },
+  {
+    title:"Counter-Strike: Source", genre:"FPS · Multiplayer", art:["#100d0d","#d69a3f"],
+    desc:"The Source-engine rebuild of the original Counter-Strike, and the long-running bridge between the classic and modern eras of the series.",
+    egg:"Its early build was so close to the original that competitive players spent months arguing over whether it even played the same.",
+    steam:"https://store.steampowered.com/app/240/CounterStrike_Source/",
+    official:"https://www.valvesoftware.com/", officialName:"Valve"
+  },
+  {
+    title:"Garry's Mod", genre:"Sandbox", art:["#101014","#f2a83f"],
+    desc:"A physics sandbox with basically no rules — spawn anything, build anything, and let the community's game modes do the rest.",
+    egg:"It started as a free Half-Life 2 mod built by one person messing with the physics engine, before becoming a full commercial release.",
+    steam:"https://store.steampowered.com/app/4000/Garrys_Mod/",
+    official:"https://garrysmod.com/", officialName:"Facepunch Studios"
+  },
+  {
+    title:"PUBG: Battlegrounds", genre:"Battle Royale", art:["#12140d","#d6c23f"],
+    desc:"The game that turned the battle royale genre into a mainstream phenomenon — 100 players, one shrinking circle, one winner.",
+    egg:"It was built by a mod-maker who'd already made battle royale mods for two earlier games before finally shipping his own standalone version.",
+    steam:"https://store.steampowered.com/app/578080/PUBG_BATTLEGROUNDS/",
+    official:"https://pubg.com/", officialName:"KRAFTON"
+  },
+  {
+    title:"Apex Legends", genre:"Battle Royale · FPS", art:["#0d1418","#d6273f"],
+    desc:"Titanfall's universe reborn as a fast, slide-and-grapple battle royale with distinct hero abilities layered on top.",
+    egg:"It was developed almost entirely in secret under a different working title, then released as a surprise with zero pre-launch marketing.",
+    steam:"https://store.steampowered.com/app/1172470/Apex_Legends/",
+    official:"https://www.ea.com/games/apex-legends", officialName:"Respawn Entertainment"
+  },
+  {
+    title:"Destiny 2", genre:"Looter Shooter", art:["#0d1218","#4f9ed6"],
+    desc:"A sci-fi shared-world shooter built around raids, seasons, and gunplay that's widely considered some of the best in the genre.",
+    egg:"Its biggest raids are deliberately designed with puzzle mechanics that can only be solved by six players coordinating in real time.",
+    steam:"https://store.steampowered.com/app/1085660/Destiny_2/",
+    official:"https://www.bungie.net/", officialName:"Bungie"
+  },
+  {
+    title:"Valheim", genre:"Survival · Open World", art:["#0e1210","#5f9e5f"],
+    desc:"A cooperative Viking-mythology survival game where you sail, build, and fight your way across a procedurally generated afterlife.",
+    egg:"It was built by a five-person team and became one of the fastest-selling early access games in Steam history within weeks of launch.",
+    steam:"https://store.steampowered.com/app/892970/Valheim/",
+    official:"https://www.valheimgame.com/", officialName:"Iron Gate Studio"
+  },
+  {
+    title:"Rust", genre:"Survival · Multiplayer", art:["#161008","#c96a2f"],
+    desc:"A brutal, unforgiving multiplayer survival game where trust is a resource and everyone else is a threat.",
+    egg:"The game world resets on regular official wipes, meaning entire bases and economies are periodically erased and rebuilt from scratch.",
+    steam:"https://store.steampowered.com/app/252490/Rust/",
+    official:"https://rust.facepunch.com/", officialName:"Facepunch Studios"
+  },
+  {
+    title:"ARK: Survival Evolved", genre:"Survival · Open World", art:["#0f1410","#5f8f5f"],
+    desc:"Wake up stranded on a dinosaur-infested island, tame the wildlife, and build your way up the food chain.",
+    egg:"Almost every dinosaur in the game can be tamed and ridden, including ones large enough to carry an entire base on their back.",
+    steam:"https://store.steampowered.com/app/346110/ARK_Survival_Evolved/",
+    official:"https://playark.com/", officialName:"Studio Wildcard"
+  },
+  {
+    title:"No Man's Sky", genre:"Exploration · Survival", art:["#0d1420","#4fd6e0"],
+    desc:"Fly seamlessly from planet surface to deep space in a procedurally generated universe that grew from a rocky launch into one of gaming's biggest comeback stories.",
+    egg:"The universe contains over eighteen quintillion planets, each generated by an algorithm rather than hand-built by a designer.",
+    steam:"https://store.steampowered.com/app/275850/No_Mans_Sky/",
+    official:"https://www.nomanssky.com/", officialName:"Hello Games"
+  },
+  {
+    title:"Sea of Thieves", genre:"Open World · Adventure", art:["#0d1618","#3fb0c9"],
+    desc:"A shared-world pirate sandbox built entirely around crewed ships, treasure hunting, and player-driven chaos on the high seas.",
+    egg:"Ships leave a visible trail of shared world events behind them, so other crews can literally sail toward smoke or gunfire to find you.",
+    steam:"https://store.steampowered.com/app/1172620/Sea_of_Thieves/",
+    official:"https://www.seaofthieves.com/", officialName:"Rare"
+  },
+  {
+    title:"Rainbow Six Siege", genre:"Tactical FPS", art:["#100d0d","#c93a3a"],
+    desc:"A slow, destructible-environment tactical shooter where nearly every wall and floor can be breached to create a new angle.",
+    egg:"Its roster of operators has grown from twenty at launch to well over eighty, each with a completely unique gadget.",
+    steam:"https://store.steampowered.com/app/359550/Tom_Clancys_Rainbow_Six_Siege/",
+    official:"https://www.ubisoft.com/en-us/game/rainbow-six/siege", officialName:"Ubisoft"
+  },
+  {
+    title:"For Honor", genre:"Melee Combat", art:["#100d0d","#c9863c"],
+    desc:"Knights, Vikings, and samurai fight in a deliberate, stance-based melee combat system unlike almost any other multiplayer game.",
+    egg:"Its combat system was built around a mechanic the studio calls 'The Art of Battle,' directing attacks with a four-way directional stance.",
+    steam:"https://store.steampowered.com/app/304390/For_Honor/",
+    official:"https://www.ubisoft.com/en-us/game/for-honor", officialName:"Ubisoft"
+  },
+  {
+    title:"Payday 2", genre:"Co-op · Heist", art:["#100d0d","#e0b53f"],
+    desc:"Four masked robbers pull off increasingly elaborate heists together, from bank jobs to full-blown armored convoy raids.",
+    egg:"Years after launch it still receives community-made heists, some built by modders who were later hired by the studio itself.",
+    steam:"https://store.steampowered.com/app/218620/PAYDAY_2/",
+    official:"https://www.payday2.com/", officialName:"Starbreeze Studios"
+  },
+  {
+    title:"Dying Light 2", genre:"Open World · Survival", art:["#100d0d","#d64f3f"],
+    desc:"Parkour across a zombie-infested city where every choice you make visibly reshapes the world's factions and layout.",
+    egg:"Your traversal skills directly affect the story — certain late-game areas are only reachable through advanced parkour techniques.",
+    steam:"https://store.steampowered.com/app/534380/Dying_Light_2_Stay_Human/",
+    official:"https://dyinglightgame.com/", officialName:"Techland"
+  },
+  {
+    title:"Dead by Daylight", genre:"Horror · Multiplayer", art:["#0d0d10","#8f3a4a"],
+    desc:"Four survivors versus one killer in an asymmetric horror match that's brought in crossover killers from nearly every major horror franchise.",
+    egg:"It popularized the entire asymmetric 4v1 horror genre, inspiring a wave of similar games that followed years later.",
+    steam:"https://store.steampowered.com/app/381210/Dead_by_Daylight/",
+    official:"https://deadbydaylight.com/", officialName:"Behaviour Interactive"
+  },
+  {
+    title:"Phasmophobia", genre:"Co-op · Horror", art:["#0a0a0d","#8fb0c9"],
+    desc:"A four-player ghost-hunting sim where you gather evidence with real tools, using voice chat the ghost itself can actually hear.",
+    egg:"It was built almost entirely by a solo developer and became a massive streaming hit within weeks of its early access launch.",
+    steam:"https://store.steampowered.com/app/739630/Phasmophobia/",
+    official:"https://kineticgames.co.uk/", officialName:"Kinetic Games"
+  },
+  {
+    title:"Lethal Company", genre:"Co-op · Horror", art:["#0d0f0d","#8fd66f"],
+    desc:"A crew of underpaid space scavengers loot abandoned, monster-filled facilities to hit a quota. Cheap, terrifying, and endlessly memeable.",
+    egg:"It was made almost entirely solo, and its low-poly horror monsters were deliberately designed to look uncanny rather than photorealistic.",
+    steam:"https://store.steampowered.com/app/1966720/Lethal_Company/",
+    official:"https://zeekerss.itch.io/lethal-company", officialName:"Zeekerss"
+  },
+  {
+    title:"Outer Wilds", genre:"Exploration · Mystery", art:["#0d1220","#e8b84b"],
+    desc:"A tiny solar system stuck in a 22-minute time loop, and a knowledge-based mystery with no combat, no upgrades — just curiosity.",
+    egg:"There's no traditional progression system at all; everything you 'unlock' is knowledge stored entirely in your own head as the player.",
+    steam:"https://store.steampowered.com/app/753640/Outer_Wilds/",
+    official:"https://www.mobiusdigitalgames.com/outer-wilds.html", officialName:"Mobius Digital"
+  },
+  {
+    title:"Inside", genre:"Puzzle Platformer", art:["#0d0d0d","#8a8a8a"],
+    desc:"A wordless, unsettling puzzle-platformer from the makers of Limbo, following a boy through a dystopia that's never explained.",
+    egg:"The game's true ending is a secret alternate finale, hidden behind a puzzle most players never discover on their first playthrough.",
+    steam:"https://store.steampowered.com/app/304430/INSIDE/",
+    official:"https://playdead.com/games/inside/", officialName:"Playdead"
+  },
+  {
+    title:"Limbo", genre:"Puzzle Platformer", art:["#0a0a0a","#c9c9c9"],
+    desc:"A boy searches a monochrome, monstrous forest for his sister in one of indie gaming's most influential atmospheric puzzlers.",
+    egg:"The entire game uses only black, white, and gray — color was avoided completely to keep every scene feeling like a silhouette.",
+    steam:"https://store.steampowered.com/app/48000/LIMBO/",
+    official:"https://playdead.com/games/limbo/", officialName:"Playdead"
+  },
+  {
+    title:"Ori and the Blind Forest", genre:"Metroidvania", art:["#0d1420","#4fd6c0"],
+    desc:"A hand-painted, heartbreaking metroidvania about a guardian spirit restoring a dying forest, built around some of the genre's tightest platforming.",
+    egg:"Its now-famous 'Escape' sequences were originally so difficult in testing that the team had to rebuild them multiple times to feel fair.",
+    steam:"https://store.steampowered.com/app/261570/Ori_and_the_Blind_Forest/",
+    official:"https://www.orithegame.com/", officialName:"Moon Studios"
+  },
+  {
+    title:"Ori and the Will of the Wisps", genre:"Metroidvania", art:["#0d1420","#e0a83f"],
+    desc:"The sequel expands Ori's world with combat, new companions, and even more ambitious platforming set-pieces.",
+    egg:"Its late-game escape sequence is widely considered one of the most technically demanding platforming segments ever shipped in the genre.",
+    steam:"https://store.steampowered.com/app/1057090/Ori_and_the_Will_of_the_Wisps/",
+    official:"https://www.orithegame.com/", officialName:"Moon Studios"
+  },
+  {
+    title:"Cuphead", genre:"Run and Gun", art:["#100d0d","#d6273f"],
+    desc:"A brutally hard run-and-gun boss rush, hand-drawn and hand-inked to look exactly like a 1930s rubber-hose cartoon.",
+    egg:"Every frame of animation was actually drawn by hand and filmed on paper, the same way cartoons were made nearly a century ago.",
+    steam:"https://store.steampowered.com/app/268910/Cuphead/",
+    official:"https://cupheadgame.com/", officialName:"StudioMDHR"
+  },
+  {
+    title:"Undertale", genre:"RPG", art:["#100d16","#d6a83f"],
+    desc:"A tiny, subversive RPG where you can beat every single enemy without killing anyone — and the game genuinely remembers if you did.",
+    egg:"The game permanently remembers your choices in its save files even after you delete them, referencing a prior playthrough if you start over.",
+    steam:"https://store.steampowered.com/app/391540/Undertale/",
+    official:"https://undertale.com/", officialName:"Toby Fox"
+  },
+  {
+    title:"Disco Elysium", genre:"RPG", art:["#100d16","#8a5fd6"],
+    desc:"A detective with amnesia and two dozen warring voices in his head investigates a murder in one of the best-written RPGs ever made.",
+    egg:"There's no combat at all — every conflict in the game is resolved entirely through dialogue and skill checks.",
+    steam:"https://store.steampowered.com/app/632470/Disco_Elysium__The_Final_Cut/",
+    official:"https://discoelysium.com/", officialName:"ZA/UM"
+  },
+  {
+    title:"Kingdom Come: Deliverance", genre:"Open World · RPG", art:["#100d08","#c98a3c"],
+    desc:"A grounded, historically accurate medieval RPG with no magic, no dragons — just a blacksmith's son surviving a brutal 15th-century war.",
+    egg:"Combat requires actually learning sword direction and timing mechanics, closer to real historical fencing than typical RPG button-mashing.",
+    steam:"https://store.steampowered.com/app/379430/Kingdom_Come_Deliverance/",
+    official:"https://www.kingdomcomerpg.com/", officialName:"Warhorse Studios"
+  },
+  {
+    title:"Kingdom Come: Deliverance II", genre:"Open World · RPG", art:["#100d08","#e0a83f"],
+    desc:"Henry's story continues in a bigger, more polished sequel that keeps the series' obsession with grounded medieval realism.",
+    egg:"The game's alchemy system requires actually following in-game recipe books step-by-step, with no simplified shortcut menu.",
+    steam:"https://store.steampowered.com/app/1771300/Kingdom_Come_Deliverance_II/",
+    official:"https://www.kingdomcomerpg.com/", officialName:"Warhorse Studios"
+  },
+  {
+    title:"Total War: Warhammer III", genre:"Strategy", art:["#100d0d","#c9273f"],
+    desc:"Massive real-time battles meet turn-based empire management, set across the Warhammer Fantasy world's most chaotic realms.",
+    egg:"Individual battles can involve tens of thousands of simulated units on screen at once, each following its own unit-level AI.",
+    steam:"https://store.steampowered.com/app/1142710/Total_War_WARHAMMER_III/",
+    official:"https://www.totalwar.com/", officialName:"Creative Assembly"
+  },
+  {
+    title:"Sid Meier's Civilization VI", genre:"Strategy", art:["#0d1420","#4f9ed6"],
+    desc:"Build an empire from a single settler to a spacefaring civilization, one turn — or one 'just one more turn' — at a time.",
+    egg:"Its 'One More Turn' addictiveness is such a well-known phenomenon that the series jokingly references it in its own marketing.",
+    steam:"https://store.steampowered.com/app/289070/Sid_Meiers_Civilization_VI/",
+    official:"https://civilization.com/", officialName:"Firaxis Games"
+  },
+  {
+    title:"Age of Empires II: Definitive Edition", genre:"Strategy", art:["#100d08","#d6a83f"],
+    desc:"The classic real-time strategy game, remastered — still one of the most beloved and competitively played RTS games ever made.",
+    egg:"Villager unit lines like 'Wololo' from the Monk have become some of the most recognizable sound bites in strategy game history.",
+    steam:"https://store.steampowered.com/app/813780/Age_of_Empires_II_Definitive_Edition/",
+    official:"https://www.ageofempires.com/", officialName:"Forgotten Empires / Xbox Game Studios"
+  },
+  {
+    title:"Company of Heroes 2", genre:"Strategy", art:["#0d0d10","#8f8f9c"],
+    desc:"A tactical WWII real-time strategy game built around cover, terrain, and destructible environments on the Eastern Front.",
+    egg:"A dynamic weather system can actually freeze units to death or slow tanks if you leave them out in a blizzard too long.",
+    steam:"https://store.steampowered.com/app/231430/Company_of_Heroes_2/",
+    official:"https://www.companyofheroes.com/", officialName:"Relic Entertainment"
+  },
+  {
+    title:"Football Manager 2024", genre:"Sports · Sim", art:["#0d1610","#4fd66f"],
+    desc:"Take charge of a football club's every decision — tactics, transfers, training — in the deepest management sim in sports gaming.",
+    egg:"Its scouting database contains real, detailed attribute profiles for hundreds of thousands of actual professional and youth players worldwide.",
+    steam:"https://store.steampowered.com/app/2252570/Football_Manager_2024/",
+    official:"https://www.footballmanager.com/", officialName:"Sports Interactive"
+  },
+  {
+    title:"Forza Horizon 5", genre:"Racing · Open World", art:["#100d08","#e8823c"],
+    desc:"An open-world racing festival across a vibrant, varied recreation of Mexico, built to be as much a scenery tour as a racing game.",
+    egg:"The map includes a fully drivable, active volcano you can race straight into and out of, complete with its own weather system.",
+    steam:"https://store.steampowered.com/app/1551360/Forza_Horizon_5/",
+    official:"https://forza.net/", officialName:"Playground Games"
+  },
+  {
+    title:"Euro Truck Simulator 2", genre:"Simulation", art:["#0d1214","#3f7ac9"],
+    desc:"Haul freight across a meticulously recreated Europe. Slow, relaxing, and somehow one of the most beloved sims ever made.",
+    egg:"It's still receiving new country map expansions well over a decade after its original release, with fans mapping real highways from memory.",
+    steam:"https://store.steampowered.com/app/227300/Euro_Truck_Simulator_2/",
+    official:"https://eurotrucksimulator2.com/", officialName:"SCS Software"
+  },
+  {
+    title:"Cities: Skylines", genre:"City Builder", art:["#0d1614","#4fae6f"],
+    desc:"Zone, build, and manage a living city, complete with traffic simulation detailed enough to become a genuine problem to solve.",
+    egg:"Its traffic simulation is detailed enough that entire YouTube channels exist purely around solving imaginary gridlock problems.",
+    steam:"https://store.steampowered.com/app/255710/Cities_Skylines/",
+    official:"https://www.paradoxinteractive.com/games/cities-skylines", officialName:"Colossal Order"
+  },
+  {
+    title:"Cities: Skylines II", genre:"City Builder", art:["#0d1418","#4f9ed6"],
+    desc:"A ground-up sequel with deeper simulation for economy, services, and citizen behavior across an even bigger buildable map.",
+    egg:"Individual citizens are simulated with their own jobs, routines, and needs, rather than being simple background traffic.",
+    steam:"https://store.steampowered.com/app/949230/Cities_Skylines_II/",
+    official:"https://www.paradoxinteractive.com/games/cities-skylines-ii", officialName:"Colossal Order"
+  },
+  {
+    title:"Planet Coaster", genre:"Sim · Management", art:["#100d08","#e0a83f"],
+    desc:"Design and run a theme park down to the individual coaster track piece, with a scenery-building toolset beloved by hobbyists.",
+    egg:"Its piece-by-piece building tools are flexible enough that players have recreated entire real-world theme parks track for track.",
+    steam:"https://store.steampowered.com/app/493340/Planet_Coaster/",
+    official:"https://www.planetcoaster.com/", officialName:"Frontier Developments"
+  },
+  {
+    title:"Two Point Hospital", genre:"Sim · Management", art:["#0d1618","#3fc9c0"],
+    desc:"Build and run a comedy hospital treating deliberately ridiculous diagnoses, from a spin-off spiritual successor to Theme Hospital.",
+    egg:"Made-up diagnoses like 'Lightheadedness,' where patients' heads literally turn into glowing lightbulbs, are treated with equally absurd cures.",
+    steam:"https://store.steampowered.com/app/535930/Two_Point_Hospital/",
+    official:"https://www.twopointhospital.com/", officialName:"Two Point Studios"
+  },
+  {
+    title:"Factorio", genre:"Simulation · Strategy", art:["#100d08","#d6a83f"],
+    desc:"Crash-land on an alien planet and slowly automate everything — mining, smelting, crafting — into a sprawling factory megastructure.",
+    egg:"The developers famously spend years polishing tiny quality-of-life details, publishing legendary weekly 'Friday Facts' devlogs the whole way.",
+    steam:"https://store.steampowered.com/app/427520/Factorio/",
+    official:"https://factorio.com/", officialName:"Wube Software"
+  },
+  {
+    title:"Satisfactory", genre:"Simulation · Survival", art:["#0d1614","#e8823c"],
+    desc:"A first-person factory-building game where you engineer sprawling automated production lines across an alien planet, in glorious first person.",
+    egg:"Players have built factories so enormous and complex that some have crashed their own game just by rendering them.",
+    steam:"https://store.steampowered.com/app/526870/Satisfactory/",
+    official:"https://www.satisfactorygame.com/", officialName:"Coffee Stain Studios"
+  },
+  {
+    title:"The Forest", genre:"Survival · Horror", art:["#0d140d","#4f8f5f"],
+    desc:"Survive a plane crash on a cannibal-infested island, building shelter by day and defending it from something far worse by night.",
+    egg:"The cannibal enemies actually react to how you treat their dead, becoming more hostile if you desecrate or leave bodies in view.",
+    steam:"https://store.steampowered.com/app/242760/The_Forest/",
+    official:"https://www.theforestgame.com/", officialName:"Endnight Games"
+  },
+  {
+    title:"Sons of the Forest", genre:"Survival · Horror", art:["#0d140d","#8fae4a"],
+    desc:"The sequel raises the stakes with a smarter, more responsive enemy AI and a much deeper base-building and crafting system.",
+    egg:"Enemies can remember and adapt to your build layout over time, sometimes finding new ways to break into a base you thought was secure.",
+    steam:"https://store.steampowered.com/app/1326470/Sons_Of_The_Forest/",
+    official:"https://www.sonsoftheforestgame.com/", officialName:"Endnight Games"
+  },
+  {
+    title:"Green Hell", genre:"Survival", art:["#0d140d","#4f8f5f"],
+    desc:"A punishing, realistic Amazon rainforest survival game where you have to actually treat wounds, parasites, and mental health, not just hunger.",
+    egg:"It includes a genuinely accurate first-aid system — you have to correctly identify and treat specific injuries, not just click a heal button.",
+    steam:"https://store.steampowered.com/app/815370/Green_Hell/",
+    official:"https://greenhellgame.com/", officialName:"Creepy Jar"
+  },
+  {
+    title:"Raft", genre:"Survival · Co-op", art:["#0a1618","#3fb0d6"],
+    desc:"Stranded on a tiny raft in the middle of the ocean, you hook floating debris and slowly build an entire seafaring base from scratch.",
+    egg:"The game started as a small student project prototype before its developers turned it into a full commercial release years later.",
+    steam:"https://store.steampowered.com/app/648800/Raft/",
+    official:"https://raft-game.com/", officialName:"Redbeet Interactive"
+  },
+  {
+    title:"Grounded", genre:"Survival · Co-op", art:["#0d140d","#8fd64f"],
+    desc:"Shrunk down to the size of an ant, you survive a suburban backyard that's suddenly an enormous, insect-filled wilderness.",
+    egg:"Every blade of grass and drop of dew was rebuilt at a scale meant to feel genuinely towering when you're the size of a bug.",
+    steam:"https://store.steampowered.com/app/962130/Grounded/",
+    official:"https://groundedgame.com/", officialName:"Obsidian Entertainment"
+  },
+  {
+    title:"A Way Out", genre:"Co-op · Action", art:["#100d0d","#8f8f9c"],
+    desc:"Two escaped prisoners must work together on the run, in a split-screen story that only exists in co-op — there's no single-player mode at all.",
+    egg:"The game can only be played in co-op, split-screen locally or online, and was designed from day one with zero single-player option.",
+    steam:"https://store.steampowered.com/app/1222700/A_Way_Out/",
+    official:"https://www.ea.com/games/a-way-out", officialName:"Hazelight Studios"
+  },
+  {
+    title:"Mount & Blade II: Bannerlord", genre:"Action RPG · Strategy", art:["#100d08","#c9863c"],
+    desc:"Build a kingdom from nothing through medieval warfare, trade, and diplomacy, commanding massive battles you can personally fight in.",
+    egg:"Battles can scale to include hundreds of individually simulated soldiers, each following their own AI rather than scripted animations.",
+    steam:"https://store.steampowered.com/app/261550/Mount__Blade_II_Bannerlord/",
+    official:"https://www.mountandblade.com/", officialName:"TaleWorlds Entertainment"
   }
 ];
 
